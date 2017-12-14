@@ -13,13 +13,16 @@ export class Grid {
         this.templateFunctionForGrid = handlebars.compile(gridHtml);
         this.templateFunctionForMainRow = handlebars.compile(gridMainRow);
         this.templateFunctionForDetailsRow = handlebars.compile(gridDetailsRow);
+        handlebars.registerHelper("col", (width): string => {
+            return '<col style="width : ' + width + 'px;"/>';
+        });
     }
 
     private bindData = (data: any[], columns: any[]): string => {
-        const detailsArray: any[] = [];
-        const mainArray: any[] = [];
         let tBodyContent: string = "";
         data.forEach((row: any) => {
+            const detailsArray: any[] = [];
+            const mainArray: any[] = [];
             columns.forEach((col: any) => {
                 const columnValue = row[col.id];
                 // if (col.renderHybridCellDefn) {
@@ -38,7 +41,6 @@ export class Grid {
             const detailRowStr = this.templateFunctionForDetailsRow(detailsArray);
             tBodyContent += detailRowStr;
         });
-        this.templateFunctionForGrid({columns, tBodyContent});
-        return tBodyContent;
+        return this.templateFunctionForGrid({columns, tBodyContent});
     }
 }

@@ -1,22 +1,40 @@
+    <style>
+        .inner-container {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    position: relative;
+}
+
+.table-body {
+    overflow: auto;
+    flex: 5;
+}
+    </style>
     <div class="inner-container tile" style="padding:0%">
         <div class="table-header">
             <table id="headertable" class="ui celled fixed single line small table">
                 <colgroup>
                     <col style="width:40px;"/>
                     {{#each columns}}
-                        <col style="width : {{width}}" />
+                       {{#col width}}{{/col}}
                     {{/each}}
                 </colgroup>
                 <thead>
                     <tr>
                         <th></th>
+                        {{#each columns}}
                         <th id="header-{{col.id}}" bindonce ng-repeat="col in ::config.columnDefConfigs" style="cursor:pointer;" ng-click="toggleOrder(col);clickHeader({col : col})">
                             <i style="font-size : 0.7em;display:none;" class="glyphicon glyphicon-arrow-up" ></i>
                             <i style="font-size : 0.7em;display:none;" class="glyphicon glyphicon-arrow-down"></i>
-                            {{#each columns}}
-                                <span>{{columnName}}</span>
-                            {{/each}}
+                            <span>{{width}}</span>
                         </th>
+                        {{/each}}
                     </tr>
                 </thead>
             </table>
@@ -26,7 +44,7 @@
                 <colgroup>
                     <col style="width:40px;"/>
                     {{#each columns}}
-                        <col style="width : {{width}}" />
+                        {{#col width}}{{/col}}
                     {{/each}}
                 </colgroup>
                 <tbody>
