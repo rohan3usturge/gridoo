@@ -1,4 +1,5 @@
 import * as handlebars from "handlebars";
+import * as $ from "jquery";
 import * as gridDetailsRow from "../html/grid-details-row.html";
 import * as gridMainRow from "../html/grid-main-row.html";
 import * as gridHtml from "../html/grid.html";
