@@ -1,3 +1,72 @@
-{{#each this}}
-    <div class="row">Rohan</div>
-{{/each}}
+    <div class="inner-container tile" style="padding:0%">
+        <div class="table-header">
+            <table id="headertable" class="ui celled fixed single line small table">
+                <colgroup>
+                    <col style="width:40px;"/>
+                    {{#each columns}}
+                        <col style="width : {{width}}" />
+                    {{/each}}
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th id="header-{{col.id}}" bindonce ng-repeat="col in ::config.columnDefConfigs" style="cursor:pointer;" ng-click="toggleOrder(col);clickHeader({col : col})">
+                            <i style="font-size : 0.7em;display:none;" class="glyphicon glyphicon-arrow-up" ></i>
+                            <i style="font-size : 0.7em;display:none;" class="glyphicon glyphicon-arrow-down"></i>
+                            {{#each columns}}
+                                <span>{{columnName}}</span>
+                            {{/each}}
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="table-body">
+            <table class="ui celled small compact fixed selectable single line table ">
+                <colgroup>
+                    <col style="width:40px;"/>
+                    {{#each columns}}
+                        <col style="width : {{width}}" />
+                    {{/each}}
+                </colgroup>
+                <tbody>
+                    {{{tBodyContent}}}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-footer" style="border-top: 1px solid rgba(34, 36, 38, 0.1);display:flex;font-size : 0.8em;padding:0.2em;justify-content: space-between;background-color: #eeeeee;">
+            <div>
+                Time : 
+            </div>
+            <div data-role="pager">
+                <button ng-disabled="paginationData.isFirstLinkDisabled" ng-click="searchForPage('first')" aria-label="Go to the first page" title="Go to the first page" class="btn btn-xs" data-page="1" tabindex="-1">
+                    <span class="glyphicon glyphicon-step-backward"></span>
+                </button>
+                <button ng-disabled="paginationData.isPrevLinkDisabled" ng-click="searchForPage('prev')" aria-label="Go to the previous page" title="Go to the previous page" class="btn btn-xs" data-page="1" tabindex="-1">
+                    <span class="glyphicon glyphicon-triangle-left"></span>
+                </button>
+                
+                <span class="k-pager-input k-label">
+                    Page <form ng-submit="searchForPage('input')" style="display: inline-block;"><input ng-model="paginationData.pageIndex" style="width: 40px;padding: 1px;margin-left: 3px;margin-right: 3px;" aria-label="1"></form>of {{paginationData.noOfPages}}
+                </span>
+                
+                <button ng-disabled="paginationData.isNextLinkDisabled" ng-click="searchForPage('next')" aria-label="Go to the next page" title="Go to the next page" class="btn btn-xs" data-page="2" tabindex="-1">
+                    <span class="glyphicon glyphicon-triangle-right"></span>
+                </button>
+                <button ng-disabled="paginationData.isLastLinkDisabled" ng-click="searchForPage('last')" aria-label="Go to the last page" title="Go to the last page" class="btn btn-xs" data-page="200" tabindex="-1">
+                    <span class="glyphicon glyphicon-step-forward"></span>
+                </button>
+            </div>
+            <div>
+                <span>
+                    <form style="display: inline">
+                        <select class="select-combo select-img" ng-change="searchForPage('pageSize')"
+                            ng-model="paginationData.pageSize"
+                            ng-options="size as size for size in pageSizes">
+                        </select>
+                    </form>
+                    </span>items per page</span>
+                <span>{{paginationData.currentRange.min}} - {{paginationData.currentRange.max}} of {{paginationData.totalResults}} items</span>
+            </div>
+        </div>
+    </div>

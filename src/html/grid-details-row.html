@@ -1,0 +1,19 @@
+<tr class="detailsRow" style="display:none;">
+    <td colspan="{{length}}">
+        <table class="ui table very compact selectable" style="width: auto;">
+            <tbody>
+                {{#each this}}
+                <tr>
+                    <td class="ACTIONABLE_CLASS">
+                        <input type="hidden" value="{{id}}:{{columnValue}}">
+                        <span>{{columnName}}</span>
+                        <i class="glyphicon glyphicon-plus-sign" />
+                        <i class="glyphicon glyphicon-minus-sign" />
+                    </td>
+                    <td>{{{columnValue}}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </td>
+</tr>

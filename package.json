@@ -4,11 +4,27 @@
   "description": "Simple Virtualized Grid with paging and auto scrollable fixed to container, with detailed rows",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run lint && npm run clean && npm run webpack",
+    "dev": "npm run lint && npm run clean && npm run webpackwatch",
+    "clean": "rimraf ./dist && rimraf ./*.vsix",
+    "gallery-publish": "npm run build && tfx extension publish --rev-version --token mi244imrtmzyhxtiych23wf2e6titzfffbdhm25my5p3bob6el4q",
+    "lint": "tslint -c tslint.json 'src/*.ts'",
+    "package": "tfx extension create  --rev-version",
+    "postbuilddemo": "npm run package",
+    "webpack": "webpack --progress --colors --config webpack.config.js --output-path ./dist -p",
+    "webpackwatch": "webpack --watch --progress --colors --config webpack.config.js --output-path ./dist -p",
+    "compiletests": "tsc ./tests/CountdownCalculatorSpec.ts",
+    "runtests": "jasmine-node --test-dir ./tests --verbose --junitreport --output ./reportTests/",
+    "runcovertests": "istanbul cover --hook-run-in-context --report cobertura --report html node_modules/jasmine-node/bin/jasmine-node --test-dir ./tests --verbose --junitreport --output ./reportTests/",
+    "inlinesource": "gulp inlinesource",
+    "pretest": "rimraf ./reportTests && rimraf ./coverage",
+    "test": "npm run compiletests && npm run runtests && npm run runcovertests",
+    "posttest": "npm run inlinesource"
   },
   "author": "rohan.usturge@hotmail.com (Rohan Usturge)",
   "license": "MIT",
   "devDependencies": {
+    "@types/handlebars": "^4.0.36",
     "@types/jquery": "^3.2.16",
     "bower": "^1.8.2",
     "html-loader": "^0.5.1",
