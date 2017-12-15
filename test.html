@@ -6,7 +6,7 @@
     crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/table.min.css" />
 
-<body>
+<body style="margin: 0px;">
 
     <div id="hi"></div>
     <script>
@@ -131,7 +131,7 @@
                 id: 'CBTFlag', columnName: 'CBT', width: '100', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
             }
         ];
-        var grid = new rohanGrid.Grid();
+        var grid = new rohanGrid.Grid(document.getElementById('hi'));
 
         var data = [];
         for (var index = 0; index < 100; index++) {
@@ -146,7 +146,6 @@
             })
         }
         var html = grid.bindData(data, columns);
-        document.getElementById('hi').innerHTML = html;
     </script>
 </body>
 

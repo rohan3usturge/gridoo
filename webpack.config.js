@@ -11,8 +11,9 @@ module.exports = {
     library: "rohanGrid",
     libraryTarget: "umd"
   },
-  externals: [
-    /^(jquery|\$)$/i  ],
+  externals: {
+    jquery : 'jQuery'
+  },
   resolve: {
     modules: [path.resolve("./src"), "node_modules"], // Add `.ts` and `.tsx` as a resolvable extension.
     extensions: ["*", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]

@@ -2,13 +2,13 @@
     <td colspan="{{length}}">
         <table class="ui table very compact selectable" style="width: auto;">
             <tbody>
-                {{#each this}}
+                {{#each detailsArray}}
                 <tr>
-                    <td class="ACTIONABLE_CLASS">
+                    <td class="actionableIcons">
                         <input type="hidden" value="{{id}}:{{columnValue}}">
                         <span>{{columnName}}</span>
-                        <i class="glyphicon glyphicon-plus-sign" />
-                        <i class="glyphicon glyphicon-minus-sign" />
+                        <i class="fa fa-plus-square-o" />
+                        <i class="fa fa-minus-square-o" />
                     </td>
                     <td>{{{columnValue}}}</td>
                 </tr>
