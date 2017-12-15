@@ -1,4 +1,4 @@
 export enum FilterActionType {
-    Add,
-    Minus,
+    Add = "Add",
+    Minus = "Minus",
 }

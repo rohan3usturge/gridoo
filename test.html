@@ -7,131 +7,148 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/table.min.css" />
 
 <body style="margin: 0px;">
-
-    <div id="hi"></div>
+    <button onclick="hideRequest()">hide RequestId</button> 
+    <button onclick="showRequest()">Show RequestId</button> 
+    <div id="hi" style="height: 80%;"></div>
     <script>
         var columns = [
             //{
-            //    id: 'Imp', columnName: 'Imp', renderDefn: true, width: '100', ddSort: true, ddGroup: true, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false, widthLocked: true, renderHybridCellDefn: false
+            //    id: 'Imp', name: 'Imp', renderDefn: true, width: '100',  dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false, widthLocked: true, renderHybrid: false
             //},
             // {
-            //     id: 'Notes', columnName: 'Notes', renderDefn: true, width: '120', locked: true, renderHybridCellDefn: false, headTabIndex: -1
+            //     id: 'Notes', name: 'Notes', renderDefn: true, width: '120', locked: true, renderHybrid: false, headTabIndex: -1
             // },
             // {
-            //     id: 'RequestTypeEnum', columnName: 'Req. Type', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+            //     id: 'RequestTypeEnum', name: 'Req. Type', width: '150',   hidden: false, locked: false
             // },
             {
-                id: 'ProjectId', columnName: 'Project ID', width: '100', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderDefn: true, renderHybridCellDefn: true, hybridCompile: true
+                id: 'ProjectId', name: 'Project ID', width: '100', hidden: true, locked: false, renderDefn: true, renderHybrid: true, 
             },
             {
-                id: 'ResourceRequestId', columnName: 'Request ID', width: '100', ddSort: true, ddGroup: true, ddFilters: true, primary: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderDefn: true, renderHybridCellDefn: true, hybridCompile: true
+                id: 'ResourceRequestId', name: 'Request ID', width: '100',  primary: true,  hidden: false, locked: false, renderDefn: true, renderHybrid: true, 
             },
             // {
-            //     id: 'DemandSourceId', columnName: 'Demand Source Id', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderDefn: true, renderHybridCellDefn: false, hybridCompile: true
+            //     id: 'DemandSourceId', name: 'Demand Source Id', width: '150',   hidden: false, locked: false, renderDefn: true, renderHybrid: false, 
             // },
             // {
-            //     id: 'ReasonCode', columnName: 'Reason Code', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+            //     id: 'ReasonCode', name: 'Reason Code', width: '150',   hidden: false, locked: false
             // },
             // {
-            //     id: 'Comments', columnName: 'Comments', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+            //     id: 'Comments', name: 'Comments', width: '150',   hidden: false, locked: false
             // },
             // {
-            //     id: 'RequestorName', columnName: 'Requestor', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+            //     id: 'RequestorName', name: 'Requestor', width: '150',   hidden: false, locked: false
             // },
 
             {
-                id: 'ProjectName', columnName: 'Project Name', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false
+                id: 'ProjectName', name: 'Project Name', width: '150',   hidden: false
             },
             // {
-            //     id: 'CustomerName', columnName: 'Account Name', width: '200', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+            //     id: 'CustomerName', name: 'Account Name', width: '200',   hidden: false, locked: false
             // },
             {
-                id: 'Role', facetable: true, columnName: 'Req.Role', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false
+                id: 'Role', facetable: true, name: 'Req.Role', width: '150',   hidden: false
             },
             {
-                id: 'DeliveryCountryName', facetable: true, columnName: 'Delivery Loc. Country', width: '200', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'DeliveryCountryName', facetable: true, name: 'Delivery Loc. Country', width: '200',   hidden: false, locked: false
             },
             {
-                id: 'RequestedHours', columnName: 'Req.Hours', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, renderHybridCellDefn: false
+                id: 'RequestedHours', name: 'Req.Hours', width: '150',   hidden: false, renderHybrid: false
             },
             {
-                id: 'ResourceRequestStatusEnum', facetable: true, columnName: 'Status', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, renderHybridCellDefn: false
+                id: 'ResourceRequestStatusEnum', facetable: true, name: 'Status', width: '150',   hidden: false, renderHybrid: false
             },
             {
-                id: 'ResourceRequestSubStatusEnum', facetable: true, columnName: 'Sub-Status', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false
+                id: 'ResourceRequestSubStatusEnum', facetable: true, name: 'Sub-Status', width: '150',   hidden: false
             },
             {
-                id: 'RequestedStartDate', columnName: 'Req.StartDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180', ddSort: true, ddGroup: true, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
+                id: 'RequestedStartDate', name: 'Req.StartDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180',  dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
             },
             {
-                id: 'RequestedEndDate', columnName: 'Req.EndDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false
+                id: 'RequestedEndDate', name: 'Req.EndDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180',   hidden: false
             },
             {
-                id: 'CreatedDate', columnName: 'Submitted Date', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180', ddSort: true, ddGroup: true, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
+                id: 'CreatedDate', name: 'Submitted Date', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180',  dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
             },
             {
-                id: 'RequestDomain', columnName: 'Pri. Domain', width: '200', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'RequestDomain', name: 'Pri. Domain', width: '200',   hidden: false, locked: false
             },
             {
-                id: 'OfferingNameOrPrimarySkill', columnName: 'Skills', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderHybridCellDefn: false
+                id: 'OfferingNameOrPrimarySkill', name: 'Skills', width: '150',   hidden: false, locked: false, renderHybrid: false
             },
             {
-                id: 'ContractSignatureDate', columnName: 'Contract Signature Date', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'ContractSignatureDate', name: 'Contract Signature Date', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '150',   hidden: false, locked: false
             },
             {
-                id: 'PubSec', columnName: 'PubSec', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderHybridCellDefn: false
+                id: 'PubSec', name: 'PubSec', width: '150',   hidden: false, locked: false, renderHybrid: false
             },
             {
-                id: 'DaysOpen', columnName: 'Days Open', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderHybridCellDefn: false
+                id: 'DaysOpen', name: 'Days Open', width: '150',   hidden: false, locked: false, renderHybrid: false
             },
             {
-                id: 'IdleDays', columnName: 'Idle', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false
+                id: 'IdleDays', name: 'Idle', width: '150',   hidden: false
             },
             {
-                id: 'DeliveryState', facetable: true, columnName: 'Delivery Loc. State', width: '200', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'DeliveryState', facetable: true, name: 'Delivery Loc. State', width: '200',   hidden: false, locked: false
             },
             {
-                id: 'DeliveryCity', facetable: true, columnName: 'Delivery City', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'DeliveryCity', facetable: true, name: 'Delivery City', width: '150',   hidden: false, locked: false
             },
 
             {
-                id: 'QueueName', columnName: 'Queue Name', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'QueueName', name: 'Queue Name', width: '150',   hidden: false, locked: false
             },
             {
-                id: 'UpdatedDate', columnName: 'Modified Date', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180', ddSort: true, ddGroup: true, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
+                id: 'UpdatedDate', name: 'Modified Date', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180',  dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
             },
             {
-                id: 'UpdatedBy', columnName: 'Modified By', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderDefn: true, renderHybridCellDefn: false, hybridCompile: true
+                id: 'UpdatedBy', name: 'Modified By',   hidden: false, locked: false, renderDefn: true, renderHybrid: false, 
             },
             {
-                id: 'CreatedBy', columnName: 'Submitted By', dddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderDefn: true, renderHybridCellDefn: false, hybridCompile: true
+                id: 'CreatedBy', name: 'Submitted By', hidden: false, locked: false, renderDefn: true, renderHybrid: false, 
             },
             {
-                id: 'ContractType', columnName: 'Contract Type', renderDefn: true, width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'ContractType', name: 'Contract Type', renderDefn: true, width: '150',   hidden: false, locked: false
             },
             {
-                id: 'ResourceManagerName', facetable: true, columnName: 'Resource Manager', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'ResourceManagerName', facetable: true, name: 'Resource Manager',   hidden: false, locked: false
             },
             {
-                id: 'LastStatusUpdatedDate', columnName: 'Last Updated', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: true, locked: false
+                id: 'LastStatusUpdatedDate', name: 'Last Updated', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180',   hidden: true, locked: false
             },
             {
-                id: 'AssignedResourceName', columnName: 'Committed Resource', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false, renderDefn: true, renderHybridCellDefn: false, hybridCompile: true
+                id: 'AssignedResourceName', name: 'Committed Resource', width: '150',   hidden: false, locked: false, renderDefn: true, renderHybrid: false, 
             },
             {
-                id: 'FundingTypeEnum', columnName: 'Fund. Type', width: '150', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'FundingTypeEnum', name: 'Fund. Type', width: '150',   hidden: false, locked: false
             },
             {
-                id: 'ScheduledStartDate', columnName: 'Sched.StartDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180', ddSort: true, ddGroup: true, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
+                id: 'ScheduledStartDate', name: 'Sched.StartDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180',  dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
             },
             {
-                id: 'ScheduledEndDate', columnName: 'Sched.EndDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180', ddSort: true, ddGroup: true, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
+                id: 'ScheduledEndDate', name: 'Sched.EndDate', renderDefn: false, columnIsDate: true, columnDatePipe: 'dd-MMM-yyyy, hh:mm a', width: '180',  dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false
             },
             {
-                id: 'CBTFlag', columnName: 'CBT', width: '100', ddSort: true, ddGroup: true, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, hidden: false, locked: false
+                id: 'CBTFlag', name: 'CBT', width: '100',   hidden: false, locked: false
             }
         ];
-        var grid = new rohanGrid.Grid(document.getElementById('hi'));
+        var renderFunction = function (col, row) {
+
+        }
+        var onClickHeader = function (col, diretion) {
+            alert('hi on click Header - ' + col + ' ' + diretion);
+        }
+        var onClickFilter = function (col, value, action) {
+            alert('hi on click filter - ' + col + ' ' + value + ' ' + action);
+        }
+        var options = {
+            columns: columns,
+            hybridFunction: renderFunction,
+            onClickHeader: onClickHeader,
+            onClickFilter: onClickFilter,
+            containerElement: document.getElementById('hi'),
+        }
+        var grid = new rohanGrid.Grid(options);
 
         var data = [];
         for (var index = 0; index < 100; index++) {
@@ -146,6 +163,12 @@
             })
         }
         var html = grid.bindData(data, columns);
+        var hideRequest = function(){
+            grid.hideColumn('ResourceRequestId');
+        }
+        var showRequest = function(){
+            grid.showColumn('ResourceRequestId');
+        }
     </script>
 </body>
 

@@ -19,18 +19,21 @@
 <div class="inner-container tile" style="padding:0%">
     <div class="table-header">
         <table id="headertable" class="ui celled fixed single line small table">
-            <colgroup>
-                <col style="width:40px;" /> {{#each columns}} {{#col width}}{{/col}} {{/each}}
+            <colgroup class="headerColGroup">
+                <col style="width:40px;" /> 
+                {{#each columns}}
+                    {{#col this}}{{/col}} 
+                {{/each}}
             </colgroup>
             <thead>
                 <tr>
                     <th></th>
                     {{#each columns}}
-                    <th id="header-{{col.id}}" bindonce ng-repeat="col in ::config.columnDefConfigs" style="cursor:pointer;" ng-click="toggleOrder(col);clickHeader({col : col})">
-                        <i class="fa fa-long-arrow-up" aria-hidden="true"></i>                        
-                        <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
-                        <span>{{columnName}}</span>
-                    </th>
+                        <th id="header-{{id}}" data-header-id="{{id}}">
+                            <i class="fa fa-long-arrow-up" aria-hidden="true" style="display:none;"></i>                        
+                            <i class="fa fa-long-arrow-down" aria-hidden="true" style="display:none;"></i>
+                            <span>{{name}}</span>
+                        </th>
                     {{/each}}
                 </tr>
             </thead>
@@ -38,8 +41,11 @@
     </div>
     <div class="table-body">
         <table class="ui celled small compact fixed selectable single line table ">
-            <colgroup>
-                <col style="width:40px;" /> {{#each columns}} {{#col width}}{{/col}} {{/each}}
+            <colgroup class="bodyColGroup">
+                <col style="width:40px;" /> 
+                {{#each columns}}
+                    {{#col this}}{{/col}} 
+                {{/each}}
             </colgroup>
             <tbody>
                 {{{tBodyContent}}}

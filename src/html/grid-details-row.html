@@ -1,14 +1,13 @@
 <tr class="detailsRow" style="display:none;">
     <td colspan="{{length}}">
-        <table class="ui table very compact selectable" style="width: auto;">
+        <table class="ui table very compact selectable detailsTable" style="width: auto;">
             <tbody>
                 {{#each detailsArray}}
                 <tr>
-                    <td class="actionableIcons">
-                        <input type="hidden" value="{{id}}:{{columnValue}}">
+                    <td data-filter-key="{{id}}" data-filter-value="{{columnValue}}">
                         <span>{{columnName}}</span>
-                        <i class="fa fa-plus-square-o" />
-                        <i class="fa fa-minus-square-o" />
+                        <i class="fa fa-plus-square-o addFilter" />
+                        <i class="fa fa-minus-square-o removeFilter" />
                     </td>
                     <td>{{{columnValue}}}</td>
                 </tr>

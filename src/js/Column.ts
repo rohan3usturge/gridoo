@@ -2,7 +2,8 @@ export interface IColumn {
     id: string;
     name: string;
     width: number;
-    renderHybrid: number;
+    renderHybrid: boolean;
     hidden: boolean;
     sortable: boolean;
+    filterable: boolean;
 }
