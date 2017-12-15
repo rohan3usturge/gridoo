@@ -11,6 +11,8 @@ import { OrderDirection } from "./OrderDirection";
 
 export class Grid<T> {
 
+    private firstIndex: number;
+    private LastIndex: number;
     private templateFunctionForGrid: any;
     private templateFunctionForMainRow: any;
     private templateFunctionForDetailsRow: any;
