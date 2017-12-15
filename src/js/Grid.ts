@@ -4,6 +4,7 @@ import * as gridDetailsRow from "../html/grid-details-row.html";
 import * as gridMainRow from "../html/grid-main-row.html";
 import * as gridHtml from "../html/grid.html";
 import { IColumn } from "./Column";
+import { CommonUtil } from "./ColumnUtil";
 import { FilterActionType } from "./FilterActionType";
 import { IGridOptions } from "./IGridOptions";
 import { OrderDirection } from "./OrderDirection";
@@ -43,7 +44,7 @@ export class Grid<T> {
     }
 
     public showColumn = (columnId: string): void => {
-        const width = this.getColumnObject(columnId).width;
+        const width = CommonUtil.getColumnObject(columnId, this.extendedOptions.columns).width;
         jQuery(".table-header .headerColGroup col").each((index, element): void => {
             const currentCol = jQuery(element).attr("data-header-id");
             if (columnId === currentCol) {
@@ -56,6 +57,23 @@ export class Grid<T> {
             if (columnId === currentCol) {
                 jQuery(element).width(width + "px");
                 return;
+            }
+        });
+    }
+
+    public showAllColumns = (): void => {
+        jQuery(".table-header .headerColGroup col").each((index, element): void => {
+            const currentCol = jQuery(element).attr("data-header-id");
+            if (typeof(currentCol) !== "undefined") {
+                const width = CommonUtil.getColumnObject(currentCol, this.extendedOptions.columns).width;
+                jQuery(element).width(width + "px");
+            }
+        });
+        jQuery(".table-body .bodyColGroup col").each((index, element): void => {
+            const currentCol = jQuery(element).attr("data-header-id");
+            if (typeof(currentCol) !== "undefined") {
+                const width = CommonUtil.getColumnObject(currentCol, this.extendedOptions.columns).width;
+                jQuery(element).width(width + "px");
             }
         });
     }
@@ -73,6 +91,21 @@ export class Grid<T> {
             if (columnId === currentCol) {
                 jQuery(element).width("0px");
                 return;
+            }
+        });
+    }
+
+    public hideAllColumns = (): void => {
+        jQuery(".table-header .headerColGroup col").each((index, element): void => {
+            const currentCol = jQuery(element).attr("data-header-id");
+            if (typeof(currentCol) !== "undefined") {
+                jQuery(element).width("0px");
+            }
+        });
+        jQuery(".table-body .bodyColGroup col").each((index, element): void => {
+            const currentCol = jQuery(element).attr("data-header-id");
+            if (typeof(currentCol) !== "undefined") {
+                jQuery(element).width("0px");
             }
         });
     }
@@ -104,17 +137,6 @@ export class Grid<T> {
         });
         this.extendedOptions.containerElement.innerHTML = this.templateFunctionForGrid({columns, tBodyContent});
         this.attachDetailsRowHandler();
-    }
-
-    private getColumnObject = (columnId: string): IColumn => {
-        let retCol: IColumn;
-        this.extendedOptions.columns.forEach((col: IColumn) => {
-            if (col.id === columnId) {
-                retCol = col;
-                return;
-            }
-        });
-        return retCol;
     }
 
     private extendOptions = (inputOptions: IGridOptions<T>): IGridOptions<T> => {
