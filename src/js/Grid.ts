@@ -1,5 +1,5 @@
 import * as handlebars from "handlebars";
-import * as $ from "jquery";
+import jQuery = require("jquery");
 import * as gridDetailsRow from "../html/grid-details-row.html";
 import * as gridMainRow from "../html/grid-main-row.html";
 import * as gridHtml from "../html/grid.html";
@@ -16,6 +16,17 @@ export class Grid {
         this.templateFunctionForDetailsRow = handlebars.compile(gridDetailsRow);
         handlebars.registerHelper("col", (width): string => {
             return '<col style="width : ' + width + 'px;"/>';
+        });
+
+        jQuery(".inner-container").on("click", "expansionArrows i", () => {
+            const detailsRow = $(this).closest("tr").next();
+            const currentIcon = $(this).hide();
+            const otherIcon = $(this).siblings("i").show();
+            if ($(this).hasClass(".expandDetailsRowIcon")) {
+                detailsRow.show();
+            } else {
+                detailsRow.hide();
+            }
         });
     }
 
