@@ -8,7 +8,7 @@ module.exports = {
   devtool: "inline-source-map",
   output: {
     filename: "gridoo-bundle.js",
-    library: "rohanGrid",
+    library: "Gridoo",
     libraryTarget: "umd"
   },
   externals: {

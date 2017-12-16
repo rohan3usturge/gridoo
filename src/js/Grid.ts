@@ -205,6 +205,8 @@ export class Grid<T> {
                 event.stopPropagation();
                 return;
             }
+            event.preventDefault();
+            document.body.scrollTop = 0;
             if (this.lastScrollPosition < scrollTop) {
                 if (this.lastIndex < this.data.length - 1) {
                     const diff = (scrollTop + tbodyHeight) - (actualTableHeight * 0.8 );
