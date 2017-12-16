@@ -13,7 +13,8 @@ export class Grid<T> {
 
     private firstIndex: number;
     private lastIndex: number;
-    private lastScrollPosition: number;
+    private chunkSize: number;
+    private lastScrollPosition: number = 0;
     private rowHeight: number;
     private data: T[];
     private rendering: boolean;
@@ -22,6 +23,7 @@ export class Grid<T> {
     private templateFunctionForDetailsRow: any;
     private extendedOptions: IGridOptions<T>;
     private defaultGridOptions: IGridOptions<T> = {
+        chunkSize: 5,
         columns: [],
         containerElement: null,
         hybridFunction: (column: IColumn, row: T): string => {
@@ -46,6 +48,7 @@ export class Grid<T> {
         this.templateFunctionForGrid = handlebars.compile(gridHtml);
         this.templateFunctionForMainRow = handlebars.compile(gridMainRow);
         this.templateFunctionForDetailsRow = handlebars.compile(gridDetailsRow);
+        this.chunkSize = this.extendedOptions.chunkSize;
         this.registerHandlerBarHelper();
     }
 
@@ -119,12 +122,13 @@ export class Grid<T> {
     public bindData = (data: T[]): void => {
         this.data = data;
         this.firstIndex = 0;
-        this.lastIndex = 20;
-        const tBodyContent: string = this.getRowsHtml(0, 20);
+        this.lastIndex = this.chunkSize + this.getInitialRowCount();
+        const tBodyContent: string = this.getRowsHtml(this.firstIndex, this.lastIndex);
         this.extendedOptions.containerElement.innerHTML = this.templateFunctionForGrid(
             {columns: this.extendedOptions.columns, tBodyContent},
         );
         this.rowHeight = jQuery(".table-body table tbody tr").outerHeight();
+        this.attachDetailsRowHandler();
     }
 
     private getRowsHtml = (firstIndex: number, lastIndex: number): string => {
@@ -156,12 +160,8 @@ export class Grid<T> {
         return tBodyContent;
     }
     // tslint:disable-next-line:no-empty
-    private prependRows = () => {
-
-    }
-    // tslint:disable-next-line:no-empty
-    private appendRows = () => {
-
+    private getInitialRowCount = (): number => {
+        return 25;
     }
 
     private extendOptions = (inputOptions: IGridOptions<T>): IGridOptions<T> => {
@@ -190,50 +190,69 @@ export class Grid<T> {
             event.stopPropagation();
         });
 
-        // jQuery(".tableBodyWrap div").scroll((event) => {
-        //     if (this.rendering) {
-        //         event.stopPropagation();
-        //         return;
-        //     }
-        //     const scrollTop = event.target.scrollTop;
-        //     const rows = Math.floor(scrollTop / 31.5);
-        //     console.log("*********************");
-        //     console.log(scrollTop);
-        //     console.log(rows);
-        //     if (rows >= 2) {
-        //         console.log("***************** REPLACING *****************");
-        //         this.rendering = true;
-        //         if (this.lastScrollPosition < scrollTop) {
-        //             console.log("Append");
-        //             console.log(this.getRowsHtml(this.lastIndex, this.lastIndex + rows));
-        //             // jQuery(".table-body table tbody")
-        //             // .append(this.getRowsHtml(this.lastIndex, this.lastIndex + rows));
-        //             // jQuery(".table-body table tbody tr").slice(0, rows).remove();
-        //             this.firstIndex = this.firstIndex + rows;
-        //             this.lastIndex = this.lastIndex + rows;
-        //         } else {
-        //             console.log("Prepend");
-        //             console.log(this.getRowsHtml(this.firstIndex - rows, this.firstIndex));
-        //             // jQuery(".table-body table tbody")
-        //             // .prepend(this.getRowsHtml(this.firstIndex - rows, this.firstIndex));
-        //             // jQuery(".table-body table tbody tr").slice(rows, -1).remove();
-        //             this.firstIndex = this.firstIndex - rows;
-        //             this.lastIndex = this.lastIndex - rows;
-        //         }
-        //     }
-        //     this.lastScrollPosition = scrollTop;
-        //     this.rendering = false;
-        //     event.stopPropagation();
-        // });
-
         jQuery(".table-body").scroll((event) => {
-            const tBodyObj = event.target;
+            const tBodyObj = jQuery(".table-body");
             jQuery(".table-header").offset(
                 {
-                    left: -1 * tBodyObj.scrollLeft,
+                    left: -1 * tBodyObj.scrollLeft(),
                     top: 0,
                 },
             );
+            const scrollTop = tBodyObj.scrollTop();
+            const actualTableHeight = jQuery(".table-body .mainTable").height();
+            const tbodyHeight =  tBodyObj.height();
+            if (this.rendering) {
+                event.stopPropagation();
+                return;
+            }
+            if (this.lastScrollPosition < scrollTop) {
+                if (this.lastIndex < this.data.length - 1) {
+                    const diff = (scrollTop + tbodyHeight) - (actualTableHeight * 0.8 );
+                    if (diff > 0) {
+                        this.rendering = true;
+                        const startIndex = this.lastIndex + 1;
+                        const endIndex = this.lastIndex + this.chunkSize > this.data.length - 1 ?
+                                            this.data.length - 1 :
+                                            this.lastIndex + this.chunkSize;
+                        tBodyObj.find(".mainTable .mainTableBody")
+                        .append(this.getRowsHtml(startIndex, endIndex));
+                        tBodyObj.find(".mainTable .mainTableBody > tr")
+                        .slice(0, this.chunkSize * 2).remove();
+                        this.firstIndex = this.firstIndex + this.chunkSize;
+                        this.lastIndex = endIndex;
+                        this.rendering = false;
+                        // console.log("Appending Content - ", diff);
+                        // console.log("Start Index - ", startIndex);
+                        // console.log("End Index - ", endIndex);
+                        // console.log("First Index - ", this.firstIndex);
+                        // console.log("Last Index Index - ", this.lastIndex);
+                        // console.log("******************");
+                    }
+                }
+            } else {
+                if (this.firstIndex > 0) {
+                    const diff = scrollTop - (actualTableHeight - tbodyHeight) * 0.1;
+                    if (diff < 0) {
+                        this.rendering = true;
+                        const startIndex = this.firstIndex - this.chunkSize < 0 ? 0 : this.firstIndex - this.chunkSize;
+                        const endIndex = this.firstIndex - 1;
+                        tBodyObj.find(".mainTable .mainTableBody")
+                        .prepend(this.getRowsHtml(startIndex, endIndex));
+                        tBodyObj.find(".mainTable .mainTableBody > tr")
+                        .slice((this.chunkSize * -2)).remove();
+                        this.firstIndex = startIndex;
+                        this.lastIndex = this.lastIndex - this.chunkSize;
+                        this.rendering = false;
+                        // console.log("Prepending Content- ", diff);
+                        // console.log("Start Index - ", startIndex);
+                        // console.log("End Index - ", endIndex);
+                        // console.log("First Index - ", this.firstIndex);
+                        // console.log("Last Index Index - ", this.lastIndex);
+                        // console.log("******************");
+                    }
+                }
+            }
+            this.lastScrollPosition = scrollTop;
             event.stopPropagation();
         });
 

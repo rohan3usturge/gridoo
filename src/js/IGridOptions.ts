@@ -11,4 +11,5 @@ export interface IGridOptions<T> {
     onClickFilter: IFilterClickHeader;
     containerElement: Element;
     onPageSearch: IPageSearchClickHandler;
+    chunkSize: 5;
 }

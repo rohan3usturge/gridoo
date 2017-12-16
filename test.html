@@ -11,7 +11,7 @@
         <button onclick="hideRequest()">hide RequestId</button> 
         <button onclick="showRequest()">Show RequestId</button> 
     </div> -->
-    <div id="hi" style="height: 80%;"></div>
+    <div id="hi"></div>
     <span id="scroll"></span>
     <script>
         var columns = [
@@ -154,7 +154,7 @@
         var grid = new rohanGrid.Grid(options);
 
         var data = [];
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 1000; i++) {
             data.push({
                 ProjectId: "ProjectId" + i,
                 ResourceRequestId: ""+i,

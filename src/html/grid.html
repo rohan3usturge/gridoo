@@ -18,7 +18,7 @@
 </style>
 <div class="inner-container tile" style="padding:0%">
     <div class="table-header">
-        <table id="headertable" class="ui celled fixed single line small table">
+        <table id="headertable" class="ui celled fixed single line small table mainTable">
             <colgroup class="headerColGroup">
                 <col style="width:40px;" /> 
                 {{#each columns}}
@@ -40,14 +40,14 @@
         </table>
     </div>
     <div class="table-body">
-        <table class="ui celled small compact fixed selectable single line table ">
+        <table class="ui celled small compact fixed selectable single line table mainTable">
             <colgroup class="bodyColGroup">
                 <col style="width:40px;" /> 
                 {{#each columns}}
                     {{#col this}}{{/col}} 
                 {{/each}}
             </colgroup>
-            <tbody>
+            <tbody class="mainTableBody">
                 {{{tBodyContent}}}
             </tbody>
         </table>
