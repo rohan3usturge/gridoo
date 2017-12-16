@@ -7,9 +7,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/table.min.css" />
 
 <body style="margin: 0px;">
-    <button onclick="hideRequest()">hide RequestId</button> 
-    <button onclick="showRequest()">Show RequestId</button> 
+    <!-- <div>
+        <button onclick="hideRequest()">hide RequestId</button> 
+        <button onclick="showRequest()">Show RequestId</button> 
+    </div> -->
     <div id="hi" style="height: 80%;"></div>
+    <span id="scroll"></span>
     <script>
         var columns = [
             //{
@@ -22,10 +25,10 @@
             //     id: 'RequestTypeEnum', name: 'Req. Type', width: '150',   hidden: false, locked: false
             // },
             {
-                id: 'ProjectId', name: 'Project ID', width: '100', hidden: true, locked: false, renderDefn: true, renderHybrid: true, 
+                id: 'ProjectId', name: 'Project ID', width: '100', hidden: true, locked: false, renderDefn: true, renderHybrid: false, 
             },
             {
-                id: 'ResourceRequestId', name: 'Request ID', width: '100',  primary: true,  hidden: false, locked: false, renderDefn: true, renderHybrid: true, 
+                id: 'ResourceRequestId', name: 'Request ID', width: '100',  primary: true,  hidden: false, locked: false, renderDefn: false, renderHybrid: false, 
             },
             // {
             //     id: 'DemandSourceId', name: 'Demand Source Id', width: '150',   hidden: false, locked: false, renderDefn: true, renderHybrid: false, 
@@ -151,15 +154,16 @@
         var grid = new rohanGrid.Grid(options);
 
         var data = [];
-        for (var index = 0; index < 100; index++) {
+        for (var i = 0; i < 100; i++) {
             data.push({
-                ProjectId: "ProjectId" + 1,
-                CBTFlag: "CBTFlag" + 1,
-                DeliveryCountryName: "ScheduledEndDate" + 1,
-                ScheduledEndDate: "ScheduledEndDate" + 1,
-                DeliveryCity: "ScheduledEndDate" + 1,
-                ScheduledStartDate: "ScheduledEndDate" + 1,
-                FundingTypeEnum: "ScheduledEndDate" + 1,
+                ProjectId: "ProjectId" + i,
+                ResourceRequestId: ""+i,
+                CBTFlag: "CBTFlag" + i,
+                DeliveryCountryName: "DeliveryCountryName" + i,
+                ScheduledEndDate: "ScheduledEndDate" + i,
+                DeliveryCity: "DeliveryCity" + i,
+                ScheduledStartDate: "ScheduledStartDate" + i,
+                FundingTypeEnum: "FundingTypeEnum" + i,
             })
         }
         var html = grid.bindData(data, columns);

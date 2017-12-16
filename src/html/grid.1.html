@@ -1,0 +1,130 @@
+<style>
+    .inner-container {
+        height: 100%;
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .table-header {
+        position: relative;
+        overflow-x: visible;
+        margin-right: 16px;
+        border-right: 1px solid;
+    }
+
+    .table-body {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        flex: 5;
+    }
+    .tableBodyWrap{
+        display: flex;
+        width: 100%;
+    }
+    .scrollbarWrap{
+        width:18px !important;
+        overflow-y: scroll;
+    }
+    .table-footer .left-footer{
+        float:left;
+        text-align: left;
+        width: 30%;
+    }
+    .table-footer .center-footer{
+        float:left;
+        text-align: center;
+        width: 40%;
+    }
+    .table-footer .right-footer{
+        float:right;
+        text-align: right;
+        width: 30%;
+    }
+</style>
+<div class="inner-container tile" style="padding:0%">
+    <div class="table-header">
+        <table id="headertable" class="ui celled fixed single line small table" style="position: relative;">
+            <colgroup class="headerColGroup">
+                <col style="width:40px;" /> 
+                {{#each columns}}
+                    {{#col this}}{{/col}} 
+                {{/each}}
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    {{#each columns}}
+                        <th id="header-{{id}}" data-header-id="{{id}}">
+                            <i class="fa fa-long-arrow-up" aria-hidden="true" style="display:none;"></i>                        
+                            <i class="fa fa-long-arrow-down" aria-hidden="true" style="display:none;"></i>
+                            <span>{{name}}</span>
+                        </th>
+                    {{/each}}
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="tableBodyWrap">
+        <div class="table-body">
+            <table class="ui celled small compact fixed selectable single line table ">
+                <colgroup class="bodyColGroup">
+                    <col style="width:40px;" /> 
+                    {{#each columns}}
+                        {{#col this}}{{/col}} 
+                    {{/each}}
+                </colgroup>
+                <tbody>
+                    {{{tBodyContent}}}
+                </tbody>
+            </table>
+        </div>
+        <div class="scrollbarWrap">
+            <div style="width:100%"></div>
+        </div>
+    </div>
+    
+    <div class="table-footer" style="border-top: 1px solid rgba(34, 36, 38, 0.1);font-size : 0.8em;padding:0.2em;justify-content: space-between;background-color: #eeeeee;">
+        <div class="left-footer">
+            Time :
+        </div>
+        <div data-role="pager" class="center-footer">
+            <button ng-disabled="paginationData.isFirstLinkDisabled" ng-click="searchForPage('first')" aria-label="Go to the first page"
+                title="Go to the first page" class="btn btn-xs" data-page="1" tabindex="-1">
+                <i class="fa fa-fast-forward" aria-hidden="true"></i>
+            </button>
+            <button ng-disabled="paginationData.isPrevLinkDisabled" ng-click="searchForPage('prev')" aria-label="Go to the previous page"
+                title="Go to the previous page" class="btn btn-xs" data-page="1" tabindex="-1">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </button>
+
+            <span class="k-pager-input k-label">
+                Page
+                <form ng-submit="searchForPage('input')" style="display: inline-block;">
+                    <input ng-model="paginationData.pageIndex" style="width: 40px;padding: 1px;margin-left: 3px;margin-right: 3px;"
+                        aria-label="1">
+                </form>of {{paginationData.noOfPages}}
+            </span>
+
+            <button ng-disabled="paginationData.isNextLinkDisabled" ng-click="searchForPage('next')" aria-label="Go to the next page"
+                title="Go to the next page" class="btn btn-xs" data-page="2" tabindex="-1">
+                <i class="fa fa-forward" aria-hidden="true"></i>
+            </button>
+            <button ng-disabled="paginationData.isLastLinkDisabled" ng-click="searchForPage('last')" aria-label="Go to the last page"
+                title="Go to the last page" class="btn btn-xs" data-page="200" tabindex="-1">
+                <i class="fa fa-fast-forward" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="right-footer">
+            <span>
+                <form style="display: inline">
+                    <select class="select-combo select-img" ng-change="searchForPage('pageSize')" ng-model="paginationData.pageSize" ng-options="size as size for size in pageSizes">
+                    </select>
+                </form>
+            </span>items per page</span>
+            <span>{{paginationData.currentRange.min}} - {{paginationData.currentRange.max}} of {{paginationData.totalResults}}
+                items</span>
+        </div>
+    </div>
+</div>

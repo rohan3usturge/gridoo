@@ -12,7 +12,11 @@ import { OrderDirection } from "./OrderDirection";
 export class Grid<T> {
 
     private firstIndex: number;
-    private LastIndex: number;
+    private lastIndex: number;
+    private lastScrollPosition: number;
+    private rowHeight: number;
+    private data: T[];
+    private rendering: boolean;
     private templateFunctionForGrid: any;
     private templateFunctionForMainRow: any;
     private templateFunctionForDetailsRow: any;
@@ -112,13 +116,25 @@ export class Grid<T> {
         });
     }
 
-    public bindData = (data: T[], columns: IColumn[]): void => {
+    public bindData = (data: T[]): void => {
+        this.data = data;
+        this.firstIndex = 0;
+        this.lastIndex = 20;
+        const tBodyContent: string = this.getRowsHtml(0, 20);
+        this.extendedOptions.containerElement.innerHTML = this.templateFunctionForGrid(
+            {columns: this.extendedOptions.columns, tBodyContent},
+        );
+        this.rowHeight = jQuery(".table-body table tbody tr").outerHeight();
+    }
+
+    private getRowsHtml = (firstIndex: number, lastIndex: number): string => {
         let tBodyContent: string = "";
-        const length = columns.length + 1;
-        data.forEach((row: T) => {
+        const length = this.extendedOptions.columns.length + 1;
+        for (let i = firstIndex; i <= lastIndex; i++) {
+            const row: T = this.data[i];
             const detailsArray: any[] = [];
             const mainArray: any[] = [];
-            columns.forEach((col: IColumn) => {
+            this.extendedOptions.columns.forEach((col: IColumn) => {
                 let columnValue = row[col.id];
                 if (col.renderHybrid) {
                     columnValue = this.extendedOptions.hybridFunction(col, row);
@@ -136,9 +152,16 @@ export class Grid<T> {
             tBodyContent += mainRowStr;
             const detailRowStr = this.templateFunctionForDetailsRow({length, detailsArray});
             tBodyContent += detailRowStr;
-        });
-        this.extendedOptions.containerElement.innerHTML = this.templateFunctionForGrid({columns, tBodyContent});
-        this.attachDetailsRowHandler();
+        }
+        return tBodyContent;
+    }
+    // tslint:disable-next-line:no-empty
+    private prependRows = () => {
+
+    }
+    // tslint:disable-next-line:no-empty
+    private appendRows = () => {
+
     }
 
     private extendOptions = (inputOptions: IGridOptions<T>): IGridOptions<T> => {
@@ -166,6 +189,42 @@ export class Grid<T> {
             }
             event.stopPropagation();
         });
+
+        // jQuery(".tableBodyWrap div").scroll((event) => {
+        //     if (this.rendering) {
+        //         event.stopPropagation();
+        //         return;
+        //     }
+        //     const scrollTop = event.target.scrollTop;
+        //     const rows = Math.floor(scrollTop / 31.5);
+        //     console.log("*********************");
+        //     console.log(scrollTop);
+        //     console.log(rows);
+        //     if (rows >= 2) {
+        //         console.log("***************** REPLACING *****************");
+        //         this.rendering = true;
+        //         if (this.lastScrollPosition < scrollTop) {
+        //             console.log("Append");
+        //             console.log(this.getRowsHtml(this.lastIndex, this.lastIndex + rows));
+        //             // jQuery(".table-body table tbody")
+        //             // .append(this.getRowsHtml(this.lastIndex, this.lastIndex + rows));
+        //             // jQuery(".table-body table tbody tr").slice(0, rows).remove();
+        //             this.firstIndex = this.firstIndex + rows;
+        //             this.lastIndex = this.lastIndex + rows;
+        //         } else {
+        //             console.log("Prepend");
+        //             console.log(this.getRowsHtml(this.firstIndex - rows, this.firstIndex));
+        //             // jQuery(".table-body table tbody")
+        //             // .prepend(this.getRowsHtml(this.firstIndex - rows, this.firstIndex));
+        //             // jQuery(".table-body table tbody tr").slice(rows, -1).remove();
+        //             this.firstIndex = this.firstIndex - rows;
+        //             this.lastIndex = this.lastIndex - rows;
+        //         }
+        //     }
+        //     this.lastScrollPosition = scrollTop;
+        //     this.rendering = false;
+        //     event.stopPropagation();
+        // });
 
         jQuery(".table-body").scroll((event) => {
             const tBodyObj = event.target;
