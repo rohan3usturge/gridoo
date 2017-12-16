@@ -9,6 +9,7 @@
 
     .table-header {
         position: relative;
+        top:0 !important;
     }
 
     .table-body {
@@ -21,13 +22,15 @@
     <div class="table-header">
         <table id="headertable" class="ui celled fixed single line small table mainTable">
             <colgroup class="headerColGroup">
-                <col style="width:40px;" /> 
+                <col style="width:40px;" />
+                <col style="width:40px;" />
                 {{#each columns}}
                     {{#col this}}{{/col}} 
                 {{/each}}
             </colgroup>
             <thead>
                 <tr>
+                    <th></th>
                     <th></th>
                     {{#each columns}}
                         <th id="header-{{id}}" data-header-id="{{id}}">
@@ -44,6 +47,7 @@
         <table class="ui celled small compact fixed selectable single line table mainTable">
             <colgroup class="bodyColGroup">
                 <col style="width:40px;" /> 
+                <col style="width:40px;" />
                 {{#each columns}}
                     {{#col this}}{{/col}} 
                 {{/each}}

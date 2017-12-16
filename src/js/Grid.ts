@@ -15,7 +15,6 @@ export class Grid<T> {
     private lastIndex: number;
     private chunkSize: number;
     private lastScrollPosition: number = 0;
-    private rowHeight: number;
     private data: T[];
     private rendering: boolean;
     private templateFunctionForGrid: any;
@@ -127,8 +126,10 @@ export class Grid<T> {
         this.extendedOptions.containerElement.innerHTML = this.templateFunctionForGrid(
             {columns: this.extendedOptions.columns, tBodyContent},
         );
-        this.rowHeight = jQuery(".table-body table tbody tr").outerHeight();
         this.attachDetailsRowHandler();
+        this.registerOnScrollVirtualization();
+        this.registerOnFilterClickHandler();
+        this.registerOnHeaderClickHandler();
     }
 
     private getRowsHtml = (firstIndex: number, lastIndex: number): string => {
@@ -159,7 +160,7 @@ export class Grid<T> {
         }
         return tBodyContent;
     }
-    // tslint:disable-next-line:no-empty
+
     private getInitialRowCount = (): number => {
         return 25;
     }
@@ -176,20 +177,7 @@ export class Grid<T> {
         });
     }
 
-    private attachDetailsRowHandler = (): void => {
-        const allArrows = jQuery(".expansionArrows i");
-        allArrows.click((event) => {
-            const detailsRow = jQuery(event.target).closest("tr").next();
-            const currentIcon = jQuery(event.target).hide();
-            const otherIcon = jQuery(event.target).siblings("i").show();
-            if (jQuery(event.target).hasClass("expandDetailsRowIcon")) {
-                detailsRow.show();
-            } else {
-                detailsRow.hide();
-            }
-            event.stopPropagation();
-        });
-
+    private registerOnScrollVirtualization = (): void => {
         jQuery(".table-body").scroll((event) => {
             const tBodyObj = jQuery(".table-body");
             jQuery(".table-header").offset(
@@ -220,6 +208,8 @@ export class Grid<T> {
                         .append(this.getRowsHtml(startIndex, endIndex));
                         tBodyObj.find(".mainTable .mainTableBody > tr")
                         .slice(0, this.chunkSize * 2).remove();
+                        this.attachDetailsRowHandler();
+                        this.registerOnFilterClickHandler();
                         this.firstIndex = this.firstIndex + this.chunkSize;
                         this.lastIndex = endIndex;
                         this.rendering = false;
@@ -242,6 +232,8 @@ export class Grid<T> {
                         .prepend(this.getRowsHtml(startIndex, endIndex));
                         tBodyObj.find(".mainTable .mainTableBody > tr")
                         .slice((this.chunkSize * -2)).remove();
+                        this.attachDetailsRowHandler();
+                        this.registerOnFilterClickHandler();
                         this.firstIndex = startIndex;
                         this.lastIndex = this.lastIndex - this.chunkSize;
                         this.rendering = false;
@@ -257,7 +249,24 @@ export class Grid<T> {
             this.lastScrollPosition = scrollTop;
             event.stopPropagation();
         });
+    }
 
+    private registerOnFilterClickHandler = (): void => {
+        jQuery(".table-body .detailsRow .detailsTable td i").click((event) => {
+            const element = jQuery(event.target);
+            const parentTd = element.parent();
+            const key = parentTd.attr("data-filter-key");
+            const value = parentTd.attr("data-filter-value");
+            let filterAction: FilterActionType = FilterActionType.Add;
+            if (element.hasClass("removeFilter")) {
+                filterAction = FilterActionType.Minus;
+            }
+            this.extendedOptions.onClickFilter(key, value, filterAction);
+            event.stopPropagation();
+        });
+    }
+
+    private registerOnHeaderClickHandler = (): void => {
         jQuery(".table-header th").click((event) => {
             const element = jQuery(event.delegateTarget);
             const arrowIcons = element.find("i");
@@ -282,17 +291,19 @@ export class Grid<T> {
             this.extendedOptions.onClickHeader(headerId, direction);
             event.stopPropagation();
         });
+    }
 
-        jQuery(".table-body .detailsRow .detailsTable td i").click((event) => {
-            const element = jQuery(event.target);
-            const parentTd = element.parent();
-            const key = parentTd.attr("data-filter-key");
-            const value = parentTd.attr("data-filter-value");
-            let filterAction: FilterActionType = FilterActionType.Add;
-            if (element.hasClass("removeFilter")) {
-                filterAction = FilterActionType.Minus;
+    private attachDetailsRowHandler = (): void => {
+        const allArrows = jQuery(".expansionArrows i");
+        allArrows.click((event) => {
+            const detailsRow = jQuery(event.target).closest("tr").next();
+            const currentIcon = jQuery(event.target).hide();
+            const otherIcon = jQuery(event.target).siblings("i").show();
+            if (jQuery(event.target).hasClass("expandDetailsRowIcon")) {
+                detailsRow.show();
+            } else {
+                detailsRow.hide();
             }
-            this.extendedOptions.onClickFilter(key, value, filterAction);
             event.stopPropagation();
         });
     }
