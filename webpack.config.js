@@ -4,7 +4,7 @@ var webpack = require("webpack");
 
 module.exports = {
   target: "web",
-  entry: __dirname + "/src/js/Grid.ts",
+  entry: __dirname + "/src/js/main/Grid.ts",
   devtool: "inline-source-map",
   output: {
     filename: "gridoo-bundle.js",

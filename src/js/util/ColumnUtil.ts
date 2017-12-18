@@ -1,4 +1,4 @@
-import { IColumn } from "./Column";
+import { IColumn } from "./../models/IColumn";
 
 export class CommonUtil {
 

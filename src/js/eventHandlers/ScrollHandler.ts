@@ -1,0 +1,63 @@
+import { OrderDirection } from "./../models/OrderDirection";
+import { GridTemplateService } from "./../services/GridTemplateService";
+import { IIndexCounter } from "./../virtualization/IndexCounter";
+import { ScrollDirection } from "./../virtualization/ScrollDirection";
+import { Virtualizer } from "./../virtualization/Virtualizer";
+import { IEventHandler } from "./IEventHandler";
+
+export class ScrollHandler<T> implements IEventHandler<T> {
+    private virtualizer: Virtualizer;
+    private parentElement: JQuery;
+    private gridTemplateService: GridTemplateService<T>;
+    private rendering: boolean =  false;
+    private chunkSize: number;
+
+    constructor(element: JQuery, gridTemplateService: GridTemplateService<T>, chunkSize: number) {
+        this.parentElement = element;
+        this.virtualizer = new Virtualizer();
+        this.gridTemplateService = gridTemplateService;
+        this.chunkSize = chunkSize;
+    }
+
+    public RegisterDomHandler = (): void => {
+        // Registering JQuery Event Handler if Header is Clicked.
+        this.parentElement.find(".table-body").on("scroll", (event) => {
+            const tBodyObj = this.parentElement.find(".table-body");
+            this.parentElement.find(".table-header").offset(
+                {
+                    left: -1 * tBodyObj.scrollLeft(),
+                    top: 0,
+                },
+            );
+            const actualTableHeight = tBodyObj.find(".mainTable").height();
+            this.virtualizer.TableHeight = actualTableHeight;
+            this.virtualizer.ScrollContainerHeight = tBodyObj.height();
+            event.preventDefault();
+            if (this.rendering) {
+                event.stopPropagation();
+                return;
+            }
+            const scrollTop = tBodyObj.scrollTop();
+            const indexCounter: IIndexCounter = this.virtualizer.GetIndexCounterForScroll(scrollTop);
+            switch (indexCounter.direction) {
+                case ScrollDirection.Down:
+                    if (indexCounter.renderingRequired) {
+                        this.rendering = true;
+                        tBodyObj.find(".mainTable .mainTableBody").append(
+                            this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
+                        tBodyObj.find(".mainTable .mainTableBody > tr").slice(0, this.chunkSize * 2).remove();
+                    }
+                    break;
+                case ScrollDirection.Up:
+                    if (indexCounter.renderingRequired) {
+                        this.rendering = true;
+                        tBodyObj.find(".mainTable .mainTableBody").prepend
+                        (this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
+                        tBodyObj.find(".mainTable .mainTableBody > tr").slice((this.chunkSize * -2)).remove();
+                    }
+                    break;
+            }
+            event.stopPropagation();
+        });
+    }
+}
