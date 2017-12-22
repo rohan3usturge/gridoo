@@ -58,45 +58,6 @@
         </table>
     </div>
     <div class="table-footer" style="border-top: 1px solid rgba(34, 36, 38, 0.1);display:flex;font-size : 0.8em;padding:0.2em;justify-content: space-between;background-color: #eeeeee;">
-        <div>
-            Time :
-        </div>
-        <div data-role="pager">
-            <button ng-disabled="paginationData.isFirstLinkDisabled" ng-click="searchForPage('first')" aria-label="Go to the first page"
-                title="Go to the first page" class="btn btn-xs" data-page="1" tabindex="-1">
-                <i class="fa fa-fast-forward" aria-hidden="true"></i>
-            </button>
-            <button ng-disabled="paginationData.isPrevLinkDisabled" ng-click="searchForPage('prev')" aria-label="Go to the previous page"
-                title="Go to the previous page" class="btn btn-xs" data-page="1" tabindex="-1">
-                <i class="fa fa-backward" aria-hidden="true"></i>
-            </button>
-
-            <span class="k-pager-input k-label">
-                Page
-                <form ng-submit="searchForPage('input')" style="display: inline-block;">
-                    <input ng-model="paginationData.pageIndex" style="width: 40px;padding: 1px;margin-left: 3px;margin-right: 3px;"
-                        aria-label="1">
-                </form>of {{paginationData.noOfPages}}
-            </span>
-
-            <button ng-disabled="paginationData.isNextLinkDisabled" ng-click="searchForPage('next')" aria-label="Go to the next page"
-                title="Go to the next page" class="btn btn-xs" data-page="2" tabindex="-1">
-                <i class="fa fa-forward" aria-hidden="true"></i>
-            </button>
-            <button ng-disabled="paginationData.isLastLinkDisabled" ng-click="searchForPage('last')" aria-label="Go to the last page"
-                title="Go to the last page" class="btn btn-xs" data-page="200" tabindex="-1">
-                <i class="fa fa-fast-forward" aria-hidden="true"></i>
-            </button>
-        </div>
-        <div>
-            <span>
-                <form style="display: inline">
-                    <select class="select-combo select-img" ng-change="searchForPage('pageSize')" ng-model="paginationData.pageSize" ng-options="size as size for size in pageSizes">
-                    </select>
-                </form>
-            </span>items per page</span>
-            <span>{{paginationData.currentRange.min}} - {{paginationData.currentRange.max}} of {{paginationData.totalResults}}
-                items</span>
-        </div>
+        {{{tableFooterContent}}}
     </div>
 </div>

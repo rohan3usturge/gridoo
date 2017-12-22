@@ -1,4 +1,5 @@
 import * as jQuery from "jquery";
+import { IPaginationInput } from "../models/IPaginationInput";
 import { DetailsRowHandler } from "./../eventHandlers/DetailsRowHandler";
 import { FilterClickHandler } from "./../eventHandlers/FilterClickHandler";
 import { HandlerNames } from "./../eventHandlers/HandlerNames";
@@ -47,10 +48,13 @@ export class Grid<T> {
         this.gridTemplateService = new GridTemplateService(this.extendedOptions);
     }
 
-    public bindData = (data: T[]): void => {
+    public bindData = (data: T[], paginationInput?: IPaginationInput): void => {
         const firstIndex = 0;
         const lastIndex = this.extendedOptions.chunkSize + this.getInitialRowCount();
-        const gridContent: string = this.gridTemplateService.GetFirstTemplate(data, firstIndex, lastIndex);
+        const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
+                                                                              firstIndex,
+                                                                              lastIndex,
+                                                                              paginationInput);
         this.extendedOptions.containerElement.innerHTML = gridContent;
         this.InitHandlers();
     }

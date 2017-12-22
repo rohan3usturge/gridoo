@@ -1,10 +1,15 @@
+import { IRange } from "./IRange";
+
 export interface IPagination {
+    totalCount: number;
     pageSize: number;
     pageIndex: number;
     pageSizes: number[];
-    firstPageLinkEnabled: boolean;
-    LastPageLinkEnabled: boolean;
-    nextPageLinkEnabled: boolean;
-    prevPageLinkEnabled: boolean;
+    noOfPages: number;
+    range: IRange;
+    firstPageLinkDisabled: boolean;
+    lastPageLinkDisabled: boolean;
+    nextPageLinkDisabled: boolean;
+    prevPageLinkDisabled: boolean;
     pageIndexInputDisabled: boolean;
 }

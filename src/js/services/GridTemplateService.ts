@@ -1,7 +1,10 @@
 import * as Handlebars from "handlebars";
 import * as GridDetailsRowTemplate from "../../html/grid-details-row.html";
+import * as GridFooter from "../../html/grid-footer.html";
 import * as GridMainRowTemplate from "../../html/grid-main-row.html";
 import * as GridTemplate from "../../html/grid.html";
+import { IPaginationInput } from "../models/IPaginationInput";
+import { Pager } from "../pagination/Pager";
 import { IGridOptions } from "./../main/IGridOptions";
 import { IColumn } from "./../models/IColumn";
 
@@ -11,19 +14,25 @@ export class GridTemplateService <T> {
     private templateFunctionForGrid: any;
     private templateFunctionForMainRow: any;
     private templateFunctionForDetailsRow: any;
+    private templateFunctionForFooter: any;
 
     constructor(options: IGridOptions<T>) {
         this.registerHandlerBarHelper();
+        this.registerSelectedHelper();
+        this.registerDisabledHelper();
         this.options = options;
         this.templateFunctionForGrid = Handlebars.compile(GridTemplate);
         this.templateFunctionForMainRow = Handlebars.compile(GridMainRowTemplate);
         this.templateFunctionForDetailsRow = Handlebars.compile(GridDetailsRowTemplate);
+        this.templateFunctionForFooter = Handlebars.compile(GridFooter);
     }
 
-    public GetFirstTemplate = (data: T[], firstIndex: number, lastIndex: number): string => {
+    public GetFirstTemplate = (data: T[], firstIndex: number,
+                               lastIndex: number, paginationInput?: IPaginationInput): string => {
         this.data = data;
         const tBodyContent = this.GetRowsHtml(firstIndex, lastIndex);
-        return this.templateFunctionForGrid({columns: this.options.columns, tBodyContent});
+        const tableFooterContent = this.templateFunctionForFooter(Pager.GetPaginationData(paginationInput));
+        return this.templateFunctionForGrid({columns: this.options.columns, tBodyContent, tableFooterContent});
     }
 
     public GetRowsHtml = (firstIndex: number, lastIndex: number): string => {
@@ -54,6 +63,7 @@ export class GridTemplateService <T> {
         }
         return tBodyContent;
     }
+
     private registerHandlerBarHelper = (): void => {
         Handlebars.registerHelper("col", (col): string => {
             const calcWidth: number = col.hidden ? 0 : col.width;
@@ -62,4 +72,15 @@ export class GridTemplateService <T> {
         });
     }
 
+    private registerDisabledHelper = (): void => {
+        Handlebars.registerHelper("isDisabled", (bool: boolean): string => {
+            return bool ? "disabled" : "";
+        });
+    }
+
+    private registerSelectedHelper = (): void => {
+        Handlebars.registerHelper("isSelected", (input: number, value: number): string => {
+            return input === value ? "selected" : "";
+        });
+    }
 }
