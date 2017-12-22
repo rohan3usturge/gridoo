@@ -3,8 +3,7 @@ import * as GridDetailsRowTemplate from "../../html/grid-details-row.html";
 import * as GridFooter from "../../html/grid-footer.html";
 import * as GridMainRowTemplate from "../../html/grid-main-row.html";
 import * as GridTemplate from "../../html/grid.html";
-import { IPaginationInput } from "../models/IPaginationInput";
-import { Pager } from "../pagination/Pager";
+import { IPagination } from "../models/IPagination";
 import { IGridOptions } from "./../main/IGridOptions";
 import { IColumn } from "./../models/IColumn";
 
@@ -20,6 +19,7 @@ export class GridTemplateService <T> {
         this.registerHandlerBarHelper();
         this.registerSelectedHelper();
         this.registerDisabledHelper();
+        this.registerMathHelper();
         this.options = options;
         this.templateFunctionForGrid = Handlebars.compile(GridTemplate);
         this.templateFunctionForMainRow = Handlebars.compile(GridMainRowTemplate);
@@ -28,10 +28,10 @@ export class GridTemplateService <T> {
     }
 
     public GetFirstTemplate = (data: T[], firstIndex: number,
-                               lastIndex: number, paginationInput?: IPaginationInput): string => {
+                               lastIndex: number, paginationData: IPagination): string => {
         this.data = data;
         const tBodyContent = this.GetRowsHtml(firstIndex, lastIndex);
-        const tableFooterContent = this.templateFunctionForFooter(Pager.GetPaginationData(paginationInput));
+        const tableFooterContent = this.templateFunctionForFooter(paginationData);
         return this.templateFunctionForGrid({columns: this.options.columns, tBodyContent, tableFooterContent});
     }
 
@@ -81,6 +81,18 @@ export class GridTemplateService <T> {
     private registerSelectedHelper = (): void => {
         Handlebars.registerHelper("isSelected", (input: number, value: number): string => {
             return input === value ? "selected" : "";
+        });
+    }
+
+    private registerMathHelper = (): void => {
+        Handlebars.registerHelper("math", (lvalue: number, operator: string, rvalue: number, options): number => {
+            return {
+                "+": lvalue + rvalue,
+                "-": lvalue - rvalue,
+                "*": lvalue * rvalue,
+                "/": lvalue / rvalue,
+                "%": lvalue % rvalue,
+            }[operator];
         });
     }
 }

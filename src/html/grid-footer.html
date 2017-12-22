@@ -2,28 +2,28 @@
     Time :
 </div>
 <div data-role="pager">
-    <button class="btn btn-xs" {{isDisabled firstPageLinkDisabled}} aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
+    <button class="btn btn-xs firstLink" {{isDisabled firstPageLinkDisabled}} aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
         <i class="fa fa-fast-forward" aria-hidden="true"></i>
     </button>
-    <button class="btn btn-xs" {{isDisabled prevPageLinkDisabled}} aria-label="Go to the previous page" title="Go to the previous page" data-page="1" tabindex="-1">
+    <button class="btn btn-xs prevLink" {{isDisabled prevPageLinkDisabled}} aria-label="Go to the previous page" title="Go to the previous page" data-page="{{#math pageIndex '-' 1}}{{/math}}" tabindex="-1">
         <i class="fa fa-backward" aria-hidden="true"></i>
     </button>
 
     <span class="pager-input-container">
-        Page <input class="pager-input" aria-label="1" value="{{pageIndex}}"> of {{noOfPages}}
+        Page <input class="pager-input" aria-label="1" value="{{pageIndex}}" /> of {{noOfPages}}
     </span>
 
-    <button {{isDisabled nextPageLinkDisabled}} class="btn btn-xs" aria-label="Go to the next page" title="Go to the next page" class="btn btn-xs" data-page="2" tabindex="-1">
+    <button {{isDisabled nextPageLinkDisabled}} class="btn btn-xs nextLink" aria-label="Go to the next page" title="Go to the next page" class="btn btn-xs" data-page="{{#math pageIndex '+' 1}}{{/math}}" tabindex="-1">
         <i class="fa fa-forward" aria-hidden="true"></i>
     </button>
-    <button {{isDisabled lastPageLinkDisabled}} class="btn btn-xs" aria-label="Go to the last page" title="Go to the last page" data-page="200" tabindex="-1">
+    <button {{isDisabled lastPageLinkDisabled}} class="btn btn-xs lastLink" aria-label="Go to the last page" title="Go to the last page" data-page="{{noOFpages}}" tabindex="-1">
         <i class="fa fa-fast-forward" aria-hidden="true"></i>
     </button>
 </div>
 <div>
     <span>
         <form style="display: inline">
-            <select class="select-combo select-img">
+            <select class="select-combo select-img pageSizeSelector">
                 {{#each pageSizes}}
                     <option {{isSelected ../pageSize this}}>{{this}}</option>
                 {{/each}}

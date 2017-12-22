@@ -1,5 +1,7 @@
 import * as jQuery from "jquery";
+import { IPagination } from "../models/IPagination";
 import { IPaginationInput } from "../models/IPaginationInput";
+import { Pager } from "../pagination/Pager";
 import { DetailsRowHandler } from "./../eventHandlers/DetailsRowHandler";
 import { FilterClickHandler } from "./../eventHandlers/FilterClickHandler";
 import { HandlerNames } from "./../eventHandlers/HandlerNames";
@@ -22,6 +24,7 @@ export class Grid<T> {
     private gridTemplateService: GridTemplateService<T>;
     private extendedOptions: IGridOptions<T>;
     private toggleHandler: ToggleColumnHandler<T>;
+    private paginationData: IPagination;
     private defaultGridOptions: IGridOptions<T> = {
         chunkSize: 5,
         columns: [],
@@ -51,10 +54,11 @@ export class Grid<T> {
     public bindData = (data: T[], paginationInput?: IPaginationInput): void => {
         const firstIndex = 0;
         const lastIndex = this.extendedOptions.chunkSize + this.getInitialRowCount();
+        this.paginationData = Pager.GetPaginationData(paginationInput);
         const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
                                                                               firstIndex,
                                                                               lastIndex,
-                                                                              paginationInput);
+                                                                              this.paginationData);
         this.extendedOptions.containerElement.innerHTML = gridContent;
         this.InitHandlers();
     }
@@ -103,7 +107,7 @@ export class Grid<T> {
             name: HandlerNames.Scroll,
         });
         this.handleChain.push({
-            handler: new PageSearchHandler<T>(this.extendedOptions.onPageSearch, parentElement),
+            handler: new PageSearchHandler<T>(this.extendedOptions.onPageSearch, parentElement, this.paginationData),
             name: HandlerNames.PageSearch,
         });
         this.toggleHandler = new ToggleColumnHandler<T>(parentElement, this.extendedOptions.columns);
