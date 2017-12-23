@@ -5,7 +5,13 @@ export class DetailsRowHandler<T> implements IEventHandler<T> {
     constructor(element: JQuery) {
         this.parentElement = element;
     }
+    public onResize(): void {
+        throw new Error("Method not implemented.");
+    }
 
+    public onDocumentClick(): void {
+        throw new Error("Method not implemented.");
+    }
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-body .expansionArrows i", (event) => {
             const arrow = jQuery(event.target);

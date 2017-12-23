@@ -12,7 +12,13 @@ export class PageSearchHandler<T> implements IEventHandler<T> {
         this.pageSearchDelegate = pageSearchDelegate;
         this.paginationData = paginationData;
     }
+    public onResize(): void {
+        throw new Error("Method not implemented.");
+    }
 
+    public onDocumentClick(): void {
+        throw new Error("Method not implemented.");
+    }
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-footer .firstLink", (event) => {
             this.pageSearchDelegate(1, this.paginationData.pageSize);

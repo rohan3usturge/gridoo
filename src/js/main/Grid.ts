@@ -1,4 +1,5 @@
 import * as jQuery from "jquery";
+import { ColSettingsHandler } from "../eventHandlers/ColSettingsHandler";
 import { IPagination } from "../models/IPagination";
 import { IPaginationInput } from "../models/IPaginationInput";
 import { Pager } from "../pagination/Pager";
@@ -95,11 +96,12 @@ export class Grid<T> {
             name: HandlerNames.DetailsRow,
         });
         this.handleChain.push({
-            handler:  new FilterClickHandler<T>(this.extendedOptions.onClickFilter, parentElement),
+            handler:  new FilterClickHandler<T>(this.extendedOptions.onClickFilter,
+                                                parentElement, this.extendedOptions),
             name: HandlerNames.FilterAction,
         });
         this.handleChain.push({
-            handler: new HeaderClickHandler<T>(this.extendedOptions.onClickHeader, parentElement),
+            handler: new HeaderClickHandler<T>(this.extendedOptions.onClickHeader, parentElement, this.extendedOptions),
             name: HandlerNames.HeaderClick,
         });
         this.handleChain.push({
@@ -114,6 +116,10 @@ export class Grid<T> {
         this.handleChain.push({
             handler: this.toggleHandler,
             name: HandlerNames.ToggleColumn,
+        });
+        this.handleChain.push({
+            handler: new ColSettingsHandler<T>(parentElement, this.extendedOptions),
+            name: HandlerNames.ColSettings,
         });
         this.handleChain.forEach((value: IHandlerChain<T>): void => {
             value.handler.RegisterDomHandler();

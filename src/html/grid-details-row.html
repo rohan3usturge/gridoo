@@ -4,10 +4,12 @@
             <tbody>
                 {{#each detailsArray}}
                 <tr>
-                    <td data-filter-key="{{id}}" data-filter-value="{{columnValue}}">
+                    <td data-filter-key="{{id}}" data-filter-value="{{actualValue}}">
                         <span>{{columnName}}</span>
-                        <i class="fa fa-plus-square-o addFilter" />
-                        <i class="fa fa-minus-square-o removeFilter" />
+                        {{#if filterable}}
+                            <i class="fa fa-plus-square-o addFilter" />
+                            <i class="fa fa-minus-square-o removeFilter" />
+                        {{/if}}
                     </td>
                     <td>{{{columnValue}}}</td>
                 </tr>

@@ -1,0 +1,28 @@
+<div class="ui card" style="height: 100%;width: auto;padding: 5px;overflow:hidden;">
+    <div class="col-settings-header" style="width: 100%">
+        <div class="ui mini fluid icon input">
+            <input type="text" placeholder="Search small...">
+            <i class="search icon"></i>
+        </div>
+        <div class="ui buttons">
+            <button class="ui gray basic button">Show All</button>
+            <button class="ui gray basic button">Hide All</button>
+        </div>
+    </div>
+    <div class="col-settings-table" style="overflow:auto;">
+        <table class="ui small very compact table">
+            <tbody>
+                {{#each this}}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="example">
+                    </td>
+                    <td>
+                        <label>{{name}}</label>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

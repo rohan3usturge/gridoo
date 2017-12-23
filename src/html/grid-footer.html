@@ -1,41 +1,35 @@
-<div class="footer-left">
+<div class="footer-left" style="display:absoulte;">
+    <i class="columns icon col-settings-trigger"></i>
+    <div class="column-settings-container">{{{manageColumnHtml}}}</div>
 </div>
 <div data-role="pager" class="footer-middle">
     <div class="margin-auto">
-        <button class="mini ui basic labeled red icon button firstLink" {{isDisabled firstPageLinkDisabled}} aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
-            <i class="fast backward icon" aria-hidden="true"></i>
-            First
+        <button class="mini ui basic button firstLink" aria-hidden="true" {{isDisabled paginationData.firstPageLinkDisabled}} aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
+            <i class="fast backward icon"></i>
         </button>
-        <button class="mini ui labeled icon button prevLink" {{isDisabled prevPageLinkDisabled}} aria-label="Go to the previous page" title="Go to the previous page" data-page="{{#math pageIndex '-' 1}}{{/math}}" tabindex="-1">
-            <i class="backward icon" aria-hidden="true"></i>
-            Prev
+        <button class="mini ui basic button prevLink" aria-hidden="true" {{isDisabled paginationData.prevPageLinkDisabled}} aria-label="Go to the previous page" title="Go to the previous page" data-page="{{#math paginationData.pageIndex '-' 1}}{{/math}}" tabindex="-1">
+            <i class="backward icon"></i>
         </button>
     </div>
     <div class="margin-side-10 pager-input-container ui input">
-        <span class="ui sub header"> Page </span>
-        <input class="margin-side-10 pager-input" aria-label="1" value="{{pageIndex}}" type="text" placeholder="Page Number ..."> 
-        <span class="ui sub header"> of {{noOfPages}}</span>
+        <span class="margin-auto"> Page </span>
+        <input class="margin-side-10 pager-input" aria-label="1" value="{{paginationData.pageIndex}}" type="text" placeholder="Page Number ..."> 
+        <span class="margin-auto"> of {{paginationData.noOfPages}}</span>
     </div>
-    <div class="margin-auto">
-        <button {{isDisabled nextPageLinkDisabled}} class="mini ui right labeled icon button nextLink" aria-label="Go to the next page" title="Go to the next page" class="ui button" data-page="{{#math pageIndex '+' 1}}{{/math}}" tabindex="-1">
-            Next
-            <i class="forward icon" aria-hidden="true"></i>
+    <div class="ui margin-auto">
+        <button class="mini ui basic button nextLink" aria-hidden="true" {{isDisabled paginationData.nextPageLinkDisabled}} aria-label="Go to the next page" title="Go to the next page" class="ui button" data-page="{{#math paginationData.pageIndex '+' 1}}{{/math}}" tabindex="-1">
+            <i class="forward icon"></i>
         </button>
-        <button {{isDisabled lastPageLinkDisabled}} class="mini ui right labeled icon button lastLink" aria-label="Go to the last page" title="Go to the last page" data-page="{{noOFpages}}" tabindex="-1">
-            Last
-            <i class="fast forward icon" aria-hidden="true"></i>
+        <button class="mini ui basic button lastLink" aria-hidden="true" {{isDisabled paginationData.lastPageLinkDisabled}} aria-label="Go to the last page" title="Go to the last page" data-page="{{paginationData.noOFpages}}" tabindex="-1">
+            <i class="fast forward icon"></i>
         </button>
     </div>
-
 </div>
 <div class="footer-right">
-    <span>
-        <form style="display: inline">
-            <select class="select-combo select-img pageSizeSelector">
-                {{#each pageSizes}}
-                    <option {{isSelected ../pageSize this}}>{{this}}</option>
-                {{/each}}
-            </select>
-        </form>
-    <span class="ui sub header">{{range.min}} - {{range.max}} of {{totalCount}} items</span>
+    <select class="margin-side-10 pageSizeSelector">
+        {{#each paginationData.pageSizes}}
+            <option {{isSelected ../paginationData.pageSize this}}>{{this}}</option>
+        {{/each}}
+    </select>
+    <span class="margin-auto">{{paginationData.range.min}} - {{paginationData.range.max}} of {{paginationData.totalCount}} items</span>
 </div>

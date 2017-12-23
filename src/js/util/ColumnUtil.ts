@@ -15,10 +15,4 @@ export class CommonUtil {
         });
         return retCol;
     }
-
-    public static setColumnToActualWidth = (columnId: string, element: Element, columns?: IColumn[]): void => {
-        const currentCol = jQuery(element).attr("data-header-id");
-        const width = CommonUtil.getColumnObject(currentCol, columns).width;
-        jQuery(element).width(width + "px");
-    }
 }

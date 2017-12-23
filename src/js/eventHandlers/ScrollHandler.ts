@@ -18,7 +18,13 @@ export class ScrollHandler<T> implements IEventHandler<T> {
         this.gridTemplateService = gridTemplateService;
         this.chunkSize = chunkSize;
     }
+    public onResize(): void {
+        throw new Error("Method not implemented.");
+    }
 
+    public onDocumentClick(): void {
+        throw new Error("Method not implemented.");
+    }
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
         this.parentElement.find(".table-body").on("scroll", (event) => {

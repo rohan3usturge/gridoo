@@ -2,6 +2,7 @@ import * as Handlebars from "handlebars";
 import * as GridDetailsRowTemplate from "../../html/grid-details-row.html";
 import * as GridFooter from "../../html/grid-footer.html";
 import * as GridMainRowTemplate from "../../html/grid-main-row.html";
+import * as ManageColumnTemplate from "../../html/grid-manage-columns.html";
 import * as GridTemplate from "../../html/grid.html";
 import { IPagination } from "../models/IPagination";
 import { IGridOptions } from "./../main/IGridOptions";
@@ -14,6 +15,7 @@ export class GridTemplateService <T> {
     private templateFunctionForMainRow: any;
     private templateFunctionForDetailsRow: any;
     private templateFunctionForFooter: any;
+    private templateFunctionForManageCol: any;
 
     constructor(options: IGridOptions<T>) {
         this.registerHandlerBarHelper();
@@ -25,13 +27,15 @@ export class GridTemplateService <T> {
         this.templateFunctionForMainRow = Handlebars.compile(GridMainRowTemplate);
         this.templateFunctionForDetailsRow = Handlebars.compile(GridDetailsRowTemplate);
         this.templateFunctionForFooter = Handlebars.compile(GridFooter);
+        this.templateFunctionForManageCol = Handlebars.compile(ManageColumnTemplate);
     }
 
     public GetFirstTemplate = (data: T[], firstIndex: number,
                                lastIndex: number, paginationData: IPagination): string => {
         this.data = data;
         const tBodyContent = this.GetRowsHtml(firstIndex, lastIndex);
-        const tableFooterContent = this.templateFunctionForFooter(paginationData);
+        const manageColumnHtml = this.templateFunctionForManageCol(this.options.columns);
+        const tableFooterContent = this.templateFunctionForFooter({paginationData, manageColumnHtml});
         return this.templateFunctionForGrid({columns: this.options.columns, tBodyContent, tableFooterContent});
     }
 
@@ -54,6 +58,7 @@ export class GridTemplateService <T> {
                     columnValue,
                     hidden: col.hidden,
                     id: col.id,
+                    filterable: col.filterable,
                 });
             });
             const mainRowStr = this.templateFunctionForMainRow(mainArray);

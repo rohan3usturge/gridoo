@@ -20,9 +20,14 @@
     .table-footer{
         display: flex;
         height: 35px;
+        padding: 5px;
         justify-content: space-between;
+        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     }
     .table-footer .footer-middle{
+        display: flex;
+    }
+    .table-footer .footer-right{
         display: flex;
     }
     .margin-auto{
@@ -31,14 +36,21 @@
     .margin-side-10{
         margin: 0px 10px 0px 10px !important;
     }
-    .pager-input-container{
+    /* .pager-input-container{
         display: table-cell !important;
-    }
+    } */
     .pager-input-container .pager-input{
-        height: 35px !important;
+        width: 50px;
+    }
+    .column-settings-container{
+        position:absolute !important;
+        z-index:1000 !important;
+        bottom:35px !important;
+        display:none;
+        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     }
 </style>
-<div class="inner-container ui fluid card" style="padding:0%">
+<div class="inner-container ui fluid card" style="padding:0%;">
     <div class="table-header">
         <table id="headertable" class="ui celled fixed single line small table mainTable">
             <colgroup class="headerColGroup">
@@ -54,8 +66,10 @@
                     <th></th>
                     {{#each columns}}
                         <th id="header-{{id}}" data-header-id="{{id}}">
-                            <i class="fa fa-long-arrow-up" aria-hidden="true" style="display:none;"></i>                        
-                            <i class="fa fa-long-arrow-down" aria-hidden="true" style="display:none;"></i>
+                            {{#if sortable}}
+                                <i class="fa fa-long-arrow-up" aria-hidden="true" style="display:none;"></i>                        
+                                <i class="fa fa-long-arrow-down" aria-hidden="true" style="display:none;"></i>
+                            {{/if}}
                             <span>{{name}}</span>
                         </th>
                     {{/each}}
@@ -77,7 +91,7 @@
             </tbody>
         </table>
     </div>
-    <div class="table-footer">
+    <div class="table-footer ui inverted gray">
             {{{tableFooterContent}}}
     </div>
 </div>

@@ -17,7 +17,13 @@ export class ToggleColumnHandler<T> implements IEventHandler<T> {
         this.columns = columns;
         this.parentElement = element;
     }
+    public onResize(): void {
+        throw new Error("Method not implemented.");
+    }
 
+    public onDocumentClick(): void {
+        throw new Error("Method not implemented.");
+    }
     public RegisterDomHandler = (): void => {
         // Nothing to Do.
     }

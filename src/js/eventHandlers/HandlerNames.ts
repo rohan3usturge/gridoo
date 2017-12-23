@@ -5,4 +5,5 @@ export enum HandlerNames {
     PageSearch,
     DetailsRow,
     ToggleColumn,
+    ColSettings,
 }
