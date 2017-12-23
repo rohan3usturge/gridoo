@@ -8,34 +8,39 @@ export class Virtualizer {
     private chunkSize: number;
     private scrollContainerHeight: number;
     private tableHeight: number;
+    private initialRowCount: number;
 
-    constructor() {
-        this.currentIndexCounter = GetDefaultIndexCounter();
+    constructor(chunkSize: number, initialRowCount: number, length: number) {
         this.lastScrollPosition = 0;
-        this.chunkSize = 5;
+        this.length = length;
+        this.chunkSize = chunkSize;
+        this.initialRowCount = initialRowCount;
+        this.currentIndexCounter = GetDefaultIndexCounter(initialRowCount, chunkSize);
     }
 
     public GetIndexCounterForScroll = (scrollTop: number): IIndexCounter => {
-        let newCounter: IIndexCounter = GetDefaultIndexCounter();
+        let newCounter: IIndexCounter = GetDefaultIndexCounter(this.chunkSize, this.initialRowCount);
         newCounter.direction = this.GetScrollDirection(scrollTop);
         switch (newCounter.direction) {
             // Calculate Index Counters for Down Movement
             case ScrollDirection.Down:
                 if (this.currentIndexCounter.lastIndex >= this.length - 1) {
                     newCounter.endReached = true;
+                } else {
+                    newCounter.endReached = false;
                     const diff = (scrollTop + this.ScrollContainerHeight) - (this.TableHeight * 0.8 );
                     if (diff > 0) {
                         newCounter.renderingRequired = true;
                         newCounter = this.PopulateIndexCounterForDown(newCounter);
                     }
-                } else {
-                    newCounter.endReached = false;
                 }
                 break;
             case ScrollDirection.Up:
                 // Calculate Index Counters for Up Movement
-                if (this.currentIndexCounter.firstIndex > 0) {
+                if (this.currentIndexCounter.firstIndex <= 0) {
                     newCounter.endReached = true;
+                } else {
+                    newCounter.endReached = false;
                     const diff = scrollTop - (this.TableHeight - this.ScrollContainerHeight) * 0.1;
                     if (diff < 0) {
                         newCounter.renderingRequired = true;
@@ -48,7 +53,23 @@ export class Virtualizer {
             this.currentIndexCounter = newCounter;
         }
         this.lastScrollPosition = scrollTop;
+        this.Print(newCounter, this.currentIndexCounter);
         return newCounter;
+    }
+
+    private Print = (newCounter: IIndexCounter, currentIndexCounter: IIndexCounter): void => {
+        console.log(" ******************************************************************* ");
+        console.log(" Scroll Position - " + this.lastScrollPosition);
+        console.log(" Length  - " + this.length);
+        console.log(" ------------  CURRENT ---------- ");
+        Object.keys(currentIndexCounter).forEach((val, index) => {
+            console.log(val + " - " + currentIndexCounter[val]);
+        });
+        console.log(" ------------  NEW ---------- ");
+        Object.keys(newCounter).forEach((val, index) => {
+            console.log(val + " - " + newCounter[val]);
+        });
+        console.log(" ******************************************************************* ");
     }
 
     private PopulateIndexCounterForDown = (counter: IIndexCounter): IIndexCounter => {
@@ -90,5 +111,12 @@ export class Virtualizer {
 
     public get TableHeight() {
         return this.tableHeight;
+    }
+    public set InitialRowCount(rowCount: number) {
+        this.initialRowCount = rowCount;
+    }
+
+    public get InitialRowCount() {
+        return this.initialRowCount;
     }
 }

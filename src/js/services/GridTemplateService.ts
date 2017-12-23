@@ -32,6 +32,9 @@ export class GridTemplateService <T> {
         this.templateFunctionForManageCol = Handlebars.compile(ManageColumnTemplate);
     }
 
+    public get DataLength(): number {
+        return this.data.length;
+    }
     public GetFirstTemplate = (data: T[], firstIndex: number, lastIndex: number): string => {
         this.data = data;
         const tBodyContent = this.GetRowsHtml(firstIndex, lastIndex);

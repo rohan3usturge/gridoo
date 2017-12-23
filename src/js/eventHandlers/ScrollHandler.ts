@@ -13,13 +13,13 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     private rendering: boolean =  false;
     private configStore: ConfigStore<T>;
 
-    constructor(configStore: ConfigStore<T>, element: JQuery, gridTemplateService: GridTemplateService<T>) {
-        this.parentElement = element;
-        this.virtualizer = new Virtualizer();
+    constructor(configStore: ConfigStore<T>, gridTemplateService: GridTemplateService<T>) {
+        this.configStore = configStore;
+        this.parentElement = jQuery(this.configStore.Options.containerElement);
         this.gridTemplateService = gridTemplateService;
     }
     public onResize(): void {
-        // throw new Error("Method not implemented.");
+        // this.RegisterDomHandler();
     }
 
     public onDocumentClick(event): void {
@@ -36,15 +36,15 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                 },
             );
             const actualTableHeight = tBodyObj.find(".mainTable").height();
-            this.virtualizer.TableHeight = actualTableHeight;
-            this.virtualizer.ScrollContainerHeight = tBodyObj.height();
+            this.Virtualizer.TableHeight = actualTableHeight;
+            this.Virtualizer.ScrollContainerHeight = tBodyObj.height();
             event.preventDefault();
             if (this.rendering) {
                 event.stopPropagation();
                 return;
             }
             const scrollTop = tBodyObj.scrollTop();
-            const indexCounter: IIndexCounter = this.virtualizer.GetIndexCounterForScroll(scrollTop);
+            const indexCounter: IIndexCounter = this.Virtualizer.GetIndexCounterForScroll(scrollTop);
             switch (indexCounter.direction) {
                 case ScrollDirection.Down:
                     if (indexCounter.renderingRequired) {
@@ -53,6 +53,7 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                             this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
                         tBodyObj.find(".mainTable .mainTableBody > tr")
                             .slice(0, this.configStore.options.chunkSize * 2).remove();
+                        this.rendering = false;
                     }
                     break;
                 case ScrollDirection.Up:
@@ -62,10 +63,19 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                         (this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
                         tBodyObj.find(".mainTable .mainTableBody > tr")
                             .slice((this.configStore.options.chunkSize * -2)).remove();
+                        this.rendering = false;
                     }
                     break;
             }
             event.stopPropagation();
         });
+    }
+    private get Virtualizer(): Virtualizer {
+        if (this.virtualizer === null || this.virtualizer === undefined) {
+            return this.virtualizer = new Virtualizer(this.configStore.options.chunkSize,
+                                                25, this.gridTemplateService.DataLength);
+        } else {
+            return this.virtualizer;
+        }
     }
 }

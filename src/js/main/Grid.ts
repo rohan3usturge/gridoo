@@ -40,6 +40,13 @@ export class Grid<T> {
                                                                               firstIndex,
                                                                               lastIndex);
         this.configStore.Options.containerElement.innerHTML = gridContent;
+        // Have to bind Scroll Handler After DOM has been created
+        const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService);
+        scrollHandler.RegisterDomHandler();
+        this.handleChain.push({
+            handler: scrollHandler,
+            name: HandlerNames.Scroll,
+        });
     }
 
     private getInitialRowCount = (): number => {
@@ -60,10 +67,6 @@ export class Grid<T> {
         this.handleChain.push({
             handler: new HeaderClickHandler<T>(this.configStore, parentElement),
             name: HandlerNames.HeaderClick,
-        });
-        this.handleChain.push({
-            handler: new ScrollHandler<T>(this.configStore, parentElement, this.gridTemplateService),
-            name: HandlerNames.Scroll,
         });
         this.handleChain.push({
             handler: new PageSearchHandler<T>(this.configStore, parentElement),

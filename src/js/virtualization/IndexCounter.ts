@@ -10,12 +10,12 @@ export interface IIndexCounter {
     renderingRequired: boolean;
 }
 
-export const GetDefaultIndexCounter = (): IIndexCounter => {
+export const GetDefaultIndexCounter = (rowCount: number, chunkSize: number): IIndexCounter => {
     return {
-        startIndex: 0,
-        endIndex: 0,
+        startIndex: rowCount - 1,
+        endIndex: rowCount + chunkSize - 1,
         firstIndex: 0,
-        lastIndex: 0,
+        lastIndex: rowCount - 1,
         direction: ScrollDirection.Down,
         endReached: false,
         renderingRequired: false,

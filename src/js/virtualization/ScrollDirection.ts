@@ -1,4 +1,4 @@
 export enum ScrollDirection {
-    Up,
-    Down,
+    Up = "Up",
+    Down = "Down",
 }
