@@ -1,61 +1,59 @@
 import * as jQuery from "jquery";
+import { ConfigStore } from "../config/ConfigStore";
+import { Pager } from "../pagination/Pager";
 import { IPageSearchClickDelegate } from "./../models/IPageSearchClickDelegate";
 import { IPagination } from "./../models/IPagination";
 import { IEventHandler } from "./IEventHandler";
-export class PageSearchHandler<T> implements IEventHandler<T> {
-    private pageSearchDelegate: IPageSearchClickDelegate;
-    private parentElement: JQuery;
-    private paginationData: IPagination;
 
-    constructor(pageSearchDelegate: IPageSearchClickDelegate, element: JQuery, paginationData: IPagination) {
+export class PageSearchHandler<T> implements IEventHandler<T> {
+    private configStore: ConfigStore<T>;
+    private parentElement: JQuery;
+
+    constructor(configStore: ConfigStore<T>, element: JQuery) {
+        this.configStore = configStore;
         this.parentElement = element;
-        this.pageSearchDelegate = pageSearchDelegate;
-        this.paginationData = paginationData;
     }
     public onResize(): void {
-        throw new Error("Method not implemented.");
+        // throw new Error("Method not implemented.");
     }
 
     public onDocumentClick(): void {
-        throw new Error("Method not implemented.");
+        // throw new Error("Method not implemented.");
     }
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-footer .firstLink", (event) => {
-            this.pageSearchDelegate(1, this.paginationData.pageSize);
+            this.configStore.options.onPageSearch(1, Pager.PaginationData.pageSize);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .nextLink", (event) => {
-            this.pageSearchDelegate(this.paginationData.pageIndex + 1, this.paginationData.pageSize);
+            this.configStore.options.onPageSearch(Pager.PaginationData.pageIndex + 1, Pager.PaginationData.pageSize);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .prevLink", (event) => {
-            this.pageSearchDelegate(this.paginationData.pageIndex - 1, this.paginationData.pageSize);
+            this.configStore.options.onPageSearch(Pager.PaginationData.pageIndex - 1, Pager.PaginationData.pageSize);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .lastLink", (event) => {
-            this.pageSearchDelegate(this.paginationData.noOfPages, this.paginationData.pageSize);
+            this.configStore.options.onPageSearch(Pager.PaginationData.noOfPages, Pager.PaginationData.pageSize);
             event.stopPropagation();
         });
         this.parentElement.on("change", ".table-footer .pageSizeSelector", (event) => {
             const val: number = +jQuery(event.target).val().toString();
-            this.pageSearchDelegate(this.paginationData.pageIndex, val);
+            this.configStore.options.onPageSearch(Pager.PaginationData.pageIndex, val);
             event.stopPropagation();
         });
         this.parentElement.on("keypress", ".table-footer .pager-input", (event) => {
             const ip = jQuery(event.target);
+            const pageData = Pager.PaginationData;
             if (event.keyCode === 13) {
                 const val: number = +ip.val().toString();
-                if (isNaN(val) || val > this.paginationData.noOfPages || val < 1) {
-                    ip.val(this.paginationData.pageIndex);
+                if (isNaN(val) || val > pageData.noOfPages || val < 1) {
+                    ip.val(pageData.pageIndex);
                 } else {
-                    this.pageSearchDelegate(val, this.paginationData.pageSize);
+                    this.configStore.options.onPageSearch(val, pageData.pageSize);
                 }
             }
             event.stopPropagation();
         });
-    }
-
-    public set PaginationData(paginationData: IPagination) {
-        this.paginationData = paginationData;
     }
 }

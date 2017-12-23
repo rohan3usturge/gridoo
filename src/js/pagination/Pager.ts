@@ -3,7 +3,9 @@ import { IPaginationInput } from "../models/IPaginationInput";
 
 export class Pager {
 
-    public static GetPaginationData = (paginationInput: IPaginationInput): IPagination => {
+    public static paginationData: IPagination;
+
+    public static CalculatePaginationData = (paginationInput: IPaginationInput): void => {
             const paginationData: any = {};
             paginationData.pageIndex = paginationInput.pageIndex;
             paginationData.pageSize = paginationInput.pageSize;
@@ -25,7 +27,10 @@ export class Pager {
                                                     || (paginationData.pageIndex - 1) <= 0;
             paginationData.nextPageLinkDisabled  = paginationData.noOfPages === paginationData.pageIndex
                                                     || (paginationData.pageIndex + 1) >= paginationData.noOfPages;
-            return paginationData;
+            Pager.paginationData = paginationData;
     }
 
+    public static get PaginationData(): IPagination {
+        return Pager.paginationData;
+    }
 }

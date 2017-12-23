@@ -1,3 +1,4 @@
+import { ConfigStore } from "../config/ConfigStore";
 import { OrderDirection } from "./../models/OrderDirection";
 import { GridTemplateService } from "./../services/GridTemplateService";
 import { IIndexCounter } from "./../virtualization/IndexCounter";
@@ -10,20 +11,19 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     private parentElement: JQuery;
     private gridTemplateService: GridTemplateService<T>;
     private rendering: boolean =  false;
-    private chunkSize: number;
+    private configStore: ConfigStore<T>;
 
-    constructor(element: JQuery, gridTemplateService: GridTemplateService<T>, chunkSize: number) {
+    constructor(configStore: ConfigStore<T>, element: JQuery, gridTemplateService: GridTemplateService<T>) {
         this.parentElement = element;
         this.virtualizer = new Virtualizer();
         this.gridTemplateService = gridTemplateService;
-        this.chunkSize = chunkSize;
     }
     public onResize(): void {
-        throw new Error("Method not implemented.");
+        // throw new Error("Method not implemented.");
     }
 
-    public onDocumentClick(): void {
-        throw new Error("Method not implemented.");
+    public onDocumentClick(event): void {
+        // throw new Error("Method not implemented.");
     }
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
@@ -51,7 +51,8 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                         this.rendering = true;
                         tBodyObj.find(".mainTable .mainTableBody").append(
                             this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
-                        tBodyObj.find(".mainTable .mainTableBody > tr").slice(0, this.chunkSize * 2).remove();
+                        tBodyObj.find(".mainTable .mainTableBody > tr")
+                            .slice(0, this.configStore.options.chunkSize * 2).remove();
                     }
                     break;
                 case ScrollDirection.Up:
@@ -59,7 +60,8 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                         this.rendering = true;
                         tBodyObj.find(".mainTable .mainTableBody").prepend
                         (this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
-                        tBodyObj.find(".mainTable .mainTableBody > tr").slice((this.chunkSize * -2)).remove();
+                        tBodyObj.find(".mainTable .mainTableBody > tr")
+                            .slice((this.configStore.options.chunkSize * -2)).remove();
                     }
                     break;
             }

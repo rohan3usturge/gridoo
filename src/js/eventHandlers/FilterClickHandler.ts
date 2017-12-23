@@ -1,3 +1,4 @@
+import { ConfigStore } from "../config/ConfigStore";
 import { IGridOptions } from "../main/IGridOptions";
 import { CommonUtil } from "../util/ColumnUtil";
 import { FilterActionType } from "./../models/FilterActionType";
@@ -5,21 +6,19 @@ import { IFilterClickDelegate } from "./../models/IFilterClickDelegate";
 import { IEventHandler } from "./IEventHandler";
 
 export class FilterClickHandler<T> implements IEventHandler<T> {
-    private filterClickDelegate: IFilterClickDelegate;
+    private configStore: ConfigStore<T>;
     private parentElement: JQuery;
-    private options: IGridOptions<T>;
 
-    constructor(filterClickDelegate: IFilterClickDelegate, element: JQuery, options: IGridOptions<T>) {
-        this.filterClickDelegate = filterClickDelegate;
+    constructor(configStore: ConfigStore<T>, element: JQuery) {
+        this.configStore = configStore;
         this.parentElement = element;
-        this.options = options;
     }
     public onResize(): void {
-        throw new Error("Method not implemented.");
+        // Nothing to Do.
     }
 
-    public onDocumentClick(): void {
-        throw new Error("Method not implemented.");
+    public onDocumentClick(event): void {
+        // Nothing to Do.
     }
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-body .detailsRow .detailsTable td i", (event) => {
@@ -27,7 +26,7 @@ export class FilterClickHandler<T> implements IEventHandler<T> {
             const parentTd = element.parent();
             const key = parentTd.attr("data-filter-key");
             const value = parentTd.attr("data-filter-value");
-            const col = CommonUtil.getColumnObject(key, this.options.columns);
+            const col = CommonUtil.GetColumnObject(key, this.configStore.Options.columns);
             if (col === undefined || col === null || !col.filterable ) {
                 return;
             }
@@ -35,7 +34,7 @@ export class FilterClickHandler<T> implements IEventHandler<T> {
             if (element.hasClass("removeFilter")) {
                 filterAction = FilterActionType.Minus;
             }
-            this.filterClickDelegate(key, value, filterAction);
+            this.configStore.Options.onClickFilter(key, value, filterAction);
             event.stopPropagation();
         });
     }

@@ -1,4 +1,5 @@
 import * as jQuery from "jquery";
+import { ConfigStore } from "../config/ConfigStore";
 import { ColSettingsHandler } from "../eventHandlers/ColSettingsHandler";
 import { IPagination } from "../models/IPagination";
 import { IPaginationInput } from "../models/IPaginationInput";
@@ -23,106 +24,69 @@ export class Grid<T> {
 
     private handleChain: Array<IHandlerChain<T>>;
     private gridTemplateService: GridTemplateService<T>;
-    private extendedOptions: IGridOptions<T>;
-    private toggleHandler: ToggleColumnHandler<T>;
-    private paginationData: IPagination;
-    private defaultGridOptions: IGridOptions<T> = {
-        chunkSize: 5,
-        columns: [],
-        containerElement: null,
-        hybridFunction: (column: IColumn, row: T): string => {
-            return "true";
-        },
-        // tslint:disable-next-line:no-empty
-        onClickFilter: (column: string, value: any, actionType: FilterActionType): void => {
-
-        },
-        // tslint:disable-next-line:no-empty
-        onClickHeader: (column: string, direction: OrderDirection): void => {
-
-        },
-        // tslint:disable-next-line:no-empty
-        onPageSearch: (pageSize: number, pageIndex: number): void => {
-
-        },
-    };
+    private configStore: ConfigStore<T>;
 
     constructor(options: IGridOptions<T>) {
-        this.extendedOptions = this.extendOptions(options);
-        this.gridTemplateService = new GridTemplateService(this.extendedOptions);
+        this.configStore = new ConfigStore<T>(options);
+        this.gridTemplateService = new GridTemplateService(this.configStore);
+        this.InitHandlers();
     }
 
     public bindData = (data: T[], paginationInput?: IPaginationInput): void => {
         const firstIndex = 0;
-        const lastIndex = this.extendedOptions.chunkSize + this.getInitialRowCount();
-        this.paginationData = Pager.GetPaginationData(paginationInput);
+        const lastIndex = this.configStore.Options.chunkSize + this.getInitialRowCount();
+        Pager.CalculatePaginationData(paginationInput);
         const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
                                                                               firstIndex,
-                                                                              lastIndex,
-                                                                              this.paginationData);
-        this.extendedOptions.containerElement.innerHTML = gridContent;
-        this.InitHandlers();
-    }
-
-    public showAllColumns = (): void => {
-        this.toggleHandler.showAllColumns();
-    }
-
-    public showColumn = (columnId: string): void => {
-        this.toggleHandler.showColumn(columnId);
-    }
-
-    public hideColumn = (columnId: string): void => {
-        this.toggleHandler.hideColumn(columnId);
-    }
-
-    public hideAllColumns = (): void => {
-        this.toggleHandler.hideAllColumns();
+                                                                              lastIndex);
+        this.configStore.Options.containerElement.innerHTML = gridContent;
     }
 
     private getInitialRowCount = (): number => {
         return 25;
     }
 
-    private extendOptions = (inputOptions: IGridOptions<T>): IGridOptions<T> => {
-        return this.extendedOptions = jQuery.extend({}, this.defaultGridOptions, inputOptions);
-    }
-
     private InitHandlers = (): void => {
-        const parentElement = jQuery(this.extendedOptions.containerElement);
+        const parentElement = jQuery(this.configStore.Options.containerElement);
         this.handleChain = [];
         this.handleChain.push({
             handler: new DetailsRowHandler<T>(parentElement),
             name: HandlerNames.DetailsRow,
         });
         this.handleChain.push({
-            handler:  new FilterClickHandler<T>(this.extendedOptions.onClickFilter,
-                                                parentElement, this.extendedOptions),
+            handler:  new FilterClickHandler<T>(this.configStore, parentElement),
             name: HandlerNames.FilterAction,
         });
         this.handleChain.push({
-            handler: new HeaderClickHandler<T>(this.extendedOptions.onClickHeader, parentElement, this.extendedOptions),
+            handler: new HeaderClickHandler<T>(this.configStore, parentElement),
             name: HandlerNames.HeaderClick,
         });
         this.handleChain.push({
-            handler: new ScrollHandler<T>(parentElement, this.gridTemplateService, this.extendedOptions.chunkSize),
+            handler: new ScrollHandler<T>(this.configStore, parentElement, this.gridTemplateService),
             name: HandlerNames.Scroll,
         });
         this.handleChain.push({
-            handler: new PageSearchHandler<T>(this.extendedOptions.onPageSearch, parentElement, this.paginationData),
+            handler: new PageSearchHandler<T>(this.configStore, parentElement),
             name: HandlerNames.PageSearch,
         });
-        this.toggleHandler = new ToggleColumnHandler<T>(parentElement, this.extendedOptions.columns);
+        const toggleHandler = new ToggleColumnHandler(this.configStore, parentElement);
         this.handleChain.push({
-            handler: this.toggleHandler,
-            name: HandlerNames.ToggleColumn,
-        });
-        this.handleChain.push({
-            handler: new ColSettingsHandler<T>(parentElement, this.extendedOptions),
+            handler: new ColSettingsHandler<T>(parentElement, toggleHandler),
             name: HandlerNames.ColSettings,
         });
         this.handleChain.forEach((value: IHandlerChain<T>): void => {
             value.handler.RegisterDomHandler();
+        });
+        jQuery(window).resize(() => {
+            this.handleChain.forEach((value: IHandlerChain<T>): void => {
+                value.handler.onResize();
+            });
+        });
+        jQuery(document).click((event) => {
+            this.handleChain.forEach((value: IHandlerChain<T>): void => {
+                value.handler.onDocumentClick(event);
+            });
+            event.stopPropagation();
         });
     }
 }

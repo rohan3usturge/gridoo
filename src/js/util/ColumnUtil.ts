@@ -2,7 +2,7 @@ import { IColumn } from "./../models/IColumn";
 
 export class CommonUtil {
 
-    public static getColumnObject = (columnId: string, columns: IColumn[]): IColumn => {
+    public static GetColumnObject = (columnId: string, columns: IColumn[]): IColumn => {
         if (columnId == null || columns == null) {
             return null;
         }

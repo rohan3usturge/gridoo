@@ -6,11 +6,11 @@ export class DetailsRowHandler<T> implements IEventHandler<T> {
         this.parentElement = element;
     }
     public onResize(): void {
-        throw new Error("Method not implemented.");
+        // Nothing to Do.
     }
 
-    public onDocumentClick(): void {
-        throw new Error("Method not implemented.");
+    public onDocumentClick(event): void {
+        // Nothing to Do.
     }
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-body .expansionArrows i", (event) => {
