@@ -53,7 +53,7 @@ export class Virtualizer {
             this.currentIndexCounter = newCounter;
         }
         this.lastScrollPosition = scrollTop;
-        this.Print(newCounter, this.currentIndexCounter);
+        // this.Print(newCounter, this.currentIndexCounter);
         return newCounter;
     }
 

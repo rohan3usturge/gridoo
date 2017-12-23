@@ -33,7 +33,7 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
             }
             const arrowIcons = element.find("i");
             const upArrowIcon = arrowIcons.first();
-            const downArrowIcon = arrowIcons.next();
+            const downArrowIcon = arrowIcons.last();
             let direction: OrderDirection;
             if (arrowIcons.is(":visible")) {
                 if (upArrowIcon.is(":visible")) {

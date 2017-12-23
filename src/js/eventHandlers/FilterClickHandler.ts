@@ -23,7 +23,7 @@ export class FilterClickHandler<T> implements IEventHandler<T> {
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-body .detailsRow .detailsTable td i", (event) => {
             const element = jQuery(event.target);
-            const parentTd = element.parent();
+            const parentTd = element.parents("td");
             const key = parentTd.attr("data-filter-key");
             const value = parentTd.attr("data-filter-value");
             const col = CommonUtil.GetColumnObject(key, this.configStore.Options.columns);
