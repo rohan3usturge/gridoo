@@ -30,7 +30,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
     public RegisterDomHandler(): void {
         this.parentElement.on("click", ".table-footer .footer-left .col-settings-trigger", (event): void => {
             const element = jQuery(event.target);
-            const settngsPopup = element.parent().next();
+            const settngsPopup = element.parents(".footer-left").children().last();
             this.onResize();
             settngsPopup.toggle();
             event.stopPropagation();

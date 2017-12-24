@@ -12,10 +12,7 @@
 </head>
 
 <body style="margin: 0px;">
-    <div>
-        <button onclick="hideRequest()">hide RequestId</button>
-    </div>
-    <div id="hi" style="height: 80%"></div>
+    <div id="hi" style="height: 80%;width: 80%;margin:auto;"></div>
     <span id="scroll"></span>
     <script>
         var columns = [
@@ -192,81 +189,6 @@
             grid.showAllColumns('ResourceRequestId');
         }
     </script>
-
-<div id="facet" style="height:80%;width:50%;margin:auto;"></div>
-<span id="scroll"></span>
-<script>
-    var facets = [
-        {
-            id: 'Role', facetable: true, name: 'Req.Role', width: '150', hidden: false
-        },
-        {
-            id: 'DeliveryCountryName', facetable: true, name: 'Delivery Loc. Country', width: '200', hidden: false, locked: false
-        },
-        {
-            id: 'ResourceRequestStatusEnum', facetable: true, name: 'Status', width: '150', hidden: false, renderHybrid: false
-        },
-        {
-            id: 'ResourceRequestSubStatusEnum', facetable: true, name: 'Sub-Status', width: '150', hidden: false
-        },
-        {
-            id: 'ResourceManagerName', facetable: true, name: 'Resource Manager', hidden: false, locked: false
-        }
-    ];
-    var renderFunction = function (col, row) {
-
-    }
-    var onClickHeader = function (col, diretion) {
-        alert('hi on click Header - ' + col + ' ' + diretion);
-    }
-    var onFilterChange = function (col, value, action) {
-        alert('hi on click filter - ' + col + ' ' + value + ' ' + action);
-    }
-    var onAllFilterRemove = function (pageIndex, pageSize) {
-        alert('hi on click filter - ' + pageIndex + ' ' + pageSize);
-    }
-    var facetValue = [];
-    for (let i = 0; i < 10; i ++) {
-        facetValue.push( {
-            count: 10 + i,
-            label: "Label" + i,
-            selected: i === 2 || i ==1,
-        });
-    }
-            
-    var filter = [];
-    filter.push({
-        filterKey: "city",
-        filterName: "City",
-        filterValues: ["Pune", "Mumbai"]
-    },{
-        filterKey: "Country",
-        filterName: "Country",
-        filterValues: ["India", "Pakistan"]
-    },{
-        filterKey: "Role",
-        filterName: "Role",
-        filterValues: ["Label2", "Label1"]
-    });
-    facetsData = facets.map((facetMeta) => {
-        return {
-            facetMeta,
-            facetRange: {
-                max: "",
-                min: "",
-            },
-            facetValues: facetValue,
-        };
-    });
-    var options = {
-        facets: facets,
-        onAllFilterRemove: onAllFilterRemove,
-        onFilterChange: onFilterChange,
-        containerElement: document.getElementById('hi'),
-    }
-    var grid = new Facetoo.Facet(options);
-    grid.Bind(facetsData,filter);
-</script>
 </body>
 
 </html>

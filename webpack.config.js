@@ -7,6 +7,7 @@ module.exports = {
   entry: __dirname + "/src/js/main/Grid.ts",
   devtool: "inline-source-map",
   output: {
+    path: path.resolve(__dirname, "dist"),
     filename: "gridoo-bundle.js",
     library: "Gridoo",
     libraryTarget: "umd"
@@ -16,7 +17,10 @@ module.exports = {
   },
   resolve: {
     modules: [path.resolve("./src"), "node_modules"], // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: ["*", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+    extensions: ["*", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+    alias: {
+      'handlebars' : 'handlebars/dist/handlebars.min.js'
+    }
   },
   node: {
     fs: "empty"

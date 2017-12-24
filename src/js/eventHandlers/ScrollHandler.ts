@@ -12,6 +12,7 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     private gridTemplateService: GridTemplateService<T>;
     private rendering: boolean =  false;
     private configStore: ConfigStore<T>;
+    private leftOffset: number;
 
     constructor(configStore: ConfigStore<T>, gridTemplateService: GridTemplateService<T>) {
         this.configStore = configStore;
@@ -19,7 +20,7 @@ export class ScrollHandler<T> implements IEventHandler<T> {
         this.gridTemplateService = gridTemplateService;
     }
     public onResize(): void {
-        // this.RegisterDomHandler();
+        this.leftOffset = this.parentElement.find(".table-header").offset().left;
     }
 
     public onDocumentClick(event): void {
@@ -29,9 +30,12 @@ export class ScrollHandler<T> implements IEventHandler<T> {
         // Registering JQuery Event Handler if Header is Clicked.
         this.parentElement.find(".table-body").on("scroll", (event) => {
             const tBodyObj = this.parentElement.find(".table-body");
+            if (this.leftOffset === undefined || this.leftOffset === null) {
+                this.leftOffset = this.parentElement.find(".table-header").offset().left;
+            }
             this.parentElement.find(".table-header").offset(
                 {
-                    left: -1 * tBodyObj.scrollLeft(),
+                    left: this.leftOffset + -1 * tBodyObj.scrollLeft(),
                     top: 0,
                 },
             );

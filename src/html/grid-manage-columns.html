@@ -1,16 +1,16 @@
-<div class="ui card" style="height: 100%;width: auto;padding: 5px;overflow:hidden;">
+<div class="ui grey card" style="height: 100%;width: auto;padding: 0.8em;overflow:hidden;">
     <div class="col-settings-header" style="width: 100%">
         <div class="ui mini fluid icon input">
             <input class="col-settings-filter" type="text" placeholder="Search filter...">
             <i class="search icon"></i>
         </div>
         <div class="ui buttons">
-            <button class="ui gray basic button show-all-column">Show All</button>
-            <button class="ui gray basic button hide-all-column">Hide All</button>
+            <button class="ui basic button show-all-column">Show All</button>
+            <button class="ui basic button hide-all-column">Hide All</button>
         </div>
     </div>
-    <div class="col-settings-table" style="overflow:auto;">
-        <table class="ui small very compact table">
+    <div class="col-settings-table" style="overflow:auto;padding:0.5em;">
+        <table class="ui small very border-less compact table">
             <tbody>
                 {{#each this}}
                 <tr data-header-id="{{name}}">

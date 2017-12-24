@@ -17,7 +17,7 @@
         flex: 5;
         padding-right: 17px;
     }
-    .table-footer{
+    .table-footer,.table-top{
         display: flex;
         height: 35px;
         padding: 5px;
@@ -50,10 +50,23 @@
         display:none;
         box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     }
+    .remove-label:hover{
+        text-decoration: line-through;
+        cursor: pointer;
+    }
+    .border-less tr td,.border-less { border: 0px !important; }
+    .cursor-pointer{
+        cursor: pointer;
+    }
+    .ui.supercompact.icon.button, .ui.supercompact.icon.buttons .button {
+        padding: .3em .3em .3em .3em !important;
+    }
 </style>
 <div class="inner-container ui fluid card" style="padding:0%;">
+    <div class="table-top ui inverted grey">
+    </div>
     <div class="table-header">
-        <table id="headertable" class="ui celled fixed single line small table mainTable">
+        <table id="headertable" class="ui fixed blue basic single line small table mainTable">
             <colgroup class="headerColGroup">
                 <col style="width:40px;" />
                 <col style="width:40px;" />
@@ -68,10 +81,10 @@
                     {{#each columns}}
                         <th id="header-{{id}}" data-header-id="{{id}}">
                             {{#if sortable}}
-                                <i class="fa fa-long-arrow-up" aria-hidden="true" style="display:none;"></i>                        
-                                <i class="fa fa-long-arrow-down" aria-hidden="true" style="display:none;"></i>
+                                <i class="long arrow up icon" aria-hidden="true" style="display:none;margin:0px;padding:0px;"></i>                        
+                                <i class="long arrow down icon" aria-hidden="true" style="display:none;margin:0px;padding:0px;"></i>
                             {{/if}}
-                            <span>{{name}}</span>
+                            <span class="ui sub blue header">{{name}}</span>
                         </th>
                     {{/each}}
                 </tr>
@@ -79,7 +92,7 @@
         </table>
     </div>
     <div class="table-body">
-        <table class="ui celled small compact fixed selectable single line table mainTable">
+        <table class="ui basic small compact fixed selectable single line table mainTable">
             <colgroup class="bodyColGroup">
                 <col style="width:40px;" /> 
                 <col style="width:40px;" />

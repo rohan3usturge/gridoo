@@ -10,12 +10,60 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <style>
+        .ui.card,
+        ui.menu {
+            margin: 0px !important;
+        }
+    </style>
 </head>
 
 <body style="margin: 0px;height:100%;weight:100%;">
     <div style="display: flex;height:100%;weight:100%;overflow: hidden;">
-        <div id="facet" style="flex:2;"></div>
-        <div id="grid" style="height:100%;overflow: hidden;flex:8"></div>
+        <div id="facet" style="flex:2;margin-right:1px;"></div>
+        <div style="height:100%;overflow: hidden;flex:10;display: flex;flex-direction: column">
+            <div class="ui menu" style="display:flex;">
+                <div class="item">
+                    Dashboard
+                </div>
+                <div class="item">
+                    Queries
+                </div>
+                <div class="item" style="flex:10;">
+                    <select class="ui search dropdown" style="border-right: none;">
+                        <option>Role</option>
+                        <option>Status</option>
+                        <option>Name</option>
+                        <option>Id</option>
+                        <option>Delivery Country</option>
+                    </select>
+                    <div id="input-search" class="ui search" style="width: 100%;">
+                        <div class="ui icon action input" style="width: 100%;">
+                            <input style="border-radius:0px" class="prompt" type="text" placeholder="Search Resource Requests....."/>
+                            <i class="search icon"></i>
+                            <button class="ui blue right labeled icon button">
+                                <i class="search icon"></i>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                <div class="ui medium icon buttons">
+                        <button class="ui button">
+                          <i class="save icon"></i>
+                        </button>
+                        <button class="ui button">
+                          <i class="file green excel outline icon"></i>
+                        </button>
+                        <button class="ui button">
+                          <i class="share icon"></i>
+                        </button>
+                      </div>
+                    </div>
+            </div>
+            <div id="grid" style="height:100%;overflow: hidden;flex:15;margin-top:1px"></div>
+        </div>
     </div>
 
     <script>
@@ -248,6 +296,47 @@
         }
         var facet = new Facetoo.Facet(options);
         facet.Bind(facetsData, filter);
+        $(".ui.search.dropdown").dropdown();
+        $('#input-search')
+  .search({
+    type          : 'category',
+    minCharacters : 3,
+    apiSettings   : {
+      onResponse: function(githubResponse) {
+        var
+          response = {
+            results : {}
+          }
+        ;
+        // translate GitHub API response to work with search
+        $.each(githubResponse.items, function(index, item) {
+          var
+            language   = item.language || 'Unknown',
+            maxResults = 8
+          ;
+          if(index >= maxResults) {
+            return false;
+          }
+          // create new language category
+          if(response.results[language] === undefined) {
+            response.results[language] = {
+              name    : language,
+              results : []
+            };
+          }
+          // add result to category
+          response.results[language].results.push({
+            title       : item.name,
+            description : item.description,
+            url         : item.html_url
+          });
+        });
+        return response;
+      },
+      url: 'https://api.github.com/search/repositories?q={query}'
+    }
+  })
+;
     </script>
 
 </body>
