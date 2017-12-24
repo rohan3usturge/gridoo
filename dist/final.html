@@ -5,6 +5,7 @@
         crossorigin="anonymous"></script>
     <script src="gridoo-bundle.js"></script>
     <script src="facetoo-bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/7.0.0/normalize.css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
         crossorigin="anonymous">
@@ -12,10 +13,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
     <style>
         .ui.card,
-        ui.menu {
+        .ui.menu {
             margin: 0px !important;
         }
+
+        .ui.category.search .results {
+            width: 100%;
+        }
     </style>
+    <script id="entry-template" type="text/x-handlebars-template">
+        <div class="ui fluid compact card" style="padding:0px;">
+            {{#eachInMap this}}
+            <div style="padding: 0px;display:flex" class="content">
+                <h5 class="ui category header" style="flex:2;margin:0px;padding:5px;">
+                    <a href="#">{{key}}</a>
+                    <div class="sub header">{{value.ProjectName}}</div>
+                    <div class="sub header">{{value.DemandSourceType}}</div>
+                </h5>
+                <table style="flex:4;border:none;margin:0px;padding:0px;" class="ui compact very collapsing small table" >
+                    <tbody>
+                        {{#each value.requests}}
+                        <tr>
+                            <td><a href="#">{{ResourceRequestId}}</a></td>
+                            <td>{{Role}}</td>
+                            <td>{{Country}}</td>
+                            <td>{{DemandSource}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            {{/eachInMap}}
+        </div>
+      </script>
 </head>
 
 <body style="margin: 0px;height:100%;weight:100%;">
@@ -39,7 +69,7 @@
                     </select>
                     <div id="input-search" class="ui search" style="width: 100%;">
                         <div class="ui icon action input" style="width: 100%;">
-                            <input style="border-radius:0px" class="prompt" type="text" placeholder="Search Resource Requests....."/>
+                            <input style="border-radius:0px" class="prompt" type="text" placeholder="Search Resource Requests....." />
                             <i class="search icon"></i>
                             <button class="ui blue right labeled icon button">
                                 <i class="search icon"></i>
@@ -49,24 +79,31 @@
                     </div>
                 </div>
                 <div class="item">
-                <div class="ui medium icon buttons">
+                    <div class="ui medium icon buttons">
                         <button class="ui button">
-                          <i class="save icon"></i>
+                            <i class="save icon"></i>
                         </button>
                         <button class="ui button">
-                          <i class="file green excel outline icon"></i>
+                            <i class="file green excel outline icon"></i>
                         </button>
                         <button class="ui button">
-                          <i class="share icon"></i>
+                            <i class="share icon"></i>
                         </button>
-                      </div>
                     </div>
+                </div>
             </div>
             <div id="grid" style="height:100%;overflow: hidden;flex:15;margin-top:1px"></div>
         </div>
     </div>
 
     <script>
+        Handlebars.registerHelper('eachInMap', function (map, block) {
+            var out = '';
+            Object.keys(map).map(function (prop) {
+                out += block.fn({ key: prop, value: map[prop] });
+            });
+            return out;
+        });
         var columns = [
             //{
             //    id: 'Imp', name: 'Imp', renderDefn: true, width: '100',  dropDownEnabled: true, ddFiltersWithSearch: true, hidden: false, widthLocked: true, renderHybrid: false
@@ -297,48 +334,78 @@
         var facet = new Facetoo.Facet(options);
         facet.Bind(facetsData, filter);
         $(".ui.search.dropdown").dropdown();
+        var source = document.getElementById("entry-template").innerHTML;
+        var template = Handlebars.compile(source);
         $('#input-search')
-  .search({
-    type          : 'category',
-    minCharacters : 3,
-    apiSettings   : {
-      onResponse: function(githubResponse) {
-        var
-          response = {
-            results : {}
-          }
-        ;
-        // translate GitHub API response to work with search
-        $.each(githubResponse.items, function(index, item) {
-          var
-            language   = item.language || 'Unknown',
-            maxResults = 8
-          ;
-          if(index >= maxResults) {
-            return false;
-          }
-          // create new language category
-          if(response.results[language] === undefined) {
-            response.results[language] = {
-              name    : language,
-              results : []
-            };
-          }
-          // add result to category
-          response.results[language].results.push({
-            title       : item.name,
-            description : item.description,
-            url         : item.html_url
-          });
-        });
-        return response;
-      },
-      url: 'https://api.github.com/search/repositories?q={query}'
-    }
-  })
-;
+            .search({
+                type: 'category',
+                minCharacters: 3,
+                onSelect: function(result, response){
+                    console.log(result);
+                    console.log(response);
+                },
+                templates: {
+                    category: function (response) {
+                        return template(response.results);
+                    },
+                },
+                apiSettings: {
+                    encodeParameters: true,
+                    beforeXHR: function (xhr) {
+                        xhr.setRequestHeader("api-key", "97FEC3C49C32A8B828370D33BB566BC9");
+                    },
+                    onResponse: function (githubResponse) {
+                        var
+                            response = {
+                                results: {}
+                            }
+                            ;
+                        // translate GitHub API response to work with search
+                        $.each(githubResponse.value, function (index, item) {
+                            var projectId = item.ProjectId || 'Unknown',
+                                maxResults = 8
+                                ;
+                            var projectName = item.ProjectName;
+                            if (index >= maxResults) {
+                                return false;
+                            }
+                            // create new language category
+                            if (response.results[projectId] === undefined) {
+                                response.results[projectId] = {
+                                    ProjectId: projectId,
+                                    ProjectName: projectName,
+                                    DemandSourceType: item.DemandSourceTypeEnum,
+                                    requests: []
+                                };
+                            }
+                            // add result to category
+                            response.results[projectId].requests.push({
+                                ResourceRequestId: item.ResourceRequestId,
+                                Role: item.Role,
+                                Country: item.DeliveryCountry
+                            });
+                        });
+                        return response;
+                    },
+                    url: 'https://grm-search-dev.search.windows.net/indexes/asgn-index/docs/suggest?$select=*&suggestername=asgn-suggst&api-version=2016-09-01&search={query}'
+                }
+            });
     </script>
 
+
+    <!-- <script type="text/javascript">
+    if (document.addEventListener) { // IE >= 9; other browsers
+        document.addEventListener('contextmenu', function(e) {
+            alert("You've tried to open context menu"); //here you draw your own menu
+            e.preventDefault();
+        }, false);
+    } else { // IE < 9
+        document.attachEvent('oncontextmenu', function() {
+            alert("You've tried to open context menu");
+            window.event.returnValue = false;
+        });
+    }
+</script> -->
 </body>
 
 </html>
