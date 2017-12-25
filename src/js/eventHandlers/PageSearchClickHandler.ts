@@ -22,24 +22,24 @@ export class PageSearchHandler<T> implements IEventHandler<T> {
     }
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-footer .firstLink", (event) => {
-            this.configStore.options.onPageSearch(1, Pager.PaginationData.pageSize);
+            this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, 1);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .nextLink", (event) => {
-            this.configStore.options.onPageSearch(Pager.PaginationData.pageIndex + 1, Pager.PaginationData.pageSize);
+            this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, Pager.PaginationData.pageIndex + 1);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .prevLink", (event) => {
-            this.configStore.options.onPageSearch(Pager.PaginationData.pageIndex - 1, Pager.PaginationData.pageSize);
+            this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, Pager.PaginationData.pageIndex - 1);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .lastLink", (event) => {
-            this.configStore.options.onPageSearch(Pager.PaginationData.noOfPages, Pager.PaginationData.pageSize);
+            this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, Pager.PaginationData.noOfPages);
             event.stopPropagation();
         });
         this.parentElement.on("change", ".table-footer .pageSizeSelector", (event) => {
             const val: number = +jQuery(event.target).val().toString();
-            this.configStore.options.onPageSearch(Pager.PaginationData.pageIndex, val);
+            this.configStore.options.onPageSearch(val, Pager.PaginationData.pageIndex);
             event.stopPropagation();
         });
         this.parentElement.on("keypress", ".table-footer .pager-input", (event) => {
@@ -50,7 +50,7 @@ export class PageSearchHandler<T> implements IEventHandler<T> {
                 if (isNaN(val) || val > pageData.noOfPages || val < 1) {
                     ip.val(pageData.pageIndex);
                 } else {
-                    this.configStore.options.onPageSearch(val, pageData.pageSize);
+                    this.configStore.options.onPageSearch(pageData.pageSize, val);
                 }
             }
             event.stopPropagation();
