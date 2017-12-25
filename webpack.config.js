@@ -1,6 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
-
+var DeclarationBundlerPlugin = require('./plugins/declaration-bundler');
 
 module.exports = {
   target: "web",
@@ -50,5 +50,11 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+      new DeclarationBundlerPlugin({
+          moduleName:'Gridoo',
+          out:'./grido-index.d.ts',
+      })
+  ]
 };

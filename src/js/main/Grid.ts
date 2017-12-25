@@ -32,9 +32,16 @@ export class Grid<T> {
         this.InitHandlers();
     }
 
+    public showLoader = (): void => {
+        jQuery(this.configStore.Options.containerElement).find(".grid-loader").addClass("active");
+    }
+    public hideLoader = (): void => {
+        jQuery(this.configStore.Options.containerElement).find(".grid-loader").remove("active");
+    }
     public bindData = (data: T[], paginationInput?: IPaginationInput): void => {
         const firstIndex = 0;
-        const lastIndex = this.configStore.Options.chunkSize + this.getInitialRowCount();
+        let lastIndex = this.configStore.Options.chunkSize + this.getInitialRowCount();
+        lastIndex = lastIndex > data.length ? data.length - 1 : lastIndex;
         Pager.CalculatePaginationData(paginationInput);
         const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
                                                                               firstIndex,
