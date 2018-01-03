@@ -8,7 +8,7 @@
     "dev": "npm run lint && npm run clean && npm run webpackwatch",
     "clean": "rimraf ./dist",
     "lint": "tslint -c tslint.json 'src/*.ts'",
-    "webpack": "webpack --progress --colors --config webpack.config.js --output-path ./dist",
+    "webpack": "webpack --progress --colors --config webpack.config.js --output-path ./dist -p",
     "webpackwatch": "webpack --watch --progress --colors --config webpack.config.js --output-path ./dist -p"
   },
   "repository": {

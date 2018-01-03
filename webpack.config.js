@@ -59,7 +59,9 @@ module.exports = {
         use: {
           loader: 'html-loader',
           options: {
-            attrs: [':data-src']
+            minimize: false,
+            removeComments: true,
+            collapseWhitespace: true
           }
         }
       }
