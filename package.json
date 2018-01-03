@@ -2,7 +2,6 @@
   "name": "gridoo",
   "version": "1.0.0",
   "description": "Simple Virtualized Grid with paging and auto scrollable fixed to container, with detailed rows",
-  "main": "index.js",
   "scripts": {
     "build": "npm run lint && npm run clean && npm run webpack",
     "dev": "npm run lint && npm run clean && npm run webpackwatch",
