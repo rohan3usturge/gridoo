@@ -2,19 +2,19 @@ var path = require("path");
 var webpack = require("webpack");
 var libraryName = "Gridoo";
 function DtsBundlePlugin(){}
-DtsBundlePlugin.prototype.apply = function (compiler) {
-  compiler.plugin('done', function(){
-    var dts = require('dts-bundle');
+  DtsBundlePlugin.prototype.apply = function (compiler) {
+    compiler.plugin('done', function(){
+      var dts = require('dts-bundle');
 
-    dts.bundle({
-      name: libraryName,
-      main: 'dist/src/js/main/Grid.d.ts',
-      out: '../index.d.ts',
-      baseDir: "dist",
-      removeSource: true,
-      outputAsModuleFolder: true // to use npm in-package typings
+      dts.bundle({
+        name: libraryName,
+        main: 'dist/src/js/main/Grid.d.ts',
+        out: '../index.d.ts',
+        baseDir: "dist",
+        removeSource: true,
+        outputAsModuleFolder: true // to use npm in-package typings
+      });
     });
-  });
 };
 module.exports = {
   target: "web",
