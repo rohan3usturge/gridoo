@@ -9,7 +9,7 @@ export interface IGridOptions<T> {
     hybridFunction: IRenderHybridDelegate<T>;
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
-    containerElement: Element;
+    containerElement: HTMLElement | null;
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: 5;
 }

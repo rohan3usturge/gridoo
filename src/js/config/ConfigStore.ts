@@ -24,6 +24,9 @@ export class ConfigStore<T> {
     };
     constructor(options: IGridOptions<T>) {
         this.extendOptions(options);
+        if (options.containerElement === null) {
+            throw new Error("Please Provide a valid container Element object");
+        }
     }
     public set Options(options: IGridOptions<T>) {
         this.options = options;

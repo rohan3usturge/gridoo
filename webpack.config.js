@@ -1,7 +1,21 @@
 var path = require("path");
 var webpack = require("webpack");
-var DeclarationBundlerPlugin = require('./plugins/declaration-bundler');
+var libraryName = "Gridoo";
+function DtsBundlePlugin(){}
+DtsBundlePlugin.prototype.apply = function (compiler) {
+  compiler.plugin('done', function(){
+    var dts = require('dts-bundle');
 
+    dts.bundle({
+      name: libraryName,
+      main: 'dist/src/js/main/Grid.d.ts',
+      out: '../index.d.ts',
+      baseDir: "dist",
+      removeSource: true,
+      outputAsModuleFolder: true // to use npm in-package typings
+    });
+  });
+};
 module.exports = {
   target: "web",
   entry: __dirname + "/src/js/main/Grid.ts",
@@ -9,7 +23,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "gridoo-bundle.js",
-    library: "Gridoo",
+    library: libraryName,
     libraryTarget: "umd"
   },
   externals: {
@@ -51,10 +65,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-      new DeclarationBundlerPlugin({
-          moduleName:'Gridoo',
-          out:'./grido-index.d.ts',
-      })
-  ]
+  plugins: [ new DtsBundlePlugin()]
 };
