@@ -1,5 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 var libraryName = "Gridoo";
 function DtsBundlePlugin(){}
   DtsBundlePlugin.prototype.apply = function (compiler) {
@@ -27,14 +29,12 @@ module.exports = {
     libraryTarget: "umd"
   },
   externals: {
-    jquery : 'jQuery'
+    jquery : 'jQuery',
+    handlebars: 'Handlebars'
   },
   resolve: {
     modules: [path.resolve("./src"), "node_modules"], // Add `.ts` and `.tsx` as a resolvable extension.
-    extensions: ["*", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
-    alias: {
-      'handlebars' : 'handlebars/dist/handlebars.min.js'
-    }
+    extensions: ["*", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
   },
   node: {
     fs: "empty"
@@ -67,5 +67,7 @@ module.exports = {
       }
     ]
   },
-  plugins: [ new DtsBundlePlugin()]
+  plugins: [
+    new DtsBundlePlugin()
+  ]
 };

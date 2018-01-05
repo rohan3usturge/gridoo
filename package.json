@@ -1,14 +1,13 @@
 {
   "name": "gridoo",
-  "version": "1.0.2",
-  "description":
-    "Simple Virtualized Grid with paging and auto scrollable fixed to container, with detailed rows",
+  "version": "1.0.6",
+  "description": "Simple Virtualized Grid with paging and auto scrollable fixed to container, with detailed rows",
   "scripts": {
     "build": "npm run lint && npm run clean && npm run webpack && rimraf ./dist/src",
     "dev": "npm run lint && npm run clean && npm run webpackwatch",
     "clean": "rimraf ./dist",
     "lint": "tslint -c tslint.json 'src/*.ts'",
-    "webpack": "webpack --progress --colors --config webpack.config.js --output-path ./dist -p",
+    "webpack": "webpack --progress --colors --config webpack.config.js --output-path ./dist",
     "webpackwatch": "webpack --watch --progress --colors --config webpack.config.js --output-path ./dist -p"
   },
   "repository": {
@@ -32,10 +31,10 @@
     "tslint-loader": "^3.5.3",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
-    "handlebars": "^4.0.11",
-    "jquery": "^3.2.1"
+    "handlebars": "^4.0.11"
   }
 }
