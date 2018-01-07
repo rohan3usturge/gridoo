@@ -1,0 +1,26 @@
+<tr class="detailsRow" style="display:none;">
+    <td colspan="{{length}}">
+        <table class="ui very compact selectable celled table detailsTable" style="width: auto;">
+            <tbody>
+                {{#each mainRowColArray}}
+                <tr>
+                    <td valign="top" data-filter-key="{{id}}" data-filter-value="{{actualValue}}">
+                        <span>{{columnName}}</span>
+                        {{#if filterable}}
+                            <span class="ui mini basic icon very supercompact buttons top aligned" style="margin-left: 5px;">
+                                <button class="ui mini icon button expand-all">
+                                    <i class="add icon addFilter"></i>
+                                </button>
+                                <button class="ui mini icon button collapse-all">
+                                    <i class="minus icon removeFilter"></i>
+                                </button>
+                            </span>
+                        {{/if}}
+                    </td>
+                    <td>{{{columnValue}}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </td>
+</tr>

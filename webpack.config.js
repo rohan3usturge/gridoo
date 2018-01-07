@@ -41,6 +41,14 @@ module.exports = {
   },
   module: {
     rules: [
+      { test: /\.handlebars$/,
+        loader: "handlebars-loader",
+        options: {
+            helperDirs: [
+              __dirname + "/src/hbs/helpers",
+            ]
+        }
+      },
       {
         test: /\.tsx?$/,
         enforce: "pre",

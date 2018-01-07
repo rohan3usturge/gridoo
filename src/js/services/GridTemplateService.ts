@@ -1,9 +1,9 @@
 import * as Handlebars from "handlebars";
-import * as GridDetailsRowTemplate from "../../html/grid-details-row.html";
-import * as GridFooter from "../../html/grid-footer.html";
-import * as GridMainRowTemplate from "../../html/grid-main-row.html";
-import * as ManageColumnTemplate from "../../html/grid-manage-columns.html";
-import * as GridTemplate from "../../html/grid.html";
+import * as GridDetailsRowTemplate from "../../hbs/grid-details-row.handlebars";
+import * as GridFooter from "../../hbs/grid-footer.handlebars";
+import * as GridMainRowTemplate from "../../hbs/grid-main-row.handlebars";
+import * as ManageColumnTemplate from "../../hbs/grid-manage-columns.handlebars";
+import * as GridTemplate from "../../hbs/grid.handlebars";
 import { ConfigStore } from "../config/ConfigStore";
 import { IPagination } from "../models/IPagination";
 import { Pager } from "../pagination/Pager";
@@ -19,17 +19,12 @@ export class GridTemplateService <T> {
     private templateFunctionForManageCol: any;
 
     constructor(configStore: ConfigStore<T>) {
-        this.registerHandlerBarHelper();
-        this.registerSelectedHelper();
-        this.registerDisabledHelper();
-        this.registerMathHelper();
-        this.registerCheckedHelper();
         this.configStore = configStore;
-        this.templateFunctionForGrid = Handlebars.compile(GridTemplate);
-        this.templateFunctionForMainRow = Handlebars.compile(GridMainRowTemplate);
-        this.templateFunctionForDetailsRow = Handlebars.compile(GridDetailsRowTemplate);
-        this.templateFunctionForFooter = Handlebars.compile(GridFooter);
-        this.templateFunctionForManageCol = Handlebars.compile(ManageColumnTemplate);
+        this.templateFunctionForGrid = GridTemplate;
+        this.templateFunctionForMainRow = GridMainRowTemplate;
+        this.templateFunctionForDetailsRow = GridDetailsRowTemplate;
+        this.templateFunctionForFooter = GridFooter;
+        this.templateFunctionForManageCol = ManageColumnTemplate;
     }
 
     public get DataLength(): number {
@@ -37,81 +32,39 @@ export class GridTemplateService <T> {
     }
     public GetFirstTemplate = (data: T[], firstIndex: number, lastIndex: number): string => {
         this.data = data;
-        const tBodyContent = this.GetRowsHtml(firstIndex, lastIndex);
-        const manageColumnHtml = this.templateFunctionForManageCol(this.configStore.Options.columns);
-        const tableFooterContent = this.templateFunctionForFooter({paginationData : Pager.PaginationData,
-                                                                     manageColumnHtml});
+        const mainRowArray = this.GetRowsHtml(firstIndex, lastIndex);
         return this.templateFunctionForGrid({
             columns: this.configStore.Options.columns,
-            tBodyContent, tableFooterContent,
+            mainRowArray,
+            paginationData: Pager.PaginationData,
         });
     }
 
-    public GetRowsHtml = (firstIndex: number, lastIndex: number): string => {
-        let tBodyContent: string = "";
+    public GetRowsHtml = (firstIndex: number, lastIndex: number): any[] => {
+        const mainRowArray: any[] = [];
         const length = this.configStore.Options.columns.length + 1;
         for (let i = firstIndex; i <= lastIndex; i++) {
             const row: T = this.data[i];
-            const detailsArray: any[] = [];
-            const mainArray: any[] = [];
-            this.configStore.Options.columns.forEach((col: IColumn) => {
+            const mainRowColArray: any[] = [];
+            for (const col of this.configStore.Options.columns) {
                 let columnValue = row[col.id];
                 if (col.renderHybrid) {
                     columnValue = this.configStore.Options.hybridFunction(col, row);
                 }
-                mainArray.push({columnValue, hidden: col.hidden});
-                detailsArray.push({
-                    actualValue: row[col.id],
-                    columnName: col.name,
+                mainRowColArray.push({
                     columnValue,
                     hidden: col.hidden,
+                    actualValue: row[col.id],
+                    columnName: col.name,
                     id: col.id,
                     filterable: col.filterable,
                 });
+            }
+            mainRowArray.push({
+                mainRowColArray,
+                length: this.configStore.Options.columns.length,
             });
-            const mainRowStr = this.templateFunctionForMainRow(mainArray);
-            tBodyContent += mainRowStr;
-            const detailRowStr = this.templateFunctionForDetailsRow({length, detailsArray});
-            tBodyContent += detailRowStr;
         }
-        return tBodyContent;
-    }
-
-    private registerHandlerBarHelper = (): void => {
-        Handlebars.registerHelper("col", (col): string => {
-            const calcWidth: number = col.hidden ? 0 : col.width;
-            const dataAttrId = 'data-header-id="' + col.id + '"';
-            return '<col style="width : ' + calcWidth + 'px;"' + dataAttrId + " />";
-        });
-    }
-
-    private registerDisabledHelper = (): void => {
-        Handlebars.registerHelper("isDisabled", (bool: boolean): string => {
-            return bool ? "disabled" : "";
-        });
-    }
-
-    private registerSelectedHelper = (): void => {
-        Handlebars.registerHelper("isSelected", (input: number, value: number): string => {
-            return input === value ? "selected" : "";
-        });
-    }
-
-    private registerMathHelper = (): void => {
-        Handlebars.registerHelper("math", (lvalue: number, operator: string, rvalue: number, options): number => {
-            return {
-                "+": lvalue + rvalue,
-                "-": lvalue - rvalue,
-                "*": lvalue * rvalue,
-                "/": lvalue / rvalue,
-                "%": lvalue % rvalue,
-            }[operator];
-        });
-    }
-
-    private registerCheckedHelper = (): void => {
-        Handlebars.registerHelper("isChecked", (bool: boolean): string => {
-            return !bool ? "checked" : "";
-        });
+        return mainRowArray;
     }
 }

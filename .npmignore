@@ -1,0 +1,18 @@
+# Do not include Src and Test
+src
+test
+.vscode
+
+# Build Config
+tsconfig.json
+tslint.json
+webpack.config.js
+webpack*.config.js
+yarn.lock
+*.tgz
+
+# Exlcude index.html
+index.html
+
+# Error log
+*-error.log
