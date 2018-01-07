@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="dist/gridoo-bundle.js"></script>
+    <script>
+        const cols = [];
+        for(var i=0; i< 100; i++){
+            cols.push({
+                id: "id"+ i,
+                name: "Name"+i,
+                hidden: false,
+                width: 100,
+                renderHybrid: false,
+                sortable: true,
+                filterable: true,
+            });
+        };
+        const data = [];
+        for(var i=0; i< 1000; i++){
+            var row = {};
+            for(var j=0; j< cols.length; j++){
+                const name = cols[j];
+                row[name.id] = "Data-Row-" + i + "-Col-" + j; 
+            }
+            data.push(row);
+        };
+    </script>
+
+</head>
+
+<body>
+    <button onclick="addFilters()">Add Filters</button>
+    <button onclick="addFilters1()">Add Filters 1</button>
+
+    <div id="hi"></div>
+    <script>
+        
+        var options = {
+            columns: cols,
+            chunkSize: 5,
+            containerElement: document.getElementById("hi")
+        };
+        var paginationInput = {
+            totalCount: 1000,
+            pageSize: 50,
+            pageIndex: 1,
+            pageSizes: [50,100,500,1000],
+        };
+        var grid = new Gridoo.Grid(options);
+        function addFilters(){
+            grid.bindData(data, paginationInput);
+        }
+    </script>
+</body>
+
+</html>
