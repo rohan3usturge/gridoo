@@ -1,9 +1,9 @@
 import * as Handlebars from "handlebars";
-import * as GridDetailsRowTemplate from "../../hbs/grid-details-row.handlebars";
-import * as GridFooter from "../../hbs/grid-footer.handlebars";
-import * as GridMainRowTemplate from "../../hbs/grid-main-row.handlebars";
-import * as ManageColumnTemplate from "../../hbs/grid-manage-columns.handlebars";
-import * as GridTemplate from "../../hbs/grid.handlebars";
+import * as GridDetailsRowTemplate from "../../hbs/grid-details-row.hbs";
+import * as GridFooter from "../../hbs/grid-footer.hbs";
+import * as GridMainRowTemplate from "../../hbs/grid-main-row.hbs";
+import * as ManageColumnTemplate from "../../hbs/grid-manage-columns.hbs";
+import * as GridTemplate from "../../hbs/grid.hbs";
 import { ConfigStore } from "../config/ConfigStore";
 import { IPagination } from "../models/IPagination";
 import { Pager } from "../pagination/Pager";

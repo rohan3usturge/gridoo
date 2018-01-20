@@ -3,12 +3,22 @@
   "version": "1.0.8",
   "description": "Simple Virtualized Grid with paging and auto scrollable fixed to container, with detailed rows",
   "scripts": {
-    "build": "npm run lint && npm run clean && npm run webpack && rimraf ./dist/src",
-    "dev": "npm run lint && npm run clean && npm run webpackwatch",
-    "clean": "rimraf ./dist",
-    "lint": "tslint -c tslint.json 'src/*.ts'",
-    "webpack": "webpack --progress --colors --config webpack.config.js --output-path ./dist",
-    "webpackwatch": "webpack --watch --progress --colors --config webpack.config.js --output-path ./dist -p"
+    "clean": "rimraf dist",
+    "postBuildClean": "rimraf ./dist/src",
+    "build": "yarn run clean && webpack --config webpack.config.js --bail --env.build --env.sourceMap && yarn postBuildClean",
+    "local": "yarn build --env.local",
+    "dev": "webpack-dashboard -m -- webpack-dev-server --config webpack.config.js --open",
+    "dev2": "webpack-dashboard -m -- webpack-dev-server --config webpack.config.js --open --env.awesome",
+    "analyze": "yarn run clean && webpack --config webpack.config.js --bail --env.build --env.analyze && yarn postBuildClean",
+    "lint": "tslint --project tsconfig.json",
+    "tsc": "tsc -p . --noEmit",
+    "tsc:watch": "tsc -p . --noEmit -w",
+    "test": "jest --config jest.json",
+    "test:update": "jest --config jest.json -u",
+    "reinstall": "rm -rf node_modules && yarn",
+    "reinstall:win": "rd /s /q node_modules && yarn",
+    "deploy": "echo 'deploy not set!'",
+    "auth": "vsts-npm-auth -config .npmrc"
   },
   "repository": {
     "type": "git",
@@ -22,20 +32,24 @@
   "license": "MIT",
   "devDependencies": {
     "@types/handlebars": "^4.0.36",
-    "@types/jquery": "^3.2.16",
-    "bower": "^1.8.2",
+    "@types/jquery": "^3.2.17",
+    "awesome-typescript-loader": "^3.4.1",
     "dts-bundle": "^0.7.3",
+    "handlebars": "^4.0.11",
+    "handlebars-loader": "^1.6.0",
     "html-loader": "^0.5.1",
+    "html-webpack-plugin": "^2.30.1",
+    "husky": "^0.14.3",
+    "jest": "^22.1.4",
+    "ts-jest": "^22.0.1",
     "ts-loader": "^3.2.0",
     "tslint": "^5.8.0",
     "tslint-loader": "^3.5.3",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.9.1",
-    "webpack-dev-server": "^2.9.7",
-    "handlebars-loader": "^1.6.0"
+    "webpack-dashboard": "^1.0.2",
+    "webpack-dev-server": "^2.9.7"
   },
-  "dependencies": {
-    "handlebars": "^4.0.11"
-  }
+  "dependencies": {}
 }

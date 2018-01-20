@@ -2,8 +2,6 @@
 
 export class Grid<T> {
     constructor(options: IGridOptions<T>);
-    showLoader: () => void;
-    hideLoader: () => void;
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
 }
 
