@@ -230,7 +230,7 @@ function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj);
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "                <tr>\r\n                    <td valign=\"top\" data-filter-key=\""
+  return "                <tr>\r\n                    <td class=\"gui rv-parent\" valign=\"top\" data-filter-key=\""
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + "\" data-filter-value=\""
     + alias4(((helper = (helper = helpers.actualValue || (depth0 != null ? depth0.actualValue : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"actualValue","hash":{},"data":data}) : helper)))
@@ -242,15 +242,15 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + ((stack1 = ((helper = (helper = helpers.columnValue || (depth0 != null ? depth0.columnValue : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"columnValue","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "</td>\r\n                </tr>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {
-    return "                            <span class=\"gui mini basic icon very supercompact buttons top aligned\" style=\"margin-left: 5px;\">\r\n                                <button class=\"gui mini icon button expand-all\">\r\n                                    <i class=\"add icon addFilter\"></i>\r\n                                </button>\r\n                                <button class=\"gui mini icon button collapse-all\">\r\n                                    <i class=\"minus icon removeFilter\"></i>\r\n                                </button>\r\n                            </span>\r\n";
+    return "                        <span class=\"gui m-l-5 rv-child gui-caption\" >\r\n                            <i class=\"gui gui-icon gui-icon-add hover m-l-5 cursor-pointer addFilter\"></i>\r\n                            <i class=\"gui gui-icon gui-icon-minus hover m-l-5 cursor-pointer removeFilter\"></i>\r\n                        </span>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
-  return "<tr class=\"detailsRow\" style=\"display:none;\">\r\n    <td colspan=\""
+  return "<tr class=\"gui hidden detailsRow\">\r\n    <td colspan=\""
     + container.escapeExpression(((helper = (helper = helpers.length || (depth0 != null ? depth0.length : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"length","hash":{},"data":data}) : helper)))
-    + "\">\r\n        <table class=\"gui very compact selectable celled table detailsTable\" style=\"width: auto;\">\r\n            <tbody>\r\n"
+    + "\">\r\n        <table class=\"gui very compact selectable celled table detailsTable m-l-10 p-5\" style=\"width: auto;\" >\r\n            <tbody>\r\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.mainRowColArray : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "            </tbody>\r\n        </table>\r\n    </td>\r\n</tr>\r\n";
+    + "            </tbody>\r\n        </table>\r\n    </td>\r\n</tr>";
 },"useData":true});
 
 /***/ }),
@@ -267,7 +267,7 @@ function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj);
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=container.escapeExpression;
 
-  return "            <option "
+  return "        <option "
     + alias1(__default(__webpack_require__(/*! ./src/hbs/helpers/Selected.ts */ 26)).call(depth0 != null ? depth0 : (container.nullContext || {}),((stack1 = (depths[1] != null ? depths[1].paginationData : depths[1])) != null ? stack1.pageSize : stack1),depth0,{"name":"Selected","hash":{},"data":data}))
     + ">"
     + alias1(container.lambda(depth0, depth0))
@@ -275,15 +275,15 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.escapeExpression, alias3=container.lambda;
 
-  return "<div class=\"footer-left\" style=\"display:absoulte;\">\r\n    <div class=\"gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button col-settings-trigger\" aria-label=\"Manage Grid Column Settings\"\r\n        title=\"Manage Grid Column Settings\" tabindex=\"1\">\r\n            <i class=\"columns icon\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button col-sorting-reset-trigger\" aria-label=\"Clear Sorting\"\r\n        title=\"Clear Sorting\" tabindex=\"2\">\r\n            <i class=\"unordered list icon\"></i>\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
+  return "<div class=\"footer-left\" style=\"display:absoulte;\">\r\n    <div class=\"gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button gui-caption col-settings-trigger\" aria-label=\"Manage Grid Column Settings\" title=\"Manage Grid Column Settings\"\r\n            tabindex=\"1\">\r\n            <i class=\"gui-icon gui-icon-repair\"></i>\r\n            Manage Columns\r\n        </button>\r\n        <button class=\"gui mini compact icon button gui-caption col-sorting-reset-trigger\" aria-label=\"Clear Sorting\" title=\"Clear Sorting\"\r\n            tabindex=\"2\">\r\n            <i class=\"gui-icon gui-icon-sort\"></i>\r\n            Clear Sorting\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-manage-columns.hbs */ 8),depth0,{"name":"grid-manage-columns","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "</div>\r\n</div>\r\n<div data-role=\"pager\" class=\"footer-middle\">\r\n    <div class=\"margin-auto gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button firstLink\" aria-hidden=\"true\" "
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.firstPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
-    + " aria-label=\"Go to the first page\"\r\n            title=\"Go to the first page\" data-page=\"1\" tabindex=\"-1\">\r\n            <i class=\"fast backward icon\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button prevLink\" aria-hidden=\"true\" "
+    + "\r\n            aria-label=\"Go to the first page\" title=\"Go to the first page\" data-page=\"1\" tabindex=\"-1\">\r\n            <i class=\"gui-icon gui-icon-fast-backward\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button prevLink\" aria-hidden=\"true\" "
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.prevPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
-    + " aria-label=\"Go to the previous page\"\r\n            title=\"Go to the previous page\" data-page=\""
+    + "\r\n            aria-label=\"Go to the previous page\" title=\"Go to the previous page\" data-page=\""
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/math.ts */ 9)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1),"-",1,{"name":"math","hash":{},"data":data}))
-    + "\" tabindex=\"-1\">\r\n            <i class=\"backward icon\"></i>\r\n        </button>\r\n    </div>\r\n    <div class=\"margin-side-10 pager-input-container gui input\">\r\n        <span class=\"margin-auto\"> Page </span>\r\n        <input class=\"margin-side-10 pager-input\" aria-label=\"1\" value=\""
+    + "\"\r\n            tabindex=\"-1\">\r\n            <i class=\"gui-icon gui-icon-previous\"></i>\r\n        </button>\r\n    </div>\r\n    <div class=\"gui m-r-10 m-l-10 pager-input-container gui input\">\r\n        <span class=\"margin-auto\"> Page </span>\r\n        <input class=\"gui m-r-10 m-l-10 pager-input\" aria-label=\"1\" value=\""
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1), depth0))
     + "\" type=\"text\" placeholder=\"Page Number ...\">\r\n        <span class=\"margin-auto no-of-pages-scan\" data-number-of-pages=\""
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.noOfPages : stack1), depth0))
@@ -291,13 +291,13 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.noOfPages : stack1), depth0))
     + "</span>\r\n    </div>\r\n    <div class=\"margin-auto gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button nextLink\" aria-hidden=\"true\" "
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.nextPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
-    + " aria-label=\"Go to the next page\"\r\n            title=\"Go to the next page\" class=\"gui button\" data-page=\""
+    + "\r\n            aria-label=\"Go to the next page\" title=\"Go to the next page\" class=\"gui button\" data-page=\""
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/math.ts */ 9)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1),"+",1,{"name":"math","hash":{},"data":data}))
-    + "\" tabindex=\"-1\">\r\n            <i class=\"forward icon\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button lastLink\" aria-hidden=\"true\" "
+    + "\"\r\n            tabindex=\"-1\">\r\n            <i class=\"gui-icon gui-icon-next\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button lastLink\" aria-hidden=\"true\" "
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.lastPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
-    + " aria-label=\"Go to the last page\"\r\n            title=\"Go to the last page\" data-page=\""
+    + "\r\n            aria-label=\"Go to the last page\" title=\"Go to the last page\" data-page=\""
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.noOFpages : stack1), depth0))
-    + "\" tabindex=\"-1\">\r\n            <i class=\"fast forward icon\"></i>\r\n        </button>\r\n    </div>\r\n</div>\r\n<div class=\"footer-right\">\r\n    <select class=\"margin-side-10 pageSizeSelector\">\r\n"
+    + "\" tabindex=\"-1\">\r\n            <i class=\"gui-icon gui-icon-fast-forward\"></i>\r\n        </button>\r\n    </div>\r\n</div>\r\n<div class=\"footer-right\">\r\n    <select class=\"gui m-r-10 m-l-10 pageSizeSelector\">\r\n"
     + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageSizes : stack1),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "    </select>\r\n    <span class=\"margin-auto\">"
     + alias2(alias3(((stack1 = ((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.range : stack1)) != null ? stack1.min : stack1), depth0))
@@ -377,14 +377,15 @@ function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj);
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "    <tr class=\"mainRow\">\r\n        <td class=\"expansionArrows\" style=\"display:flex;justify-content:center;\">\r\n            <button class=\"gui mini compact icon button\">\r\n                <i class=\"right triangle icon expandDetailsRowIcon\" aria-hidden=\"true\" style=\"cursor:pointer\"></i>\r\n                <i class=\"down triangle icon CollapseDetailsRowIcon\" aria-hidden=\"true\" style=\"cursor:pointer;display:none;\"></i>\r\n            </button>\r\n        </td>\r\n        <td>\r\n            <input type=\"checkbox\">\r\n        </td>\r\n"
+  return "<tr class=\"mainRow\">\r\n    <td class=\"expansionArrows\" style=\"display:flex;justify-content:center;\">\r\n        <i class=\"gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer\" aria-hidden=\"true\"></i>\r\n        <i class=\"gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer hidden\" aria-hidden=\"true\"></i>\r\n    </td>\r\n    <td>\r\n        <input type=\"checkbox\">\r\n    </td>\r\n"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.mainRowColArray : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "    </tr>\r\n"
-    + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-details-row.hbs */ 6),depth0,{"name":"grid-details-row","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+    + "</tr>\r\n"
+    + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-details-row.hbs */ 6),depth0,{"name":"grid-details-row","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + " ";
 },"2":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "            <td>"
+  return "    <td>"
     + ((stack1 = container.lambda((depth0 != null ? depth0.columnValue : depth0), depth0)) != null ? stack1 : "")
     + "</td>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
@@ -1401,19 +1402,19 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + alias2(alias1((depth0 != null ? depth0.name : depth0), depth0))
     + "</span>\n                        </th>\n";
 },"4":function(container,depth0,helpers,partials,data) {
-    return "                                <i class=\"long arrow up icon\" aria-hidden=\"true\" style=\"display:none;margin:0px;padding:0px;\"></i>                        \n                                <i class=\"long arrow down icon\" aria-hidden=\"true\" style=\"display:none;margin:0px;padding:0px;\"></i>\n";
+    return "                                <i class=\"gui gui-icon gui-icon-arrow-up hidden\" aria-hidden=\"true\" ></i>                        \n                                <i class=\"gui gui-icon gui-icon-arrow-down hidden\" aria-hidden=\"true\" ></i>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
-  return "<style>\n    .inner-container {\n        height: 100%;\n        overflow: hidden;\n        width: 100%;\n        display: flex;\n        flex-direction: column;\n    }\n\n    .table-header {\n        position: relative;\n        top:0 !important;\n    }\n\n    .table-body {\n        overflow: auto;\n        flex: 5;\n        padding-right: 17px;\n    }\n    .table-footer,.table-top{\n        display: flex;\n        height: 35px;\n        padding: 5px;\n        justify-content: space-between;\n        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;\n    }\n    .table-footer .footer-middle{\n        display: flex;\n    }\n    .table-footer .footer-right{\n        display: flex;\n    }\n    .margin-auto{\n        margin: auto !important;\n    }\n    .margin-side-10{\n        margin: 0px 10px 0px 10px !important;\n    }\n    .pager-input-container .pager-input{\n        width: 50px;\n    }\n    .column-settings-container{\n        position:absolute !important;\n        z-index:1000 !important;\n        bottom:35px !important;\n        left: 5px;\n        display:none;\n        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;\n    }\n    .remove-label:hover{\n        text-decoration: line-through;\n        cursor: pointer;\n    }\n    .border-less tr td,.border-less { border: 0px !important; }\n    .cursor-pointer{\n        cursor: pointer;\n    }\n    .ui.supercompact.icon.button, .ui.supercompact.icon.buttons .button {\n        padding: .3em .3em .3em .3em !important;\n    }\n</style>\n<div class=\"inner-container gui fluid card\" style=\"padding:0%;\">\n    <div class=\"table-header\">\n        <table id=\"headertable\" class=\"gui fixed blue basic single line small table mainTable\">\n            <colgroup class=\"headerColGroup\">\n                <col style=\"width:40px;\" />\n                <col style=\"width:40px;\" />\n"
+  return "<style>\n    .inner-container {\n        height: 100%;\n        overflow: hidden;\n        width: 100%;\n        display: flex;\n        flex-direction: column;\n    }\n\n    .table-header {\n        position: relative;\n        top:0 !important;\n    }\n\n    .table-body {\n        overflow: auto;\n        flex: 5;\n        padding-right: 17px;\n    }\n    .table-footer,.table-top{\n        display: flex;\n        height: 35px;\n        padding: 5px;\n        justify-content: space-between;\n    }\n    .table-footer .footer-middle{\n        display: flex;\n    }\n    .table-footer .footer-right{\n        display: flex;\n    }\n    .margin-auto{\n        margin: auto !important;\n    }\n    .pager-input-container .pager-input{\n        width: 50px;\n    }\n    .column-settings-container{\n        position:absolute !important;\n        z-index:1000 !important;\n        bottom:35px !important;\n        left: 5px;\n        display:none;\n        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;\n    }\n    .remove-label:hover{\n        text-decoration: line-through;\n        cursor: pointer;\n    }\n    .border-less tr td,.border-less { border: 0px !important; }\n    .cursor-pointer{\n        cursor: pointer;\n    }\n    .ui.supercompact.icon.button, .ui.supercompact.icon.buttons .button {\n        padding: .3em .3em .3em .3em !important;\n    }\n</style>\n<div class=\"inner-container gui fluid container\" style=\"padding:0%;\">\n    <div class=\"table-header\">\n        <table id=\"headertable\" class=\"gui small inverted primary compact fixed selectable single line table mainTable\">\n            <colgroup class=\"headerColGroup\">\n                <col style=\"width:40px;\" />\n                <col style=\"width:40px;\" />\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "            </colgroup>\n            <thead>\n                <tr>\n                    <th></th>\n                    <th></th>\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "                </tr>\n            </thead>\n        </table>\n    </div>\n    <div class=\"table-body\">\n        <table class=\"gui basic small compact fixed selectable single line table mainTable\">\n            <colgroup class=\"bodyColGroup\">\n                <col style=\"width:40px;\" /> \n                <col style=\"width:40px;\" />\n"
+    + "                </tr>\n            </thead>\n        </table>\n    </div>\n    <div class=\"table-body\">\n        <table class=\"gui very basic mini compact fixed selectable single line table mainTable\">\n            <colgroup class=\"bodyColGroup\">\n                <col style=\"width:40px;\" /> \n                <col style=\"width:40px;\" />\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "            </colgroup>\n            <tbody class=\"mainTableBody\">\n"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-main-row.hbs */ 10),depth0,{"name":"grid-main-row","data":data,"indent":"                ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "            </tbody>\n        </table>\n    </div>\n    <div class=\"table-footer gui inverted gray\">\n"
+    + "            </tbody>\n        </table>\n    </div>\n    <div class=\"table-footer gui very basic curved container p-5\">\n"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-footer.hbs */ 7),depth0,{"name":"grid-footer","data":data,"indent":"           ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "    </div>\n</div>";
 },"usePartial":true,"useData":true});
