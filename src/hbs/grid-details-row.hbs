@@ -1,20 +1,16 @@
-<tr class="detailsRow" style="display:none;">
+<tr class="gui hidden detailsRow">
     <td colspan="{{length}}">
-        <table class="gui very compact selectable celled table detailsTable" style="width: auto;">
+        <table class="gui very compact selectable celled table detailsTable m-l-10 p-5" style="width: auto;" >
             <tbody>
                 {{#each mainRowColArray}}
                 <tr>
-                    <td valign="top" data-filter-key="{{id}}" data-filter-value="{{actualValue}}">
+                    <td class="gui rv-parent" valign="top" data-filter-key="{{id}}" data-filter-value="{{actualValue}}">
                         <span>{{columnName}}</span>
                         {{#if filterable}}
-                            <span class="gui mini basic icon very supercompact buttons top aligned" style="margin-left: 5px;">
-                                <button class="gui mini icon button expand-all">
-                                    <i class="add icon addFilter"></i>
-                                </button>
-                                <button class="gui mini icon button collapse-all">
-                                    <i class="minus icon removeFilter"></i>
-                                </button>
-                            </span>
+                        <span class="gui m-l-5 rv-child gui-caption" >
+                            <i class="gui gui-icon gui-icon-add hover m-l-5 cursor-pointer addFilter"></i>
+                            <i class="gui gui-icon gui-icon-minus hover m-l-5 cursor-pointer removeFilter"></i>
+                        </span>
                         {{/if}}
                     </td>
                     <td>{{{columnValue}}}</td>

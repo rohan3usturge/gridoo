@@ -1,10 +1,10 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("Handlebars"), require("jQuery"));
+		module.exports = factory(require("handlebars/runtime"), require("jQuery"));
 	else if(typeof define === 'function' && define.amd)
-		define(["Handlebars", "jQuery"], factory);
+		define(["handlebars.runtime", "jQuery"], factory);
 	else if(typeof exports === 'object')
-		exports["Gridoo"] = factory(require("Handlebars"), require("jQuery"));
+		exports["Gridoo"] = factory(require("handlebars/runtime"), require("jQuery"));
 	else
 		root["Gridoo"] = factory(root["Handlebars"], root["jQuery"]);
 })(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_5__) {
@@ -75,12 +75,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
+/*!**********************************************************************************************************************************!*\
+  !*** external {"root":"Handlebars","amd":"handlebars.runtime","commonjs2":"handlebars/runtime","commonjs":"handlebars/runtime"} ***!
+  \**********************************************************************************************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
 /* 1 */
+/*!*************************************!*\
+  !*** ./src/hbs/helpers/Disabled.ts ***!
+  \*************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94,6 +104,11 @@ exports.default = disabled;
 
 /***/ }),
 /* 2 */
+/*!************************************!*\
+  !*** ./src/js/pagination/Pager.ts ***!
+  \************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -140,6 +155,11 @@ exports.Pager = Pager;
 
 /***/ }),
 /* 3 */
+/*!***********************************!*\
+  !*** ./src/js/util/ColumnUtil.ts ***!
+  \***********************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -168,6 +188,11 @@ exports.CommonUtil = CommonUtil;
 
 /***/ }),
 /* 4 */
+/*!**************************************************!*\
+  !*** ./src/js/virtualization/ScrollDirection.ts ***!
+  \**************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -182,15 +207,25 @@ var ScrollDirection;
 
 /***/ }),
 /* 5 */
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
 
 /***/ }),
 /* 6 */
+/*!**************************************!*\
+  !*** ./src/hbs/grid-details-row.hbs ***!
+  \**************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Handlebars = __webpack_require__(0);
+var Handlebars = __webpack_require__(/*! handlebars */ 0);
 function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
@@ -207,54 +242,59 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + ((stack1 = ((helper = (helper = helpers.columnValue || (depth0 != null ? depth0.columnValue : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"columnValue","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "</td>\r\n                </tr>\r\n";
 },"2":function(container,depth0,helpers,partials,data) {
-    return "                            <span class=\"ui mini basic icon very supercompact buttons top aligned\" style=\"margin-left: 5px;\">\r\n                                <button class=\"ui mini icon button expand-all\">\r\n                                    <i class=\"add icon addFilter\"></i>\r\n                                </button>\r\n                                <button class=\"ui mini icon button collapse-all\">\r\n                                    <i class=\"minus icon removeFilter\"></i>\r\n                                </button>\r\n                            </span>\r\n";
+    return "                            <span class=\"gui mini basic icon very supercompact buttons top aligned\" style=\"margin-left: 5px;\">\r\n                                <button class=\"gui mini icon button expand-all\">\r\n                                    <i class=\"add icon addFilter\"></i>\r\n                                </button>\r\n                                <button class=\"gui mini icon button collapse-all\">\r\n                                    <i class=\"minus icon removeFilter\"></i>\r\n                                </button>\r\n                            </span>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
   return "<tr class=\"detailsRow\" style=\"display:none;\">\r\n    <td colspan=\""
     + container.escapeExpression(((helper = (helper = helpers.length || (depth0 != null ? depth0.length : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"length","hash":{},"data":data}) : helper)))
-    + "\">\r\n        <table class=\"ui very compact selectable celled table detailsTable\" style=\"width: auto;\">\r\n            <tbody>\r\n"
+    + "\">\r\n        <table class=\"gui very compact selectable celled table detailsTable\" style=\"width: auto;\">\r\n            <tbody>\r\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.mainRowColArray : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "            </tbody>\r\n        </table>\r\n    </td>\r\n</tr>\r\n";
 },"useData":true});
 
 /***/ }),
 /* 7 */
+/*!*********************************!*\
+  !*** ./src/hbs/grid-footer.hbs ***!
+  \*********************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Handlebars = __webpack_require__(0);
+var Handlebars = __webpack_require__(/*! handlebars */ 0);
 function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=container.escapeExpression;
 
   return "            <option "
-    + alias1(__default(__webpack_require__(26)).call(depth0 != null ? depth0 : (container.nullContext || {}),((stack1 = (depths[1] != null ? depths[1].paginationData : depths[1])) != null ? stack1.pageSize : stack1),depth0,{"name":"Selected","hash":{},"data":data}))
+    + alias1(__default(__webpack_require__(/*! ./src/hbs/helpers/Selected.ts */ 26)).call(depth0 != null ? depth0 : (container.nullContext || {}),((stack1 = (depths[1] != null ? depths[1].paginationData : depths[1])) != null ? stack1.pageSize : stack1),depth0,{"name":"Selected","hash":{},"data":data}))
     + ">"
     + alias1(container.lambda(depth0, depth0))
     + "</option>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.escapeExpression, alias3=container.lambda;
 
-  return "<div class=\"footer-left\" style=\"display:absoulte;\">\r\n    <div class=\"ui mini compact icon buttons\">\r\n        <button class=\"ui mini compact icon button col-settings-trigger\" aria-label=\"Manage Grid Column Settings\"\r\n        title=\"Manage Grid Column Settings\" tabindex=\"1\">\r\n            <i class=\"columns icon\"></i>\r\n        </button>\r\n        <button class=\"ui mini compact icon button col-sorting-reset-trigger\" aria-label=\"Clear Sorting\"\r\n        title=\"Clear Sorting\" tabindex=\"2\">\r\n            <i class=\"unordered list icon\"></i>\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
-    + ((stack1 = container.invokePartial(__webpack_require__(8),depth0,{"name":"grid-manage-columns","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "</div>\r\n</div>\r\n<div data-role=\"pager\" class=\"footer-middle\">\r\n    <div class=\"margin-auto ui mini compact icon buttons\">\r\n        <button class=\"ui mini compact icon button firstLink\" aria-hidden=\"true\" "
-    + alias2(__default(__webpack_require__(1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.firstPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
-    + " aria-label=\"Go to the first page\"\r\n            title=\"Go to the first page\" data-page=\"1\" tabindex=\"-1\">\r\n            <i class=\"fast backward icon\"></i>\r\n        </button>\r\n        <button class=\"ui mini compact icon button prevLink\" aria-hidden=\"true\" "
-    + alias2(__default(__webpack_require__(1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.prevPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
+  return "<div class=\"footer-left\" style=\"display:absoulte;\">\r\n    <div class=\"gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button col-settings-trigger\" aria-label=\"Manage Grid Column Settings\"\r\n        title=\"Manage Grid Column Settings\" tabindex=\"1\">\r\n            <i class=\"columns icon\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button col-sorting-reset-trigger\" aria-label=\"Clear Sorting\"\r\n        title=\"Clear Sorting\" tabindex=\"2\">\r\n            <i class=\"unordered list icon\"></i>\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
+    + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-manage-columns.hbs */ 8),depth0,{"name":"grid-manage-columns","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "</div>\r\n</div>\r\n<div data-role=\"pager\" class=\"footer-middle\">\r\n    <div class=\"margin-auto gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button firstLink\" aria-hidden=\"true\" "
+    + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.firstPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
+    + " aria-label=\"Go to the first page\"\r\n            title=\"Go to the first page\" data-page=\"1\" tabindex=\"-1\">\r\n            <i class=\"fast backward icon\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button prevLink\" aria-hidden=\"true\" "
+    + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.prevPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
     + " aria-label=\"Go to the previous page\"\r\n            title=\"Go to the previous page\" data-page=\""
-    + alias2(__default(__webpack_require__(9)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1),"-",1,{"name":"math","hash":{},"data":data}))
-    + "\" tabindex=\"-1\">\r\n            <i class=\"backward icon\"></i>\r\n        </button>\r\n    </div>\r\n    <div class=\"margin-side-10 pager-input-container ui input\">\r\n        <span class=\"margin-auto\"> Page </span>\r\n        <input class=\"margin-side-10 pager-input\" aria-label=\"1\" value=\""
+    + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/math.ts */ 9)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1),"-",1,{"name":"math","hash":{},"data":data}))
+    + "\" tabindex=\"-1\">\r\n            <i class=\"backward icon\"></i>\r\n        </button>\r\n    </div>\r\n    <div class=\"margin-side-10 pager-input-container gui input\">\r\n        <span class=\"margin-auto\"> Page </span>\r\n        <input class=\"margin-side-10 pager-input\" aria-label=\"1\" value=\""
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1), depth0))
     + "\" type=\"text\" placeholder=\"Page Number ...\">\r\n        <span class=\"margin-auto no-of-pages-scan\" data-number-of-pages=\""
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.noOfPages : stack1), depth0))
     + "\"> of "
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.noOfPages : stack1), depth0))
-    + "</span>\r\n    </div>\r\n    <div class=\"margin-auto ui mini compact icon buttons\">\r\n        <button class=\"ui mini compact icon button nextLink\" aria-hidden=\"true\" "
-    + alias2(__default(__webpack_require__(1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.nextPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
-    + " aria-label=\"Go to the next page\"\r\n            title=\"Go to the next page\" class=\"ui button\" data-page=\""
-    + alias2(__default(__webpack_require__(9)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1),"+",1,{"name":"math","hash":{},"data":data}))
-    + "\" tabindex=\"-1\">\r\n            <i class=\"forward icon\"></i>\r\n        </button>\r\n        <button class=\"ui mini compact icon button lastLink\" aria-hidden=\"true\" "
-    + alias2(__default(__webpack_require__(1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.lastPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
+    + "</span>\r\n    </div>\r\n    <div class=\"margin-auto gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button nextLink\" aria-hidden=\"true\" "
+    + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.nextPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
+    + " aria-label=\"Go to the next page\"\r\n            title=\"Go to the next page\" class=\"gui button\" data-page=\""
+    + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/math.ts */ 9)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageIndex : stack1),"+",1,{"name":"math","hash":{},"data":data}))
+    + "\" tabindex=\"-1\">\r\n            <i class=\"forward icon\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button lastLink\" aria-hidden=\"true\" "
+    + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.lastPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
     + " aria-label=\"Go to the last page\"\r\n            title=\"Go to the last page\" data-page=\""
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.noOFpages : stack1), depth0))
     + "\" tabindex=\"-1\">\r\n            <i class=\"fast forward icon\"></i>\r\n        </button>\r\n    </div>\r\n</div>\r\n<div class=\"footer-right\">\r\n    <select class=\"margin-side-10 pageSizeSelector\">\r\n"
@@ -270,9 +310,14 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 
 /***/ }),
 /* 8 */
+/*!*****************************************!*\
+  !*** ./src/hbs/grid-manage-columns.hbs ***!
+  \*****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Handlebars = __webpack_require__(0);
+var Handlebars = __webpack_require__(/*! handlebars */ 0);
 function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression;
@@ -282,20 +327,25 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + "\">\r\n                    <td>\r\n                        <input type=\"checkbox\" class=\"col-settings-hidden-checkbox\" value=\""
     + alias2(alias1((depth0 != null ? depth0.id : depth0), depth0))
     + "\" "
-    + alias2(__default(__webpack_require__(27)).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.hidden : depth0),{"name":"Checked","hash":{},"data":data}))
+    + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Checked.ts */ 27)).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.hidden : depth0),{"name":"Checked","hash":{},"data":data}))
     + ">\r\n                    </td>\r\n                    <td>\r\n                        <label>"
     + alias2(alias1((depth0 != null ? depth0.name : depth0), depth0))
     + "</label>\r\n                    </td>\r\n                </tr>\r\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"ui grey card\" style=\"height: 100%;width: auto;padding: 0.8em;overflow:hidden;\">\r\n    <div class=\"col-settings-header\" style=\"width: 100%\">\r\n        <div class=\"ui mini fluid icon input\">\r\n            <input class=\"col-settings-filter\" type=\"text\" placeholder=\"Search filter...\">\r\n            <i class=\"search icon\"></i>\r\n        </div>\r\n        <div class=\"ui buttons\">\r\n            <button class=\"ui basic button show-all-column\">Show All</button>\r\n            <button class=\"ui basic button hide-all-column\">Hide All</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-settings-table\" style=\"overflow:auto;padding:0.5em;\">\r\n        <table class=\"ui small very border-less compact table\">\r\n            <tbody>\r\n"
+  return "<div class=\"gui grey card\" style=\"height: 100%;width: auto;padding: 0.8em;overflow:hidden;\">\r\n    <div class=\"col-settings-header\" style=\"width: 100%\">\r\n        <div class=\"gui mini fluid icon input\">\r\n            <input class=\"col-settings-filter\" type=\"text\" placeholder=\"Search filter...\">\r\n            <i class=\"search icon\"></i>\r\n        </div>\r\n        <div class=\"gui buttons\">\r\n            <button class=\"gui basic button show-all-column\">Show All</button>\r\n            <button class=\"gui basic button hide-all-column\">Hide All</button>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-settings-table\" style=\"overflow:auto;padding:0.5em;\">\r\n        <table class=\"gui small very border-less compact table\">\r\n            <tbody>\r\n"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "            </tbody>\r\n        </table>\r\n    </div>\r\n</div>";
 },"useData":true});
 
 /***/ }),
 /* 9 */
+/*!*********************************!*\
+  !*** ./src/hbs/helpers/math.ts ***!
+  \*********************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -315,17 +365,22 @@ exports.default = math;
 
 /***/ }),
 /* 10 */
+/*!***********************************!*\
+  !*** ./src/hbs/grid-main-row.hbs ***!
+  \***********************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Handlebars = __webpack_require__(0);
+var Handlebars = __webpack_require__(/*! handlebars */ 0);
 function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "    <tr class=\"mainRow\">\r\n        <td class=\"expansionArrows\" style=\"display:flex;justify-content:center;\">\r\n            <button class=\"ui mini compact icon button\">\r\n                <i class=\"right triangle icon expandDetailsRowIcon\" aria-hidden=\"true\" style=\"cursor:pointer\"></i>\r\n                <i class=\"down triangle icon CollapseDetailsRowIcon\" aria-hidden=\"true\" style=\"cursor:pointer;display:none;\"></i>\r\n            </button>\r\n        </td>\r\n        <td>\r\n            <input type=\"checkbox\">\r\n        </td>\r\n"
+  return "    <tr class=\"mainRow\">\r\n        <td class=\"expansionArrows\" style=\"display:flex;justify-content:center;\">\r\n            <button class=\"gui mini compact icon button\">\r\n                <i class=\"right triangle icon expandDetailsRowIcon\" aria-hidden=\"true\" style=\"cursor:pointer\"></i>\r\n                <i class=\"down triangle icon CollapseDetailsRowIcon\" aria-hidden=\"true\" style=\"cursor:pointer;display:none;\"></i>\r\n            </button>\r\n        </td>\r\n        <td>\r\n            <input type=\"checkbox\">\r\n        </td>\r\n"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.mainRowColArray : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "    </tr>\r\n"
-    + ((stack1 = container.invokePartial(__webpack_require__(6),depth0,{"name":"grid-details-row","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
+    + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-details-row.hbs */ 6),depth0,{"name":"grid-details-row","data":data,"indent":"    ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "");
 },"2":function(container,depth0,helpers,partials,data) {
     var stack1;
 
@@ -340,23 +395,28 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 
 /***/ }),
 /* 11 */
+/*!*****************************!*\
+  !*** ./src/js/main/Grid.ts ***!
+  \*****************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var jQuery = __webpack_require__(5);
-var ConfigStore_1 = __webpack_require__(12);
-var ColSettingsHandler_1 = __webpack_require__(13);
-var Pager_1 = __webpack_require__(2);
-var DetailsRowHandler_1 = __webpack_require__(14);
-var FilterClickHandler_1 = __webpack_require__(15);
-var HandlerNames_1 = __webpack_require__(17);
-var HeaderClickHandler_1 = __webpack_require__(18);
-var PageSearchClickHandler_1 = __webpack_require__(20);
-var ScrollHandler_1 = __webpack_require__(21);
-var ToggleColumnHandler_1 = __webpack_require__(24);
-var GridTemplateService_1 = __webpack_require__(25);
+var jQuery = __webpack_require__(/*! jquery */ 5);
+var ConfigStore_1 = __webpack_require__(/*! ../config/ConfigStore */ 12);
+var ColSettingsHandler_1 = __webpack_require__(/*! ../eventHandlers/ColSettingsHandler */ 13);
+var Pager_1 = __webpack_require__(/*! ../pagination/Pager */ 2);
+var DetailsRowHandler_1 = __webpack_require__(/*! ./../eventHandlers/DetailsRowHandler */ 14);
+var FilterClickHandler_1 = __webpack_require__(/*! ./../eventHandlers/FilterClickHandler */ 15);
+var HandlerNames_1 = __webpack_require__(/*! ./../eventHandlers/HandlerNames */ 17);
+var HeaderClickHandler_1 = __webpack_require__(/*! ./../eventHandlers/HeaderClickHandler */ 18);
+var PageSearchClickHandler_1 = __webpack_require__(/*! ./../eventHandlers/PageSearchClickHandler */ 20);
+var ScrollHandler_1 = __webpack_require__(/*! ./../eventHandlers/ScrollHandler */ 21);
+var ToggleColumnHandler_1 = __webpack_require__(/*! ./../eventHandlers/ToggleColumnHandler */ 24);
+var GridTemplateService_1 = __webpack_require__(/*! ./../services/GridTemplateService */ 25);
 var Grid = /** @class */ (function () {
     function Grid(options) {
         var _this = this;
@@ -428,6 +488,11 @@ exports.Grid = Grid;
 
 /***/ }),
 /* 12 */
+/*!**************************************!*\
+  !*** ./src/js/config/ConfigStore.ts ***!
+  \**************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -491,6 +556,11 @@ exports.ConfigStore = ConfigStore;
 
 /***/ }),
 /* 13 */
+/*!****************************************************!*\
+  !*** ./src/js/eventHandlers/ColSettingsHandler.ts ***!
+  \****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -575,6 +645,11 @@ exports.ColSettingsHandler = ColSettingsHandler;
 
 /***/ }),
 /* 14 */
+/*!***************************************************!*\
+  !*** ./src/js/eventHandlers/DetailsRowHandler.ts ***!
+  \***************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -613,13 +688,18 @@ exports.DetailsRowHandler = DetailsRowHandler;
 
 /***/ }),
 /* 15 */
+/*!****************************************************!*\
+  !*** ./src/js/eventHandlers/FilterClickHandler.ts ***!
+  \****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ColumnUtil_1 = __webpack_require__(3);
-var FilterActionType_1 = __webpack_require__(16);
+var ColumnUtil_1 = __webpack_require__(/*! ../util/ColumnUtil */ 3);
+var FilterActionType_1 = __webpack_require__(/*! ./../models/FilterActionType */ 16);
 var FilterClickHandler = /** @class */ (function () {
     function FilterClickHandler(configStore, element) {
         var _this = this;
@@ -657,6 +737,11 @@ exports.FilterClickHandler = FilterClickHandler;
 
 /***/ }),
 /* 16 */
+/*!*******************************************!*\
+  !*** ./src/js/models/FilterActionType.ts ***!
+  \*******************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -671,6 +756,11 @@ var FilterActionType;
 
 /***/ }),
 /* 17 */
+/*!**********************************************!*\
+  !*** ./src/js/eventHandlers/HandlerNames.ts ***!
+  \**********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -690,13 +780,18 @@ var HandlerNames;
 
 /***/ }),
 /* 18 */
+/*!****************************************************!*\
+  !*** ./src/js/eventHandlers/HeaderClickHandler.ts ***!
+  \****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ColumnUtil_1 = __webpack_require__(3);
-var OrderDirection_1 = __webpack_require__(19);
+var ColumnUtil_1 = __webpack_require__(/*! ../util/ColumnUtil */ 3);
+var OrderDirection_1 = __webpack_require__(/*! ./../models/OrderDirection */ 19);
 var HeaderClickHandler = /** @class */ (function () {
     function HeaderClickHandler(configStore, element) {
         var _this = this;
@@ -749,6 +844,11 @@ exports.HeaderClickHandler = HeaderClickHandler;
 
 /***/ }),
 /* 19 */
+/*!*****************************************!*\
+  !*** ./src/js/models/OrderDirection.ts ***!
+  \*****************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -763,13 +863,18 @@ var OrderDirection;
 
 /***/ }),
 /* 20 */
+/*!********************************************************!*\
+  !*** ./src/js/eventHandlers/PageSearchClickHandler.ts ***!
+  \********************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var jQuery = __webpack_require__(5);
-var Pager_1 = __webpack_require__(2);
+var jQuery = __webpack_require__(/*! jquery */ 5);
+var Pager_1 = __webpack_require__(/*! ../pagination/Pager */ 2);
 var PageSearchHandler = /** @class */ (function () {
     function PageSearchHandler(configStore, element) {
         var _this = this;
@@ -826,13 +931,18 @@ exports.PageSearchHandler = PageSearchHandler;
 
 /***/ }),
 /* 21 */
+/*!***********************************************!*\
+  !*** ./src/js/eventHandlers/ScrollHandler.ts ***!
+  \***********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ScrollDirection_1 = __webpack_require__(4);
-var Virtualizer_1 = __webpack_require__(22);
+var ScrollDirection_1 = __webpack_require__(/*! ./../virtualization/ScrollDirection */ 4);
+var Virtualizer_1 = __webpack_require__(/*! ./../virtualization/Virtualizer */ 22);
 var ScrollHandler = /** @class */ (function () {
     function ScrollHandler(configStore, gridTemplateService) {
         var _this = this;
@@ -910,13 +1020,18 @@ exports.ScrollHandler = ScrollHandler;
 
 /***/ }),
 /* 22 */
+/*!**********************************************!*\
+  !*** ./src/js/virtualization/Virtualizer.ts ***!
+  \**********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var IndexCounter_1 = __webpack_require__(23);
-var ScrollDirection_1 = __webpack_require__(4);
+var IndexCounter_1 = __webpack_require__(/*! ./IndexCounter */ 23);
+var ScrollDirection_1 = __webpack_require__(/*! ./ScrollDirection */ 4);
 var Virtualizer = /** @class */ (function () {
     function Virtualizer(chunkSize, initialRowCount, length) {
         var _this = this;
@@ -1041,12 +1156,17 @@ exports.Virtualizer = Virtualizer;
 
 /***/ }),
 /* 23 */
+/*!***********************************************!*\
+  !*** ./src/js/virtualization/IndexCounter.ts ***!
+  \***********************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ScrollDirection_1 = __webpack_require__(4);
+var ScrollDirection_1 = __webpack_require__(/*! ./ScrollDirection */ 4);
 exports.GetDefaultIndexCounter = function (rowCount, chunkSize) {
     return {
         startIndex: rowCount - 1,
@@ -1062,12 +1182,17 @@ exports.GetDefaultIndexCounter = function (rowCount, chunkSize) {
 
 /***/ }),
 /* 24 */
+/*!*****************************************************!*\
+  !*** ./src/js/eventHandlers/ToggleColumnHandler.ts ***!
+  \*****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var ColumnUtil_1 = __webpack_require__(3);
+var ColumnUtil_1 = __webpack_require__(/*! ./../util/ColumnUtil */ 3);
 var ShowHide;
 (function (ShowHide) {
     ShowHide[ShowHide["Show"] = 0] = "Show";
@@ -1135,17 +1260,22 @@ exports.ToggleColumnHandler = ToggleColumnHandler;
 
 /***/ }),
 /* 25 */
+/*!************************************************!*\
+  !*** ./src/js/services/GridTemplateService.ts ***!
+  \************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var GridDetailsRowTemplate = __webpack_require__(6);
-var GridFooter = __webpack_require__(7);
-var GridMainRowTemplate = __webpack_require__(10);
-var ManageColumnTemplate = __webpack_require__(8);
-var GridTemplate = __webpack_require__(28);
-var Pager_1 = __webpack_require__(2);
+var GridDetailsRowTemplate = __webpack_require__(/*! ../../hbs/grid-details-row.hbs */ 6);
+var GridFooter = __webpack_require__(/*! ../../hbs/grid-footer.hbs */ 7);
+var GridMainRowTemplate = __webpack_require__(/*! ../../hbs/grid-main-row.hbs */ 10);
+var ManageColumnTemplate = __webpack_require__(/*! ../../hbs/grid-manage-columns.hbs */ 8);
+var GridTemplate = __webpack_require__(/*! ../../hbs/grid.hbs */ 28);
+var Pager_1 = __webpack_require__(/*! ../pagination/Pager */ 2);
 var GridTemplateService = /** @class */ (function () {
     function GridTemplateService(configStore) {
         var _this = this;
@@ -1207,6 +1337,11 @@ exports.GridTemplateService = GridTemplateService;
 
 /***/ }),
 /* 26 */
+/*!*************************************!*\
+  !*** ./src/hbs/helpers/Selected.ts ***!
+  \*************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1220,6 +1355,11 @@ exports.default = selected;
 
 /***/ }),
 /* 27 */
+/*!************************************!*\
+  !*** ./src/hbs/helpers/Checked.ts ***!
+  \************************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1233,15 +1373,20 @@ exports.default = checked;
 
 /***/ }),
 /* 28 */
+/*!**************************!*\
+  !*** ./src/hbs/grid.hbs ***!
+  \**************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Handlebars = __webpack_require__(0);
+var Handlebars = __webpack_require__(/*! handlebars */ 0);
 function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "                    "
-    + ((stack1 = __default(__webpack_require__(29)).call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"Column","hash":{},"data":data})) != null ? stack1 : "")
+    + ((stack1 = __default(__webpack_require__(/*! ./src/hbs/helpers/Column.ts */ 29)).call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"Column","hash":{},"data":data})) != null ? stack1 : "")
     + "\n";
 },"3":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
@@ -1252,7 +1397,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + alias2(alias1((depth0 != null ? depth0.id : depth0), depth0))
     + "\">\n"
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.sortable : depth0),{"name":"if","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "                            <span class=\"ui sub header\">"
+    + "                            <span class=\"gui sub header\">"
     + alias2(alias1((depth0 != null ? depth0.name : depth0), depth0))
     + "</span>\n                        </th>\n";
 },"4":function(container,depth0,helpers,partials,data) {
@@ -1260,21 +1405,26 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
-  return "<style>\n    .inner-container {\n        height: 100%;\n        overflow: hidden;\n        width: 100%;\n        display: flex;\n        flex-direction: column;\n    }\n\n    .table-header {\n        position: relative;\n        top:0 !important;\n    }\n\n    .table-body {\n        overflow: auto;\n        flex: 5;\n        padding-right: 17px;\n    }\n    .table-footer,.table-top{\n        display: flex;\n        height: 35px;\n        padding: 5px;\n        justify-content: space-between;\n        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;\n    }\n    .table-footer .footer-middle{\n        display: flex;\n    }\n    .table-footer .footer-right{\n        display: flex;\n    }\n    .margin-auto{\n        margin: auto !important;\n    }\n    .margin-side-10{\n        margin: 0px 10px 0px 10px !important;\n    }\n    .pager-input-container .pager-input{\n        width: 50px;\n    }\n    .column-settings-container{\n        position:absolute !important;\n        z-index:1000 !important;\n        bottom:35px !important;\n        left: 5px;\n        display:none;\n        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;\n    }\n    .remove-label:hover{\n        text-decoration: line-through;\n        cursor: pointer;\n    }\n    .border-less tr td,.border-less { border: 0px !important; }\n    .cursor-pointer{\n        cursor: pointer;\n    }\n    .ui.supercompact.icon.button, .ui.supercompact.icon.buttons .button {\n        padding: .3em .3em .3em .3em !important;\n    }\n</style>\n<div class=\"inner-container ui fluid card\" style=\"padding:0%;\">\n    <div class=\"table-header\">\n        <table id=\"headertable\" class=\"ui fixed blue basic single line small table mainTable\">\n            <colgroup class=\"headerColGroup\">\n                <col style=\"width:40px;\" />\n                <col style=\"width:40px;\" />\n"
+  return "<style>\n    .inner-container {\n        height: 100%;\n        overflow: hidden;\n        width: 100%;\n        display: flex;\n        flex-direction: column;\n    }\n\n    .table-header {\n        position: relative;\n        top:0 !important;\n    }\n\n    .table-body {\n        overflow: auto;\n        flex: 5;\n        padding-right: 17px;\n    }\n    .table-footer,.table-top{\n        display: flex;\n        height: 35px;\n        padding: 5px;\n        justify-content: space-between;\n        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;\n    }\n    .table-footer .footer-middle{\n        display: flex;\n    }\n    .table-footer .footer-right{\n        display: flex;\n    }\n    .margin-auto{\n        margin: auto !important;\n    }\n    .margin-side-10{\n        margin: 0px 10px 0px 10px !important;\n    }\n    .pager-input-container .pager-input{\n        width: 50px;\n    }\n    .column-settings-container{\n        position:absolute !important;\n        z-index:1000 !important;\n        bottom:35px !important;\n        left: 5px;\n        display:none;\n        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;\n    }\n    .remove-label:hover{\n        text-decoration: line-through;\n        cursor: pointer;\n    }\n    .border-less tr td,.border-less { border: 0px !important; }\n    .cursor-pointer{\n        cursor: pointer;\n    }\n    .ui.supercompact.icon.button, .ui.supercompact.icon.buttons .button {\n        padding: .3em .3em .3em .3em !important;\n    }\n</style>\n<div class=\"inner-container gui fluid card\" style=\"padding:0%;\">\n    <div class=\"table-header\">\n        <table id=\"headertable\" class=\"gui fixed blue basic single line small table mainTable\">\n            <colgroup class=\"headerColGroup\">\n                <col style=\"width:40px;\" />\n                <col style=\"width:40px;\" />\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "            </colgroup>\n            <thead>\n                <tr>\n                    <th></th>\n                    <th></th>\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(3, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "                </tr>\n            </thead>\n        </table>\n    </div>\n    <div class=\"table-body\">\n        <table class=\"ui basic small compact fixed selectable single line table mainTable\">\n            <colgroup class=\"bodyColGroup\">\n                <col style=\"width:40px;\" /> \n                <col style=\"width:40px;\" />\n"
+    + "                </tr>\n            </thead>\n        </table>\n    </div>\n    <div class=\"table-body\">\n        <table class=\"gui basic small compact fixed selectable single line table mainTable\">\n            <colgroup class=\"bodyColGroup\">\n                <col style=\"width:40px;\" /> \n                <col style=\"width:40px;\" />\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "            </colgroup>\n            <tbody class=\"mainTableBody\">\n"
-    + ((stack1 = container.invokePartial(__webpack_require__(10),depth0,{"name":"grid-main-row","data":data,"indent":"                ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "            </tbody>\n        </table>\n    </div>\n    <div class=\"table-footer ui inverted gray\">\n"
-    + ((stack1 = container.invokePartial(__webpack_require__(7),depth0,{"name":"grid-footer","data":data,"indent":"           ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-main-row.hbs */ 10),depth0,{"name":"grid-main-row","data":data,"indent":"                ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
+    + "            </tbody>\n        </table>\n    </div>\n    <div class=\"table-footer gui inverted gray\">\n"
+    + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-footer.hbs */ 7),depth0,{"name":"grid-footer","data":data,"indent":"           ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "    </div>\n</div>";
 },"usePartial":true,"useData":true});
 
 /***/ }),
 /* 29 */
+/*!***********************************!*\
+  !*** ./src/hbs/helpers/Column.ts ***!
+  \***********************************/
+/*! dynamic exports provided */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -22,7 +22,6 @@
         height: 35px;
         padding: 5px;
         justify-content: space-between;
-        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
     }
     .table-footer .footer-middle{
         display: flex;
@@ -32,9 +31,6 @@
     }
     .margin-auto{
         margin: auto !important;
-    }
-    .margin-side-10{
-        margin: 0px 10px 0px 10px !important;
     }
     .pager-input-container .pager-input{
         width: 50px;
@@ -59,9 +55,9 @@
         padding: .3em .3em .3em .3em !important;
     }
 </style>
-<div class="inner-container gui fluid card" style="padding:0%;">
+<div class="inner-container gui fluid container" style="padding:0%;">
     <div class="table-header">
-        <table id="headertable" class="gui fixed blue basic single line small table mainTable">
+        <table id="headertable" class="gui small inverted primary compact fixed selectable single line table mainTable">
             <colgroup class="headerColGroup">
                 <col style="width:40px;" />
                 <col style="width:40px;" />
@@ -76,8 +72,8 @@
                     {{#each columns}}
                         <th id="header-{{id}}" data-header-id="{{id}}">
                             {{#if sortable}}
-                                <i class="long arrow up icon" aria-hidden="true" style="display:none;margin:0px;padding:0px;"></i>                        
-                                <i class="long arrow down icon" aria-hidden="true" style="display:none;margin:0px;padding:0px;"></i>
+                                <i class="gui gui-icon gui-icon-arrow-up hidden" aria-hidden="true" ></i>                        
+                                <i class="gui gui-icon gui-icon-arrow-down hidden" aria-hidden="true" ></i>
                             {{/if}}
                             <span class="gui sub header">{{name}}</span>
                         </th>
@@ -87,7 +83,7 @@
         </table>
     </div>
     <div class="table-body">
-        <table class="gui basic small compact fixed selectable single line table mainTable">
+        <table class="gui very basic mini compact fixed selectable single line table mainTable">
             <colgroup class="bodyColGroup">
                 <col style="width:40px;" /> 
                 <col style="width:40px;" />
@@ -100,7 +96,7 @@
             </tbody>
         </table>
     </div>
-    <div class="table-footer gui inverted gray">
+    <div class="table-footer gui very basic curved container p-5">
            {{> grid-footer}}
     </div>
 </div>

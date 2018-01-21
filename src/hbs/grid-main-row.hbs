@@ -1,17 +1,14 @@
 {{#each mainRowArray}}
-    <tr class="mainRow">
-        <td class="expansionArrows" style="display:flex;justify-content:center;">
-            <button class="gui mini compact icon button">
-                <i class="right triangle icon expandDetailsRowIcon" aria-hidden="true" style="cursor:pointer"></i>
-                <i class="down triangle icon CollapseDetailsRowIcon" aria-hidden="true" style="cursor:pointer;display:none;"></i>
-            </button>
-        </td>
-        <td>
-            <input type="checkbox">
-        </td>
-        {{#each mainRowColArray}}
-            <td>{{{columnValue}}}</td>
-        {{/each}}
-    </tr>
-    {{> grid-details-row}}
-{{/each}}
+<tr class="mainRow">
+    <td class="expansionArrows" style="display:flex;justify-content:center;">
+        <i class="gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer" aria-hidden="true"></i>
+        <i class="gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer hidden" aria-hidden="true"></i>
+    </td>
+    <td>
+        <input type="checkbox">
+    </td>
+    {{#each mainRowColArray}}
+    <td>{{{columnValue}}}</td>
+    {{/each}}
+</tr>
+{{> grid-details-row}} {{/each}}

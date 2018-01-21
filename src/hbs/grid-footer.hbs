@@ -1,47 +1,51 @@
 <div class="footer-left" style="display:absoulte;">
     <div class="gui mini compact icon buttons">
-        <button class="gui mini compact icon button col-settings-trigger" aria-label="Manage Grid Column Settings"
-        title="Manage Grid Column Settings" tabindex="1">
-            <i class="columns icon"></i>
+        <button class="gui mini compact icon button gui-caption col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings"
+            tabindex="1">
+            <i class="gui-icon gui-icon-repair"></i>
+            Manage Columns
         </button>
-        <button class="gui mini compact icon button col-sorting-reset-trigger" aria-label="Clear Sorting"
-        title="Clear Sorting" tabindex="2">
-            <i class="unordered list icon"></i>
+        <button class="gui mini compact icon button gui-caption col-sorting-reset-trigger" aria-label="Clear Sorting" title="Clear Sorting"
+            tabindex="2">
+            <i class="gui-icon gui-icon-sort"></i>
+            Clear Sorting
         </button>
     </div>
     <div class="column-settings-container">{{> grid-manage-columns}}</div>
 </div>
 <div data-role="pager" class="footer-middle">
     <div class="margin-auto gui mini compact icon buttons">
-        <button class="gui mini compact icon button firstLink" aria-hidden="true" {{Disabled paginationData.firstPageLinkDisabled}} aria-label="Go to the first page"
-            title="Go to the first page" data-page="1" tabindex="-1">
-            <i class="fast backward icon"></i>
+        <button class="gui mini compact icon button firstLink" aria-hidden="true" {{Disabled paginationData.firstPageLinkDisabled}}
+            aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
+            <i class="gui-icon gui-icon-fast-backward"></i>
         </button>
-        <button class="gui mini compact icon button prevLink" aria-hidden="true" {{Disabled paginationData.prevPageLinkDisabled}} aria-label="Go to the previous page"
-            title="Go to the previous page" data-page="{{math paginationData.pageIndex '-' 1}}" tabindex="-1">
-            <i class="backward icon"></i>
+        <button class="gui mini compact icon button prevLink" aria-hidden="true" {{Disabled paginationData.prevPageLinkDisabled}}
+            aria-label="Go to the previous page" title="Go to the previous page" data-page="{{math paginationData.pageIndex '-' 1}}"
+            tabindex="-1">
+            <i class="gui-icon gui-icon-previous"></i>
         </button>
     </div>
-    <div class="margin-side-10 pager-input-container gui input">
+    <div class="gui m-r-10 m-l-10 pager-input-container gui input">
         <span class="margin-auto"> Page </span>
-        <input class="margin-side-10 pager-input" aria-label="1" value="{{paginationData.pageIndex}}" type="text" placeholder="Page Number ...">
+        <input class="gui m-r-10 m-l-10 pager-input" aria-label="1" value="{{paginationData.pageIndex}}" type="text" placeholder="Page Number ...">
         <span class="margin-auto no-of-pages-scan" data-number-of-pages="{{paginationData.noOfPages}}"> of {{paginationData.noOfPages}}</span>
     </div>
     <div class="margin-auto gui mini compact icon buttons">
-        <button class="gui mini compact icon button nextLink" aria-hidden="true" {{Disabled paginationData.nextPageLinkDisabled}} aria-label="Go to the next page"
-            title="Go to the next page" class="gui button" data-page="{{math paginationData.pageIndex '+' 1}}" tabindex="-1">
-            <i class="forward icon"></i>
+        <button class="gui mini compact icon button nextLink" aria-hidden="true" {{Disabled paginationData.nextPageLinkDisabled}}
+            aria-label="Go to the next page" title="Go to the next page" class="gui button" data-page="{{math paginationData.pageIndex '+' 1}}"
+            tabindex="-1">
+            <i class="gui-icon gui-icon-next"></i>
         </button>
-        <button class="gui mini compact icon button lastLink" aria-hidden="true" {{Disabled paginationData.lastPageLinkDisabled}} aria-label="Go to the last page"
-            title="Go to the last page" data-page="{{paginationData.noOFpages}}" tabindex="-1">
-            <i class="fast forward icon"></i>
+        <button class="gui mini compact icon button lastLink" aria-hidden="true" {{Disabled paginationData.lastPageLinkDisabled}}
+            aria-label="Go to the last page" title="Go to the last page" data-page="{{paginationData.noOFpages}}" tabindex="-1">
+            <i class="gui-icon gui-icon-fast-forward"></i>
         </button>
     </div>
 </div>
 <div class="footer-right">
-    <select class="margin-side-10 pageSizeSelector">
+    <select class="gui m-r-10 m-l-10 pageSizeSelector">
         {{#each paginationData.pageSizes}}
-            <option {{Selected ../paginationData.pageSize this}}>{{this}}</option>
+        <option {{Selected ../paginationData.pageSize this}}>{{this}}</option>
         {{/each}}
     </select>
     <span class="margin-auto">{{paginationData.range.min}} - {{paginationData.range.max}} of {{paginationData.totalCount}} items</span>

@@ -2,10 +2,12 @@
 
 <head>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script> -->
+    <link rel="stylesheet" href="http://localhost:8080/assignment-search/asgn-search.min.css" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-    <script src="dist/gridoo-bundle.js"></script>
+    <script src="gridoo.js"></script>
     <script>
         const cols = [];
         for(var i=0; i< 100; i++){
@@ -36,7 +38,7 @@
     <button onclick="addFilters()">Add Filters</button>
     <button onclick="addFilters1()">Add Filters 1</button>
 
-    <div id="hi"></div>
+    <div class="gui container" style="height: 90%; margin: 20px;" id="hi"></div>
     <script>
         
         var options = {

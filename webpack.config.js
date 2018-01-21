@@ -3,7 +3,9 @@ const webpack = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const DashboardPlugin = require("webpack-dashboard/plugin");
+const Dashboard = require("webpack-dashboard");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const PORT = 8082;
 
 const libraryName = "Gridoo";
 function DtsBundlePlugin() {}
@@ -38,10 +40,11 @@ const DEV_SERVER = {
   },
   historyApiFallback: true,
   overlay: true,
-  stats: "verbose",
-  contentBase: PATHS.dist,
+  contentBase: PATHS.root,
   inline: true,
-  port: 8081
+  // quiet: true,
+  open: true,
+  port: PORT
 };
 
 module.exports = (env = {}) => {
@@ -50,7 +53,8 @@ module.exports = (env = {}) => {
   const isBuild = !!env.build;
   const isDev = !env.build;
   const isSourceMap = !!env.sourceMap || isDev;
-  console.log({ isDev, isBuild, isSourceMap, isAnalyze });
+  const isDashboard = !!env.dashboard;
+  console.log({ isDev, isBuild, isSourceMap, isAnalyze, isDashboard });
   return {
     cache: true,
     target: "web",
@@ -58,18 +62,24 @@ module.exports = (env = {}) => {
     devServer: DEV_SERVER,
     context: PATHS.root,
     entry: {
-      "gridoo": path.join(PATHS.src, "js/main/Grid.ts"),
+      gridoo: path.join(PATHS.src, "js/main/Grid.ts"),
       "gridoo.min": path.join(PATHS.src, "js/main/Grid.ts")
     },
     output: {
       path: PATHS.dist,
       filename: "[name].js",
       library: "Gridoo",
-      libraryTarget: "umd"
+      libraryTarget: "umd",
+      pathinfo: true
     },
     externals: {
-      "jquery" :  "jQuery",
-      "handlebars/runtime" : "Handlebars"
+      jquery: "jQuery",
+      handlebars: {
+        root: "Handlebars",
+        amd: "handlebars.runtime",
+        commonjs2: "handlebars/runtime",
+        commonjs: "handlebars/runtime"
+      }
     },
     resolve: {
       modules: [PATHS.src, PATHS.nodeModules], // Add `.ts` and `.tsx` as a resolvable extension.
@@ -85,7 +95,7 @@ module.exports = (env = {}) => {
           loader: "handlebars-loader",
           options: {
             helperDirs: path.join(PATHS.src, "hbs/helpers"),
-            runtime: 'handlebars/runtime'
+            runtime: "handlebars"
           }
         },
         {
@@ -143,8 +153,14 @@ module.exports = (env = {}) => {
           NODE_ENV: JSON.stringify(isDev ? "development" : "production")
         }
       }),
-      new webpack.IgnorePlugin(new RegExp("^(handlebars)$")),
-      ...(isDev ? [new DashboardPlugin()] : []),
+      ...(isDashboard
+        ? [
+            new DashboardPlugin({
+              port: PORT,
+              handler: new Dashboard().setData
+            })
+          ]
+        : []),
       ...(isDev
         ? [
             new webpack.HotModuleReplacementPlugin({
@@ -153,16 +169,22 @@ module.exports = (env = {}) => {
             new webpack.NamedModulesPlugin()
           ]
         : []),
-      new webpack.LoaderOptionsPlugin({ debug: false }),
-      new webpack.optimize.UglifyJsPlugin({
-        include: /\.min\.js$/,
-        beautify: false,
-        compress: {
-          screw_ie8: true
-        },
-        comments: false,
-        sourceMap: isSourceMap
-      }),
+      ...(isBuild
+        ? [new webpack.LoaderOptionsPlugin({ minimize: true, debug: true })]
+        : []),
+      ...(isBuild
+        ? [
+            new webpack.optimize.UglifyJsPlugin({
+              include: /\.min\.js$/,
+              beautify: false,
+              compress: {
+                screw_ie8: true
+              },
+              comments: false,
+              sourceMap: isSourceMap
+            })
+          ]
+        : []),
       ...(isAnalyze ? [new BundleAnalyzerPlugin()] : []),
       ...(isBuild ? [new DtsBundlePlugin()] : [])
     ]
