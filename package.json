@@ -1,14 +1,14 @@
 {
   "name": "gridoo",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Simple Virtualized Grid with paging and auto scrollable fixed to container, with detailed rows",
   "scripts": {
     "clean": "rimraf dist",
     "postBuildClean": "rimraf ./dist/src",
     "build": "yarn run clean && webpack --config webpack.config.js --bail --env.build --env.sourceMap && yarn postBuildClean",
     "local": "yarn build --env.local",
-    "dashboard" : "webpack-dashboard -p 8082 -m -- webpack-dev-server --config webpack.config.js --env.dashboard",
-    "dashboard2" : "webpack-dashboard -p 8082 -m -- webpack-dev-server --config webpack.config.js --env.awesome --env.dashboard",
+    "dashboard": "webpack-dashboard -p 8082 -m -- webpack-dev-server --config webpack.config.js --env.dashboard",
+    "dashboard2": "webpack-dashboard -p 8082 -m -- webpack-dev-server --config webpack.config.js --env.awesome --env.dashboard",
     "dev": "webpack-dev-server --config webpack.config.js",
     "dev2": "webpack-dev-server --config webpack.config.js --env.awesome",
     "analyze": "yarn run clean && webpack --config webpack.config.js --bail --env.build --env.analyze && yarn postBuildClean",
