@@ -19,7 +19,7 @@
     "test:update": "jest --config jest.json -u",
     "reinstall": "rm -rf node_modules && yarn",
     "reinstall:win": "rd /s /q node_modules && yarn",
-    "deploy": "echo 'deploy not set!'",
+    "pub": "yarn build && git commit -am 'Build' && npm version patch && npm publish",
     "auth": "vsts-npm-auth -config .npmrc"
   },
   "repository": {
