@@ -246,7 +246,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {});
 
-  return "<tr class=\"gui hidden detailsRow\">\r\n    <td colspan=\""
+  return "<tr class=\"gui gui-hidden detailsRow\">\r\n    <td colspan=\""
     + container.escapeExpression(((helper = (helper = helpers.length || (depth0 != null ? depth0.length : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"length","hash":{},"data":data}) : helper)))
     + "\">\r\n        <table class=\"gui very compact selectable celled table detailsTable m-l-10 p-5\" style=\"width: auto;\" >\r\n            <tbody>\r\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.mainRowColArray : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -275,7 +275,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.escapeExpression, alias3=container.lambda;
 
-  return "<div class=\"col-md-3 gui left text-left\" style=\"display:absoulte;\">\r\n    <div class=\"gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button gui-caption col-settings-trigger\" aria-label=\"Manage Grid Column Settings\" title=\"Manage Grid Column Settings\"\r\n            tabindex=\"1\">\r\n            <i class=\"gui-icon gui-icon-repair\"></i>\r\n            Manage Columns\r\n        </button>\r\n        <button class=\"gui mini compact icon button gui-caption col-sorting-reset-trigger\" aria-label=\"Clear Sorting\" title=\"Clear Sorting\"\r\n            tabindex=\"2\">\r\n            <i class=\"gui-icon gui-icon-sort\"></i>\r\n            Clear Sorting\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
+  return "<div class=\"col-md-3 gui left text-left\" style=\"display:absoulte;\">\r\n    <div class=\"gui buttons\">\r\n        <button class=\"gui button gui-caption col-settings-trigger\" aria-label=\"Manage Grid Column Settings\" title=\"Manage Grid Column Settings\"\r\n            tabindex=\"1\">\r\n            <i class=\"gui-icon gui-icon-repair\"></i>\r\n            Manage Columns\r\n        </button>\r\n        <button class=\"gui button gui-caption col-sorting-reset-trigger\" aria-label=\"Clear Sorting\" title=\"Clear Sorting\"\r\n            tabindex=\"2\">\r\n            <i class=\"gui-icon gui-icon-sort\"></i>\r\n            Clear Sorting\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-manage-columns.hbs */ 8),depth0,{"name":"grid-manage-columns","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "</div>\r\n</div>\r\n<div data-role=\"pager\" class=\"col-md-6 text-center\">\r\n    <div class=\"margin-auto gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button firstLink\" aria-hidden=\"true\" "
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.firstPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
@@ -377,7 +377,7 @@ function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj);
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<tr class=\"mainRow\">\r\n    <td class=\"expansionArrows\" style=\"display:flex;justify-content:center;\">\r\n        <i class=\"gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer\" aria-hidden=\"true\"></i>\r\n        <i class=\"gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer hidden\" aria-hidden=\"true\"></i>\r\n    </td>\r\n    <td>\r\n        <input type=\"checkbox\">\r\n    </td>\r\n"
+  return "<tr class=\"mainRow\">\r\n    <td class=\"expansionArrows\" style=\"display:flex;justify-content:center;\">\r\n        <i class=\"gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer\" aria-hidden=\"true\"></i>\r\n        <i class=\"gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer gui-hidden\" aria-hidden=\"true\"></i>\r\n    </td>\r\n    <td>\r\n        <input type=\"checkbox\">\r\n    </td>\r\n"
     + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.mainRowColArray : depth0),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</tr>\r\n"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-details-row.hbs */ 6),depth0,{"name":"grid-details-row","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
@@ -590,9 +590,9 @@ var ColSettingsHandler = /** @class */ (function () {
     };
     ColSettingsHandler.prototype.RegisterDomHandler = function () {
         var _this = this;
-        this.parentElement.on("click", ".table-footer .footer-left .col-settings-trigger", function (event) {
+        this.parentElement.on("click", ".table-footer .col-settings-trigger", function (event) {
             var element = jQuery(event.target);
-            var settngsPopup = element.parents(".footer-left").children().last();
+            var settngsPopup = jQuery(".column-settings-container");
             _this.onResize();
             settngsPopup.toggle();
             event.stopPropagation();
@@ -666,10 +666,10 @@ var DetailsRowHandler = /** @class */ (function () {
                 var currentIcon = arrow.hide();
                 var otherIcon = arrow.siblings("i").show();
                 if (arrow.hasClass("expandDetailsRowIcon")) {
-                    detailsRow.show();
+                    detailsRow.show(200);
                 }
                 else {
-                    detailsRow.hide();
+                    detailsRow.hide(200);
                 }
                 event.stopPropagation();
             });
