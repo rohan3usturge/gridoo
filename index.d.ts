@@ -14,13 +14,17 @@ export interface IPaginationInput {
 
 export interface IGridOptions<T> {
     columns: IColumn[];
+    keyColumn: string;
     hybridFunction: IRenderHybridDelegate<T>;
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
     containerElement: HTMLElement | null;
+    onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: 5;
 }
+
+export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean) => void;
 
 export interface IColumn {
     id: string;
