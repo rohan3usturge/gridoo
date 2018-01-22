@@ -44,9 +44,14 @@
     <script>
         
         var options = {
+            keyColumn: "id1",
             columns: cols,
             chunkSize: 5,
-            containerElement: document.getElementById("hi")
+            containerElement: document.getElementById("hi"),
+            onSelect: function(row, checked){
+                alert('recieved' + checked);
+                console.log(row);
+            }
         };
         var paginationInput = {
             totalCount: 1000,

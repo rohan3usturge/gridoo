@@ -1,6 +1,7 @@
 import * as jQuery from "jquery";
 import { ConfigStore } from "../config/ConfigStore";
 import { ColSettingsHandler } from "../eventHandlers/ColSettingsHandler";
+import { SelectEventHandler } from "../eventHandlers/SelectEventHandler";
 import { IPagination } from "../models/IPagination";
 import { IPaginationInput } from "../models/IPaginationInput";
 import { Pager } from "../pagination/Pager";
@@ -76,6 +77,10 @@ export class Grid<T> {
         const toggleHandler = new ToggleColumnHandler(this.configStore, parentElement);
         this.handleChain.push({
             handler: new ColSettingsHandler<T>(parentElement, toggleHandler),
+            name: HandlerNames.ColSettings,
+        });
+        this.handleChain.push({
+            handler: new SelectEventHandler<T>(this.configStore, parentElement, this.gridTemplateService),
             name: HandlerNames.ColSettings,
         });
         this.handleChain.forEach((value: IHandlerChain<T>): void => {

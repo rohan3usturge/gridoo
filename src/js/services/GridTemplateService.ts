@@ -26,7 +26,9 @@ export class GridTemplateService <T> {
         this.templateFunctionForFooter = GridFooter;
         this.templateFunctionForManageCol = ManageColumnTemplate;
     }
-
+    public get Data(): T[] {
+        return this.data;
+    }
     public get DataLength(): number {
         return this.data.length;
     }
@@ -61,6 +63,8 @@ export class GridTemplateService <T> {
                 });
             }
             mainRowArray.push({
+                rowData: JSON.stringify(row),
+                keyColumn: row[this.configStore.Options.keyColumn],
                 mainRowColArray,
                 length: this.configStore.Options.columns.length,
             });

@@ -5,7 +5,7 @@
         <i class="gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer gui-hidden" aria-hidden="true"></i>
     </td>
     <td>
-        <input type="checkbox">
+        <input type="checkbox" data-value="{{rowData}}" value="{{keyColumn}}" class="select-key-checkbox">
     </td>
     {{#each mainRowColArray}}
     <td>{{{columnValue}}}</td>

@@ -12,6 +12,7 @@ export class ConfigStore<T> {
         hybridFunction: (column: IColumn, row: T): string => {
             return "true";
         },
+        keyColumn: "",
         onClickFilter: (column: string, value: any, actionType: FilterActionType): void => {
             // No code
         },
@@ -20,6 +21,9 @@ export class ConfigStore<T> {
         },
         onPageSearch: (pageSize: number, pageIndex: number): void => {
             // No code
+        },
+        onSelect: (rows: T[]): void => {
+            // No Code
         },
     };
     constructor(options: IGridOptions<T>) {
