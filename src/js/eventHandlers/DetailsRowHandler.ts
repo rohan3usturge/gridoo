@@ -19,9 +19,9 @@ export class DetailsRowHandler<T> implements IEventHandler<T> {
             const currentIcon = arrow.hide();
             const otherIcon = arrow.siblings("i").show();
             if (arrow.hasClass("expandDetailsRowIcon")) {
-                detailsRow.show();
+                detailsRow.show(200);
             } else {
-                detailsRow.hide();
+                detailsRow.hide(200);
             }
             event.stopPropagation();
         });
