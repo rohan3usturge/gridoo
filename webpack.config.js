@@ -58,7 +58,7 @@ module.exports = (env = {}) => {
   return {
     cache: true,
     target: "web",
-    devtool: isDev ? "inline-source-map" : "none",
+    devtool: isSourceMap ? "inline-source-map" : "none",
     devServer: DEV_SERVER,
     context: PATHS.root,
     entry: {
