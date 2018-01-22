@@ -1,4 +1,4 @@
-<div class="footer-left" style="display:absoulte;">
+<div class="col-md-3 gui left" style="display:absoulte;">
     <div class="gui mini compact icon buttons">
         <button class="gui mini compact icon button gui-caption col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings"
             tabindex="1">
@@ -13,7 +13,7 @@
     </div>
     <div class="column-settings-container">{{> grid-manage-columns}}</div>
 </div>
-<div data-role="pager" class="footer-middle">
+<div data-role="pager" class="col-md-6">
     <div class="margin-auto gui mini compact icon buttons">
         <button class="gui mini compact icon button firstLink" aria-hidden="true" {{Disabled paginationData.firstPageLinkDisabled}}
             aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
@@ -42,7 +42,7 @@
         </button>
     </div>
 </div>
-<div class="footer-right">
+<div class="col-md-3 gui right">
     <select class="gui m-r-10 m-l-10 pageSizeSelector">
         {{#each paginationData.pageSizes}}
         <option {{Selected ../paginationData.pageSize this}}>{{this}}</option>
