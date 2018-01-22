@@ -275,9 +275,9 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.escapeExpression, alias3=container.lambda;
 
-  return "<div class=\"col-md-3 gui left\" style=\"display:absoulte;\">\r\n    <div class=\"gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button gui-caption col-settings-trigger\" aria-label=\"Manage Grid Column Settings\" title=\"Manage Grid Column Settings\"\r\n            tabindex=\"1\">\r\n            <i class=\"gui-icon gui-icon-repair\"></i>\r\n            Manage Columns\r\n        </button>\r\n        <button class=\"gui mini compact icon button gui-caption col-sorting-reset-trigger\" aria-label=\"Clear Sorting\" title=\"Clear Sorting\"\r\n            tabindex=\"2\">\r\n            <i class=\"gui-icon gui-icon-sort\"></i>\r\n            Clear Sorting\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
+  return "<div class=\"col-md-3 gui left text-left\" style=\"display:absoulte;\">\r\n    <div class=\"gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button gui-caption col-settings-trigger\" aria-label=\"Manage Grid Column Settings\" title=\"Manage Grid Column Settings\"\r\n            tabindex=\"1\">\r\n            <i class=\"gui-icon gui-icon-repair\"></i>\r\n            Manage Columns\r\n        </button>\r\n        <button class=\"gui mini compact icon button gui-caption col-sorting-reset-trigger\" aria-label=\"Clear Sorting\" title=\"Clear Sorting\"\r\n            tabindex=\"2\">\r\n            <i class=\"gui-icon gui-icon-sort\"></i>\r\n            Clear Sorting\r\n        </button>\r\n    </div>\r\n    <div class=\"column-settings-container\">"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-manage-columns.hbs */ 8),depth0,{"name":"grid-manage-columns","data":data,"helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "</div>\r\n</div>\r\n<div data-role=\"pager\" class=\"col-md-6\">\r\n    <div class=\"margin-auto gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button firstLink\" aria-hidden=\"true\" "
+    + "</div>\r\n</div>\r\n<div data-role=\"pager\" class=\"col-md-6 text-center\">\r\n    <div class=\"margin-auto gui mini compact icon buttons\">\r\n        <button class=\"gui mini compact icon button firstLink\" aria-hidden=\"true\" "
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.firstPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
     + "\r\n            aria-label=\"Go to the first page\" title=\"Go to the first page\" data-page=\"1\" tabindex=\"-1\">\r\n            <i class=\"gui-icon gui-icon-fast-backward\"></i>\r\n        </button>\r\n        <button class=\"gui mini compact icon button prevLink\" aria-hidden=\"true\" "
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.prevPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
@@ -297,7 +297,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + alias2(__default(__webpack_require__(/*! ./src/hbs/helpers/Disabled.ts */ 1)).call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.lastPageLinkDisabled : stack1),{"name":"Disabled","hash":{},"data":data}))
     + "\r\n            aria-label=\"Go to the last page\" title=\"Go to the last page\" data-page=\""
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.noOFpages : stack1), depth0))
-    + "\" tabindex=\"-1\">\r\n            <i class=\"gui-icon gui-icon-fast-forward\"></i>\r\n        </button>\r\n    </div>\r\n</div>\r\n<div class=\"col-md-3 gui right\">\r\n    <select class=\"gui m-r-10 m-l-10 pageSizeSelector\">\r\n"
+    + "\" tabindex=\"-1\">\r\n            <i class=\"gui-icon gui-icon-fast-forward\"></i>\r\n        </button>\r\n    </div>\r\n</div>\r\n<div class=\"col-md-3 gui right text-right\">\r\n    <select class=\"gui m-r-10 m-l-10 pageSizeSelector\">\r\n"
     + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.pageSizes : stack1),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "    </select>\r\n    <span class=\"margin-auto\">"
     + alias2(alias3(((stack1 = ((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.range : stack1)) != null ? stack1.min : stack1), depth0))
@@ -305,7 +305,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + alias2(alias3(((stack1 = ((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.range : stack1)) != null ? stack1.max : stack1), depth0))
     + " of "
     + alias2(alias3(((stack1 = (depth0 != null ? depth0.paginationData : depth0)) != null ? stack1.totalCount : stack1), depth0))
-    + " items</span>\r\n</div>";
+    + " items</span>\r\n</div>\r\n<div class=\"gui clear\"></div>";
 },"usePartial":true,"useData":true,"useDepths":true});
 
 /***/ }),
@@ -1414,7 +1414,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.columns : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "            </colgroup>\n            <tbody class=\"mainTableBody\">\n"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-main-row.hbs */ 10),depth0,{"name":"grid-main-row","data":data,"indent":"                ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
-    + "            </tbody>\n        </table>\n    </div>\n    <div class=\"table-footer gui fluid-w basic curved row p-5\">\n"
+    + "            </tbody>\n        </table>\n    </div>\n    <div class=\"table-footer gui h-50 fluid-w basic curved row p-5\">\n"
     + ((stack1 = container.invokePartial(__webpack_require__(/*! ./src/hbs/grid-footer.hbs */ 7),depth0,{"name":"grid-footer","data":data,"indent":"           ","helpers":helpers,"partials":partials,"decorators":container.decorators})) != null ? stack1 : "")
     + "    </div>\n</div>";
 },"usePartial":true,"useData":true});
