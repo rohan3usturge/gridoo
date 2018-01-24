@@ -1,15 +1,15 @@
-<div class="gui grey card" style="height: 100%;width: auto;padding: 0.8em;overflow:hidden;">
+<div class="gui card of-hidden p-10 min-w-50 w-auto fluid-h" >
     <div class="col-settings-header" style="width: 100%">
         <div class="gui mini fluid icon input">
             <input class="col-settings-filter" type="text" placeholder="Search filter...">
             <i class="search icon"></i>
         </div>
-        <div class="gui buttons">
-            <button class="gui basic button show-all-column">Show All</button>
-            <button class="gui basic button hide-all-column">Hide All</button>
+        <div class="gui m-t-10">
+            <a class="gui show-all-column">Show All</a>
+            <a class="gui hide-all-column">Hide All</a>
         </div>
     </div>
-    <div class="col-settings-table" style="overflow:auto;padding:0.5em;">
+    <div class="col-settings-table gui of-auto p-5 m-t-10" >
         <table class="gui small very border-less compact table">
             <tbody>
                 {{#each columns}}

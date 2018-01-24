@@ -1,5 +1,5 @@
 const checked = (bool: boolean): string => {
-    return bool ? "checked" : "";
+    return !bool ? "checked" : "";
 };
 
 export default checked;
