@@ -49,6 +49,7 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
                 direction = OrderDirection.Asc;
                 upArrowIcon.show();
             }
+            CommonUtil.SetOrder(headerId, direction, this.configStore.Options.columns);
             this.configStore.Options.onClickHeader(headerId, direction);
             event.stopPropagation();
         });

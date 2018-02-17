@@ -40,7 +40,8 @@ export class Grid<T> {
         Pager.CalculatePaginationData(paginationInput);
         const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
                                                                               firstIndex,
-                                                                              lastIndex);
+                                                                              lastIndex,
+                                                                              );
         this.configStore.Options.containerElement.innerHTML = gridContent;
         // Have to bind Scroll Handler After DOM has been created
         const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService);
@@ -49,6 +50,10 @@ export class Grid<T> {
             handler: scrollHandler,
             name: HandlerNames.Scroll,
         });
+    }
+
+    public getManageColumsHtml = (): string => {
+        return this.gridTemplateService.GetManageColumnsHtml();
     }
 
     private getInitialRowCount = (): number => {
@@ -75,8 +80,12 @@ export class Grid<T> {
             name: HandlerNames.PageSearch,
         });
         const toggleHandler = new ToggleColumnHandler(this.configStore, parentElement);
+        let container = parentElement;
+        if (this.configStore.Options.manageColSettingsContainer !== undefined) {
+            container = jQuery(this.configStore.Options.manageColSettingsContainer);
+        }
         this.handleChain.push({
-            handler: new ColSettingsHandler<T>(parentElement, toggleHandler),
+            handler: new ColSettingsHandler<T>(container, toggleHandler),
             name: HandlerNames.ColSettings,
         });
         this.handleChain.push({

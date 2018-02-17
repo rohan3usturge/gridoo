@@ -1,3 +1,4 @@
+import { OrderDirection } from "../models/OrderDirection";
 import { IColumn } from "./../models/IColumn";
 
 export class CommonUtil {
@@ -9,6 +10,20 @@ export class CommonUtil {
         let retCol: IColumn;
         columns.forEach((col: IColumn) => {
             if (col.id === columnId) {
+                retCol = col;
+                return;
+            }
+        });
+        return retCol;
+    }
+    public static SetOrder = (columnId: string, order: OrderDirection, columns: IColumn[]): IColumn => {
+        if (columnId == null || columns == null) {
+            return null;
+        }
+        let retCol: IColumn;
+        columns.forEach((col: IColumn) => {
+            if (col.id === columnId) {
+                col.order = order;
                 retCol = col;
                 return;
             }

@@ -2,8 +2,19 @@
 
 <head>
     <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link href='https://aurorasit.azurewebsites.net/fonts/black/segoeui.woff' rel='stylesheet' type='text/css'>
+    <style>
+        @font-face {
+            font-family: 'SegoeUI MDL2 Assets';
+            src: url("https://aurorasit.azurewebsites.net/fonts/black/segoeui.woff") format('woff');
+            font-weight: 100;
+            font-style: normal;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script> -->
     <link rel="stylesheet" href="http://localhost:8080/assignment-search/asgn-search.min.css" />
@@ -11,24 +22,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="gridoo.js"></script>
     <script>
-        const cols = [];
-        for(var i=0; i< 100; i++){
+        var cols = [];
+        for (var i = 0; i < 100; i++) {
             cols.push({
-                id: "id"+ i,
-                name: "Name"+i,
+                id: "id" + i,
+                name: "Name" + i,
                 hidden: false,
                 width: 100,
                 renderHybrid: false,
                 sortable: true,
-                filterable: true,
+                filterable: true
+                //order: "Asc"
             });
         };
         const data = [];
-        for(var i=0; i< 1000; i++){
+        for (var i = 0; i < 1000; i++) {
             var row = {};
-            for(var j=0; j< cols.length; j++){
+            for (var j = 0; j < cols.length; j++) {
                 const name = cols[j];
-                row[name.id] = "Data-Row-" + i + "-Col-" + j; 
+                row[name.id] = "Data-Row-" + i + "-Col-" + j;
             }
             data.push(row);
         };
@@ -42,13 +54,13 @@
 
     <div class="gui container" style="height: 90%; margin: 20px;" id="hi"></div>
     <script>
-        
+
         var options = {
             keyColumn: "id1",
             columns: cols,
             chunkSize: 5,
             containerElement: document.getElementById("hi"),
-            onSelect: function(row, checked){
+            onSelect: function (row, checked) {
                 alert('recieved' + checked);
                 console.log(row);
             }
@@ -57,10 +69,10 @@
             totalCount: 1000,
             pageSize: 50,
             pageIndex: 1,
-            pageSizes: [50,100,500,1000],
+            pageSizes: [50, 100, 500, 1000],
         };
         var grid = new Gridoo.Grid(options);
-        function addFilters(){
+        function addFilters() {
             grid.bindData(data, paginationInput);
         }
     </script>

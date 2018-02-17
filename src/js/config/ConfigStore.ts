@@ -9,6 +9,7 @@ export class ConfigStore<T> {
         chunkSize: 5,
         columns: [],
         containerElement: null,
+        manageColSettingsContainer: null,
         hybridFunction: (column: IColumn, row: T): string => {
             return "true";
         },

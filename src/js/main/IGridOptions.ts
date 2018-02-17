@@ -12,6 +12,7 @@ export interface IGridOptions<T> {
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
     containerElement: HTMLElement | null;
+    manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: 5;

@@ -32,7 +32,9 @@ export class GridTemplateService <T> {
     public get DataLength(): number {
         return this.data.length;
     }
-    public GetFirstTemplate = (data: T[], firstIndex: number, lastIndex: number): string => {
+    public GetFirstTemplate = (data: T[],
+                               firstIndex: number,
+                               lastIndex: number): string => {
         this.data = data;
         const mainRowArray = this.GetRowsHtml(firstIndex, lastIndex);
         return this.templateFunctionForGrid({
@@ -40,6 +42,9 @@ export class GridTemplateService <T> {
             mainRowArray,
             paginationData: Pager.PaginationData,
         });
+    }
+    public GetManageColumnsHtml = (): string => {
+        return this.templateFunctionForManageCol({columns: this.configStore.Options.columns});
     }
 
     public GetRowsHtml = (firstIndex: number, lastIndex: number): any[] => {
