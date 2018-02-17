@@ -35,7 +35,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
             settngsPopup.toggle();
             event.stopPropagation();
         });
-        this.parentElement.on("keyup", ".column-settings-container .col-settings-header .col-settings-filter",
+        this.parentElement.on("keyup", ".col-settings-header .col-settings-filter",
             (event): void => {
                 const element = jQuery(event.target);
                 const val = element.val().toString().toLowerCase();
@@ -48,23 +48,23 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                 });
                 event.stopPropagation();
         });
-        this.parentElement.on("click", ".column-settings-container .show-all-column", (event): void => {
-            this.parentElement.find(".column-settings-container .col-settings-hidden-checkbox")
+        this.parentElement.on("click", ".show-all-column", (event): void => {
+            this.parentElement.find(".col-settings-hidden-checkbox")
             .each((index, element) => {
                 jQuery(element).prop("checked", true);
             });
             this.toggleColumnHandler.showAllColumns();
             event.stopPropagation();
         });
-        this.parentElement.on("click", ".column-settings-container .hide-all-column", (event): void => {
-            this.parentElement.find(".column-settings-container .col-settings-hidden-checkbox")
+        this.parentElement.on("click", ".hide-all-column", (event): void => {
+            this.parentElement.find(".col-settings-hidden-checkbox")
             .each((index, element) => {
                 jQuery(element).prop("checked", false);
             });
             this.toggleColumnHandler.hideAllColumns();
             event.stopPropagation();
         });
-        this.parentElement.on("click", ".column-settings-container .col-settings-hidden-checkbox", (event): void => {
+        this.parentElement.on("click", ".col-settings-hidden-checkbox", (event): void => {
             if (event.originalEvent !== undefined) {
                 const checkbox = jQuery(event.target);
                 const id = checkbox.val().toString();

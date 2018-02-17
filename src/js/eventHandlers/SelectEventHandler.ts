@@ -14,12 +14,18 @@ export class SelectEventHandler<T> implements IEventHandler<T> {
     }
     public RegisterDomHandler(): void {
         this.parentElement.on("change", ".select-key-checkbox" , (event) => {
+            const element = jQuery(event.target);
+            const row = element.data("value");
+            const checked = element.is(":checked");
+            if (checked) {
+                element.parents(".mainRow").addClass("active");
+            } else {
+                element.parents(".mainRow").removeClass("active");
+            }
             if (event.originalEvent === undefined) {
                 return;
             }
-            const element = jQuery(event.target);
-            const row = element.data("value");
-            this.configStore.Options.onSelect([row], element.is(":checked"));
+            this.configStore.Options.onSelect([row], checked);
             event.stopPropagation();
         });
         this.parentElement.on("change", ".select-all-checkbox" , (event) => {
@@ -27,6 +33,11 @@ export class SelectEventHandler<T> implements IEventHandler<T> {
             const checked = element.is(":checked");
             this.configStore.Options.onSelect(this.gridTemplateService.Data, checked);
             this.parentElement.find(".select-key-checkbox").prop("checked", checked);
+            if (checked) {
+                this.parentElement.find(".mainTable .mainRow").addClass("active");
+            } else {
+                this.parentElement.find(".mainTable .mainRow").removeClass("active");
+            }
             event.stopPropagation();
         });
     }

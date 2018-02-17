@@ -5,12 +5,14 @@
             <i class="search icon"></i>
         </div>
         <div class="gui m-t-10">
-            <a class="gui show-all-column">Show All</a>
-            <a class="gui hide-all-column">Hide All</a>
+            <a class="gui left show-all-column">Show All</a>
+            <a class="gui right hide-all-column">Hide All</a>
         </div>
+        <div class="gui clear"></div>
     </div>
+    <div class="gui clear"></div>
     <div class="col-settings-table gui of-auto p-5 m-t-10" >
-        <table class="gui small very border-less compact table">
+        <table class="gui small very border-less basic compact table">
             <tbody>
                 {{#each columns}}
                 <tr data-header-id="{{name}}">
