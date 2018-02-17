@@ -3,6 +3,7 @@
 export class Grid<T> {
     constructor(options: IGridOptions<T>);
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
+    getManageColumsHtml: () => string;
 }
 
 export interface IPaginationInput {
@@ -19,6 +20,7 @@ export interface IGridOptions<T> {
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
     containerElement: HTMLElement | null;
+    manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: 5;
@@ -34,6 +36,7 @@ export interface IColumn {
     hidden: boolean;
     sortable: boolean;
     filterable: boolean;
+    order?: OrderDirection;
 }
 
 export type IFilterClickDelegate = (column: string, value: any, actionType: FilterActionType) => void;
@@ -44,13 +47,14 @@ export type IPageSearchClickDelegate = (pageSize: number, pageIndex: number) => 
 
 export type IRenderHybridDelegate<T> = (column: IColumn, row: T) => string;
 
+export enum OrderDirection {
+    None = "None",
+    Asc = "Asc",
+    Desc = "Desc",
+}
+
 export enum FilterActionType {
     Add = "Add",
     Minus = "Minus",
-}
-
-export enum OrderDirection {
-    Asc = "Asc",
-    Desc = "Desc",
 }
 
