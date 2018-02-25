@@ -12,7 +12,7 @@
     </div>
     <div class="column-settings-container gui pop-up">{{> grid-manage-columns}}</div>
 </div> --}}
-<div data-role="pager" class="gui left gui-subheading-2 col-md-6 text-left m-0 p-5">
+<div data-role="pager" class="gui left gui-subheading-2 col-md-6 text-left m-0">
     <span class="gui mini compact ">
         <a class="gui mini compact firstLink" aria-hidden="true" {{Disabled paginationData.firstPageLinkDisabled}}
             aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
@@ -42,7 +42,7 @@
         </a>
     </span>
 </div>
-<div class="col-md-6 gui gui-subheading-2 right text-right m-0 p-5">
+<div class="col-md-6 gui gui-subheading-2 right text-right m-0">
     <span>Rows Per Page</span>
     <select class="gui pageSizeSelector">
         {{#each paginationData.pageSizes}}

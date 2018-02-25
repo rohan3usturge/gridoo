@@ -11,7 +11,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
         this.toggleColumnHandler = toggleColumnHandler;
     }
     public onResize(): void {
-        const settngsPopup = this.parentElement.find(".column-settings-container");
+        const settngsPopup = this.parentElement.find(".col-settings-container");
         const tbodyHeight = this.parentElement.find(".table-body").innerHeight();
         settngsPopup.innerHeight(tbodyHeight - 10);
         settngsPopup.find(".col-settings-table").innerHeight(settngsPopup.innerHeight() -
@@ -23,14 +23,14 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
         if (targetElement.is(".col-settings-trigger")) {
             return;
         }
-        if (!targetElement.parents().is(".column-settings-container")) {
-            jQuery(".column-settings-container").hide();
+        if (!targetElement.parents().is(".col-settings-container")) {
+            jQuery(".col-settings-container").hide();
         }
     }
     public RegisterDomHandler(): void {
-        this.parentElement.on("click", ".table-footer .col-settings-trigger", (event): void => {
+        this.parentElement.on("click", ".col-settings-trigger", (event): void => {
             const element = jQuery(event.target);
-            const settngsPopup = jQuery(".column-settings-container");
+            const settngsPopup = this.parentElement.find(".col-settings-container");
             this.onResize();
             settngsPopup.toggle();
             event.stopPropagation();
