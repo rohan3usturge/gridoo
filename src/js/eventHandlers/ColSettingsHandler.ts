@@ -11,11 +11,11 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
         this.toggleColumnHandler = toggleColumnHandler;
     }
     public onResize(): void {
-        const settngsPopup = this.parentElement.find(".col-settings-container");
-        const tbodyHeight = this.parentElement.find(".table-body").innerHeight();
-        settngsPopup.innerHeight(tbodyHeight - 10);
-        settngsPopup.find(".col-settings-table").innerHeight(settngsPopup.innerHeight() -
-                                settngsPopup.find(".col-settings-header").innerHeight());
+        // const settngsPopup = this.parentElement.find(".col-settings-container");
+        // const tbodyHeight = this.parentElement.find(".table-body").innerHeight();
+        // settngsPopup.innerHeight(tbodyHeight - 10);
+        // settngsPopup.find(".col-settings-table").innerHeight(settngsPopup.innerHeight() -
+        //                         settngsPopup.find(".col-settings-header").innerHeight());
     }
 
     public onDocumentClick(event): void {
