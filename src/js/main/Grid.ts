@@ -52,15 +52,14 @@ export class Grid<T> {
         });
     }
 
-    public bindManageColums = (): void => {
+    public bindManageColums = (manageColContainer?: HTMLElement): void => {
         const html = this.gridTemplateService.GetManageColumnsHtml();
-        let container = jQuery(this.configStore.Options.containerElement);
-        const toggleHandler = new ToggleColumnHandler(this.configStore, container);
-        if (this.configStore.Options.manageColSettingsContainer !== undefined) {
-            container = jQuery(this.configStore.Options.manageColSettingsContainer);
-        }
-        const manageColHandler = new ColSettingsHandler<T>(container, toggleHandler);
-        container.find(".col-settings-container").html(html);
+        const element = jQuery(manageColContainer || this.configStore.Options.manageColSettingsContainer
+            || this.configStore.Options.containerElement);
+        const toggleHandler = new ToggleColumnHandler(this.configStore,
+                             jQuery(this.configStore.Options.containerElement));
+        const manageColHandler = new ColSettingsHandler<T>(jQuery(element), toggleHandler);
+        element.find(".col-settings-container").html(html);
         manageColHandler.RegisterDomHandler();
         jQuery(window).resize(() => {
             manageColHandler.onResize();
