@@ -3,7 +3,7 @@
 export class Grid<T> {
     constructor(options: IGridOptions<T>);
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
-    getManageColumsHtml: () => string;
+    bindManageColums: () => void;
 }
 
 export interface IPaginationInput {
