@@ -50,9 +50,12 @@
 
 <body>
     <button onclick="addFilters()">Add Filters</button>
-    <div>
-        <button onclick="showManageCols()">Manage Columns</button>
-        <div style="display: none;position: absolute;z-index: 1000;" id="manageCol"></div>
+    <div class="gui item right gui-subheading-2 m-0 manage-col-container" id="manange-cols-container">
+        <a class="gui col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings" tabindex="1">
+            <i class="gui-icon gui-icon-repair"></i>
+            Manage Columns
+        </a>
+        <div class="col-settings-container gui of-hidden gui-hidden pop-up"></div>
     </div>
 
     <div class="gui container" style="height: 90%; margin: 20px;" id="hi"></div>
@@ -63,7 +66,7 @@
             columns: cols,
             chunkSize: 5,
             containerElement: document.getElementById("hi"),
-            manageColSettingsContainer: document.getElementById("manageCol"),
+            manageColSettingsContainer: document.getElementById("manange-cols-container"),
             onSelect: function (row, checked) {
                 alert('recieved' + checked);
                 console.log(row);
@@ -76,9 +79,9 @@
             pageSizes: [50, 100, 500, 1000],
         };
         var grid = new Gridoo.Grid(options);
-        document.getElementById("manageCol").innerHTML = grid.getManageColumsHtml();
         function addFilters() {
             grid.bindData(data, paginationInput);
+            grid.bindManageColums();
         }
         function showManageCols() {
             $("#manageCol").toggle();

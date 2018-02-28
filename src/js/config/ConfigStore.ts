@@ -43,16 +43,16 @@ export class ConfigStore<T> {
         return this.options;
     }
     public SetHiddenOnConfig = (bool: boolean, columnId?: string): void => {
-        this.Options.columns.forEach((col: IColumn) => {
-            if (columnId === null) {
+        for (const col of this.Options.columns) {
+            if (columnId === undefined) {
                 col.hidden = bool;
             } else {
                 if (col.id === columnId) {
                     col.hidden = bool;
-                    return false;
+                    break;
                 }
             }
-        });
+        }
     }
     private extendOptions = (inputOptions: IGridOptions<T>): IGridOptions<T> => {
         return this.options = jQuery.extend({}, this.defaultGridOptions, inputOptions);

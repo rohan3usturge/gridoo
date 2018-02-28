@@ -49,7 +49,6 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                         jQuery(e).hide();
                     }
                 });
-                this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
                 event.stopPropagation();
         });
         this.parentElement.on("click", ".show-all-column", (event): void => {
