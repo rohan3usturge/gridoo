@@ -58,7 +58,7 @@ export class Grid<T> {
             || this.configStore.Options.containerElement);
         const toggleHandler = new ToggleColumnHandler(this.configStore,
                              jQuery(this.configStore.Options.containerElement));
-        const manageColHandler = new ColSettingsHandler<T>(jQuery(element), toggleHandler);
+        const manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, toggleHandler);
         element.find(".col-settings-container").html(html);
         manageColHandler.RegisterDomHandler();
         jQuery(window).resize(() => {

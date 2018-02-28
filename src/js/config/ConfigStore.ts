@@ -14,6 +14,9 @@ export class ConfigStore<T> {
             return "true";
         },
         keyColumn: "",
+        onColSettingsChange: (colConfig: IColumn[]): void => {
+            // No Code
+        },
         onClickFilter: (column: string, value: any, actionType: FilterActionType): void => {
             // No code
         },

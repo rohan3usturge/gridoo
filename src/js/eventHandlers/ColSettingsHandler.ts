@@ -1,13 +1,16 @@
 import { IGridOptions } from "../main/IGridOptions";
+import { ConfigStore } from "./../config/ConfigStore";
 import { IEventHandler } from "./IEventHandler";
 import { ToggleColumnHandler } from "./ToggleColumnHandler";
 
 export class ColSettingsHandler<T> implements IEventHandler<T> {
     private parentElement: JQuery;
     private toggleColumnHandler: ToggleColumnHandler<T>;
+    private configStore: ConfigStore<T>;
 
-    constructor(element: JQuery, toggleColumnHandler: ToggleColumnHandler<T>) {
+    constructor(element: JQuery, configStore: ConfigStore<T>, toggleColumnHandler: ToggleColumnHandler<T>) {
         this.parentElement = element;
+        this.configStore = configStore;
         this.toggleColumnHandler = toggleColumnHandler;
     }
     public onResize(): void {
@@ -46,6 +49,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                         jQuery(e).hide();
                     }
                 });
+                this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
                 event.stopPropagation();
         });
         this.parentElement.on("click", ".show-all-column", (event): void => {
@@ -54,6 +58,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                 jQuery(element).prop("checked", true);
             });
             this.toggleColumnHandler.showAllColumns();
+            this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".hide-all-column", (event): void => {
@@ -62,6 +67,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                 jQuery(element).prop("checked", false);
             });
             this.toggleColumnHandler.hideAllColumns();
+            this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".col-settings-hidden-checkbox", (event): void => {
@@ -74,6 +80,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                     this.toggleColumnHandler.hideColumn(id);
                 }
             }
+            this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
             event.stopPropagation();
         });
     }

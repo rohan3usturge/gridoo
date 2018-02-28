@@ -19,12 +19,15 @@ export interface IGridOptions<T> {
     hybridFunction: IRenderHybridDelegate<T>;
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
+    onColSettingsChange: IColSettingsChangeDelegate;
     containerElement: HTMLElement | null;
     manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: 5;
 }
+
+export type IColSettingsChangeDelegate = (colConfig: IColumn[]) => void;
 
 export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean) => void;
 

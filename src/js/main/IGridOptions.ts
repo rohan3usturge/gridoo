@@ -1,3 +1,4 @@
+import { IColSettingsChangeDelegate } from "../models/IColSettingsChangeDelegate";
 import { ISelectDelegate } from "../models/ISelectDelegate";
 import { IColumn } from "./../models/IColumn";
 import { IFilterClickDelegate } from "./../models/IFilterClickDelegate";
@@ -11,6 +12,7 @@ export interface IGridOptions<T> {
     hybridFunction: IRenderHybridDelegate<T>;
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
+    onColSettingsChange: IColSettingsChangeDelegate;
     containerElement: HTMLElement | null;
     manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
