@@ -4,6 +4,7 @@ export class Grid<T> {
     constructor(options: IGridOptions<T>);
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
     bindManageColums: (manageColContainer?: HTMLElement) => void;
+    applyColumnConfig: (columns: IColumn[]) => void;
 }
 
 export interface IPaginationInput {
@@ -11,6 +12,17 @@ export interface IPaginationInput {
     pageSize: number;
     pageIndex: number;
     pageSizes: number[];
+}
+
+export interface IColumn {
+    id: string;
+    name: string;
+    width: number;
+    renderHybrid: boolean;
+    hidden: boolean;
+    sortable: boolean;
+    filterable: boolean;
+    order?: OrderDirection;
 }
 
 export interface IGridOptions<T> {
@@ -27,20 +39,15 @@ export interface IGridOptions<T> {
     chunkSize: 5;
 }
 
+export enum OrderDirection {
+    None = "None",
+    Asc = "Asc",
+    Desc = "Desc",
+}
+
 export type IColSettingsChangeDelegate = (colConfig: IColumn[]) => void;
 
 export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean) => void;
-
-export interface IColumn {
-    id: string;
-    name: string;
-    width: number;
-    renderHybrid: boolean;
-    hidden: boolean;
-    sortable: boolean;
-    filterable: boolean;
-    order?: OrderDirection;
-}
 
 export type IFilterClickDelegate = (column: string, value: any, actionType: FilterActionType) => void;
 
@@ -49,12 +56,6 @@ export type IHeaderClickDelegate = (column: string, direction: OrderDirection) =
 export type IPageSearchClickDelegate = (pageSize: number, pageIndex: number) => void;
 
 export type IRenderHybridDelegate<T> = (column: IColumn, row: T) => string;
-
-export enum OrderDirection {
-    None = "None",
-    Asc = "Asc",
-    Desc = "Desc",
-}
 
 export enum FilterActionType {
     Add = "Add",

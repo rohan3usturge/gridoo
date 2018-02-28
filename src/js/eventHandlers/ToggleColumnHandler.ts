@@ -41,7 +41,15 @@ export class ToggleColumnHandler<T> {
         this.SetColWidth(".table-body .bodyColGroup col", ShowHide.HideAll);
         this.configStore.SetHiddenOnConfig(true);
     }
-
+    public applyColumnConfig = (columns: IColumn[]) => {
+        for (const column of columns) {
+            if (column.hidden) {
+                this.hideColumn(column.id);
+            } else {
+                this.showColumn(column.id);
+            }
+        }
+    }
     private SetColWidth = (selector: string, control: ShowHide, columnId?: string): void => {
         this.parentElement.find(selector).each((index, element): void | false => {
             let width = 0;

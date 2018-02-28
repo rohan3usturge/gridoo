@@ -25,6 +25,7 @@ export class Grid<T> {
 
     private handleChain: Array<IHandlerChain<T>>;
     private gridTemplateService: GridTemplateService<T>;
+    private toggleHandler: ToggleColumnHandler<T>;
     private configStore: ConfigStore<T>;
 
     constructor(options: IGridOptions<T>) {
@@ -56,9 +57,9 @@ export class Grid<T> {
         const html = this.gridTemplateService.GetManageColumnsHtml();
         const element = jQuery(manageColContainer || this.configStore.Options.manageColSettingsContainer
             || this.configStore.Options.containerElement);
-        const toggleHandler = new ToggleColumnHandler(this.configStore,
+        this.toggleHandler = new ToggleColumnHandler(this.configStore,
                              jQuery(this.configStore.Options.containerElement));
-        const manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, toggleHandler);
+        const manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, this.toggleHandler);
         element.find(".col-settings-container").html(html);
         manageColHandler.RegisterDomHandler();
         jQuery(window).resize(() => {
@@ -69,7 +70,9 @@ export class Grid<T> {
             event.stopPropagation();
         });
     }
-
+    public applyColumnConfig = (columns: IColumn[]) => {
+        this.toggleHandler.applyColumnConfig(columns);
+    }
     private getInitialRowCount = (): number => {
         return 25;
     }
@@ -113,4 +116,5 @@ export class Grid<T> {
             event.stopPropagation();
         });
     }
+
 }
