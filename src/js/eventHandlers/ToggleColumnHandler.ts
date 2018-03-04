@@ -19,26 +19,34 @@ export class ToggleColumnHandler<T> {
     }
 
     public showAllColumns = (): void => {
-        this.SetColWidth(".table-header .headerColGroup col", ShowHide.ShowAll);
-        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.ShowAll);
+        jQuery(".table-header thead").fadeIn(200);
+        jQuery(".mainTableBody").fadeIn(200);
+        // this.SetColWidth(".table-header .headerColGroup col", ShowHide.ShowAll);
+        // this.SetColWidth(".table-body .bodyColGroup col", ShowHide.ShowAll);
         this.configStore.SetHiddenOnConfig(false);
     }
 
     public showColumn = (columnId: string): void => {
-        this.SetColWidth(".table-header .headerColGroup col", ShowHide.Show, columnId);
-        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Show, columnId);
+        jQuery(".table-header thead #header-" + columnId).fadeIn(200);
+        jQuery(".mainTableBody .body-" + columnId).fadeIn(200);
+        // this.SetColWidth(".table-header .headerColGroup col", ShowHide.Show, columnId);
+        // this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Show, columnId);
         this.configStore.SetHiddenOnConfig(false, columnId);
     }
 
     public hideColumn = (columnId: string): void => {
-        this.SetColWidth(".table-header .headerColGroup col", ShowHide.Hide, columnId);
-        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Hide , columnId);
+        jQuery(".table-header thead #header-" + columnId).fadeOut(200);
+        jQuery(".mainTableBody .body-" + columnId).fadeOut(200);
+        // this.SetColWidth(".table-header .headerColGroup col", ShowHide.Hide, columnId);
+        // this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Hide , columnId);
         this.configStore.SetHiddenOnConfig(true, columnId);
     }
 
     public hideAllColumns = (): void => {
-        this.SetColWidth(".table-header .headerColGroup col", ShowHide.HideAll);
-        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.HideAll);
+        jQuery(".table-header thead").fadeOut(200);
+        jQuery(".mainTableBody").fadeOut(200);
+        // this.SetColWidth(".table-header .headerColGroup col", ShowHide.HideAll);
+        // this.SetColWidth(".table-body .bodyColGroup col", ShowHide.HideAll);
         this.configStore.SetHiddenOnConfig(true);
     }
     public applyColumnConfig = (columns: IColumn[]) => {

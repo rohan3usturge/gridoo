@@ -17,13 +17,13 @@
         crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script> -->
-    <link rel="stylesheet" href="http://localhost:8080/assignment-search/asgn-search.min.css" />
+    <link rel="stylesheet" href="http://localhost:8082/asgn-search.min.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
     <script src="gridoo.js"></script>
     <script>
         var cols = [];
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 50; i++) {
             cols.push({
                 id: "id" + i,
                 name: "Name" + i,
@@ -50,6 +50,7 @@
 
 <body>
     <button onclick="addFilters()">Add Filters</button>
+    <button onclick="hideRows()">Hide Rows</button>
     <div class="gui item right gui-subheading-2 m-0 manage-col-container" id="manange-cols-container">
         <a class="gui col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings" tabindex="1">
             <i class="gui-icon gui-icon-repair"></i>
@@ -81,7 +82,9 @@
         var grid = new Gridoo.Grid(options);
         function addFilters() {
             grid.bindData(data, paginationInput);
-            grid.bindManageColums();
+        }
+        function hideRows() {
+            grid.hideRows(["Data-Row-10-Col-1","Data-Row-11-Col-1","Data-Row-12-Col-1", "Data-Row-13-Col-1"]);
         }
         function showManageCols() {
             $("#manageCol").toggle();

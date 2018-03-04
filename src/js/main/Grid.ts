@@ -44,6 +44,9 @@ export class Grid<T> {
                                                                               lastIndex,
                                                                               );
         this.configStore.Options.containerElement.innerHTML = gridContent;
+        if (this.configStore.Options.manageColSettingsContainer !== undefined) {
+            this.bindManageColums(this.configStore.Options.manageColSettingsContainer);
+        }
         // Have to bind Scroll Handler After DOM has been created
         const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService);
         scrollHandler.RegisterDomHandler();
@@ -72,6 +75,18 @@ export class Grid<T> {
     }
     public applyColumnConfig = (columns: IColumn[]) => {
         this.toggleHandler.applyColumnConfig(columns);
+    }
+    public hideRows = (colIds: any[]) => {
+        jQuery(".mainRow").each((index, element): void | false => {
+            const current = jQuery(element);
+            const uniqueId = current.attr("data-pk-attr");
+            for (const colId of colIds) {
+                if (colId === uniqueId) {
+                    current.fadeOut();
+                    break;
+                }
+            }
+        });
     }
     private getInitialRowCount = (): number => {
         return 25;
