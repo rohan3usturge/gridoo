@@ -17,10 +17,10 @@
                 {{#each columns}}
                 <tr data-header-id="{{name}}">
                     <td>
-                        <input type="checkbox" class="col-settings-hidden-checkbox" value="{{id}}" {{Checked hidden}}>
-                    </td>
-                    <td>
-                        <label>{{name}}</label>
+                        <label>
+                            <input type="checkbox" class="col-settings-hidden-checkbox gui m-r-10" value="{{id}}" {{Checked hidden}}>
+                            {{name}}
+                        </label>
                     </td>
                 </tr>
                 {{/each}}

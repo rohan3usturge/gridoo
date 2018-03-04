@@ -37,7 +37,7 @@ export class Grid<T> {
     public bindData = (data: T[], paginationInput?: IPaginationInput): void => {
         const firstIndex = 0;
         let lastIndex = this.configStore.Options.chunkSize + this.getInitialRowCount();
-        lastIndex = lastIndex > data.length ? data.length - 1 : lastIndex;
+        lastIndex = lastIndex >= data.length ? data.length - 1 : lastIndex;
         Pager.CalculatePaginationData(paginationInput);
         const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
                                                                               firstIndex,
@@ -48,7 +48,7 @@ export class Grid<T> {
             this.bindManageColums(this.configStore.Options.manageColSettingsContainer);
         }
         // Have to bind Scroll Handler After DOM has been created
-        const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService);
+        const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex);
         scrollHandler.RegisterDomHandler();
         this.handleChain.push({
             handler: scrollHandler,
@@ -76,12 +76,12 @@ export class Grid<T> {
     public applyColumnConfig = (columns: IColumn[]) => {
         this.toggleHandler.applyColumnConfig(columns);
     }
-    public hideRows = (colIds: any[]) => {
+    public hideRows = (colIds: number[]) => {
         jQuery(".mainRow").each((index, element): void | false => {
             const current = jQuery(element);
             const uniqueId = current.attr("data-pk-attr");
             for (const colId of colIds) {
-                if (colId === uniqueId) {
+                if (colId.toString() === uniqueId) {
                     current.fadeOut();
                     break;
                 }
@@ -89,7 +89,7 @@ export class Grid<T> {
         });
     }
     private getInitialRowCount = (): number => {
-        return 25;
+        return Math.floor((jQuery(window).innerHeight() * 0.65 ) / 32);
     }
 
     private InitHandlers = (): void => {

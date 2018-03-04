@@ -13,11 +13,13 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     private rendering: boolean =  false;
     private configStore: ConfigStore<T>;
     private leftOffset: number;
+    private currentIndex: number;
 
-    constructor(configStore: ConfigStore<T>, gridTemplateService: GridTemplateService<T>) {
+    constructor(configStore: ConfigStore<T>, gridTemplateService: GridTemplateService<T>, currentIndex: number) {
         this.configStore = configStore;
         this.parentElement = jQuery(this.configStore.Options.containerElement);
         this.gridTemplateService = gridTemplateService;
+        this.currentIndex = currentIndex;
     }
     public onResize(): void {
         this.leftOffset = this.parentElement.find(".table-header").offset().left;
@@ -28,6 +30,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     }
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
+        this.parentElement.resize((event) => {
+            this.leftOffset = this.parentElement.find(".table-header").offset().left;
+        });
         this.parentElement.find(".table-body").on("scroll", (event) => {
             const tBodyObj = this.parentElement.find(".table-body");
             if (this.leftOffset === undefined || this.leftOffset === null) {
@@ -40,46 +45,31 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                 },
             );
             const actualTableHeight = tBodyObj.find(".mainTable").height();
-            this.Virtualizer.TableHeight = actualTableHeight;
-            this.Virtualizer.ScrollContainerHeight = tBodyObj.height();
+            const scrollContainerHeight = tBodyObj.height();
             event.preventDefault();
             if (this.rendering) {
                 event.stopPropagation();
                 return;
             }
             const scrollTop = tBodyObj.scrollTop();
-            const indexCounter: IIndexCounter = this.Virtualizer.GetIndexCounterForScroll(scrollTop);
-            switch (indexCounter.direction) {
-                case ScrollDirection.Down:
-                    if (indexCounter.renderingRequired) {
-                        this.rendering = true;
-                        tBodyObj.find(".mainTable .mainTableBody").append(
-                            this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
-                        tBodyObj.find(".mainTable .mainTableBody > tr")
-                            .slice(0, this.configStore.options.chunkSize * 2).remove();
-                        this.rendering = false;
-                    }
-                    break;
-                case ScrollDirection.Up:
-                    if (indexCounter.renderingRequired) {
-                        this.rendering = true;
-                        tBodyObj.find(".mainTable .mainTableBody").prepend
-                        (this.gridTemplateService.GetRowsHtml(indexCounter.startIndex, indexCounter.endIndex));
-                        tBodyObj.find(".mainTable .mainTableBody > tr")
-                            .slice((this.configStore.options.chunkSize * -2)).remove();
-                        this.rendering = false;
-                    }
-                    break;
+            if ((scrollContainerHeight + scrollTop ) - (actualTableHeight * 0.8 ) > 0 ) {
+                this.rendering = true;
+                const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex,
+                                                                          this.currentIndex +
+                                                                          this.configStore.Options.chunkSize));
+                tBodyObj.find(".mainTableBody").append(html);
+                this.currentIndex = this.currentIndex + this.configStore.Options.chunkSize;
+                this.rendering = false;
             }
             event.stopPropagation();
         });
     }
-    private get Virtualizer(): Virtualizer {
-        if (this.virtualizer === null || this.virtualizer === undefined) {
-            return this.virtualizer = new Virtualizer(this.configStore.options.chunkSize,
-                                                25, this.gridTemplateService.DataLength);
-        } else {
-            return this.virtualizer;
-        }
-    }
+    // private get Virtualizer(): Virtualizer {
+    //     if (this.virtualizer === null || this.virtualizer === undefined) {
+    //         return this.virtualizer = new Virtualizer(this.configStore.options.chunkSize,
+    //                                             25, this.gridTemplateService.DataLength);
+    //     } else {
+    //         return this.virtualizer;
+    //     }
+    // }
 }
