@@ -5,6 +5,7 @@ export class Grid<T> {
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
     bindManageColums: (manageColContainer?: HTMLElement) => void;
     applyColumnConfig: (columns: IColumn[]) => void;
+    hideRows: (colIds: any[]) => void;
 }
 
 export interface IPaginationInput {
