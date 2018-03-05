@@ -27,7 +27,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
             return;
         }
         if (!targetElement.parents().is(".col-settings-container")) {
-            jQuery(".col-settings-container").slideUp();
+            jQuery(".col-settings-container").slideUp(this.configStore.Options.animationTime);
         }
     }
     public RegisterDomHandler(): void {
@@ -35,7 +35,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
             const element = jQuery(event.target);
             const settngsPopup = this.parentElement.find(".col-settings-container");
             this.onResize();
-            settngsPopup.slideToggle();
+            settngsPopup.slideToggle(this.configStore.Options.animationTime);
             event.stopPropagation();
         });
         this.parentElement.on("keyup", ".col-settings-header .col-settings-filter",
@@ -44,9 +44,9 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                 const val = element.val().toString().toLowerCase();
                 console.log(val);
                 this.parentElement.find(".col-settings-table table tbody tr").each((i: number, e) => {
-                    jQuery(e).show();
+                    jQuery(e).show(this.configStore.Options.animationTime);
                     if (jQuery(e).attr("data-header-id").toLowerCase().indexOf(val) === -1 ) {
-                        jQuery(e).hide();
+                        jQuery(e).hide(this.configStore.Options.animationTime);
                     }
                 });
                 event.stopPropagation();

@@ -17,5 +17,6 @@ export interface IGridOptions<T> {
     manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
-    chunkSize: 5;
+    chunkSize: number;
+    animationTime: number;
 }

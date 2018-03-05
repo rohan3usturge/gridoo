@@ -6,6 +6,7 @@ import { OrderDirection } from "../models/OrderDirection";
 export class ConfigStore<T> {
     public options: IGridOptions<T>;
     private defaultGridOptions: IGridOptions<T> = {
+        animationTime: 200,
         chunkSize: 5,
         columns: [],
         containerElement: null,

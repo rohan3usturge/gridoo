@@ -12,12 +12,12 @@
     </div>
     <div class="gui clear"></div>
     <div class="col-settings-table gui fluid h-95 of-auto p-5 m-t-10" >
-        <table class="gui small very border-less selectable basic compact table">
+        <table class="gui small very border-less basic compact table">
             <tbody>
                 {{#each columns}}
                 <tr data-header-id="{{name}}">
-                    <td class="gui cursor-pointer">
-                        <label class="gui cursor-pointer">
+                    <td>
+                        <label>
                             <input type="checkbox" class="col-settings-hidden-checkbox gui m-r-10" value="{{id}}" {{Checked hidden}}>
                             {{name}}
                         </label>

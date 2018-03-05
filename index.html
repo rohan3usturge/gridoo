@@ -23,7 +23,7 @@
     <script src="gridoo.js"></script>
     <script>
         var cols = [];
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 10; i++) {
             cols.push({
                 id: "id" + i,
                 name: "Name" + i,
@@ -50,12 +50,13 @@
 
 <body>
     <button onclick="addFilters()">Add Filters</button>
+    <button onclick="hideRows()">Hide Rows</button>
     <div class="gui item right gui-subheading-2 m-0 manage-col-container" id="manange-cols-container">
         <a class="gui col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings" tabindex="1">
             <i class="gui-icon gui-icon-repair"></i>
             Manage Columns
         </a>
-        <div class="col-settings-container gui of-hidden gui-hidden pop-up"></div>
+        <div style="height: 400px; overflow: hidden;"  class="col-settings-container gui of-hidden gui-hidden pop-up"></div>
     </div>
 
     <div class="gui container" style="height: 90%; margin: 20px;" id="hi"></div>
@@ -74,14 +75,16 @@
         };
         var paginationInput = {
             totalCount: 1000,
-            pageSize: 50,
+            pageSize: 1000,
             pageIndex: 1,
             pageSizes: [50, 100, 500, 1000],
         };
         var grid = new Gridoo.Grid(options);
         function addFilters() {
             grid.bindData(data, paginationInput);
-            grid.bindManageColums();
+        }
+        function hideRows() {
+            grid.hideRows(["Data-Row-10-Col-1","Data-Row-11-Col-1","Data-Row-12-Col-1", "Data-Row-13-Col-1"]);
         }
         function showManageCols() {
             $("#manageCol").toggle();

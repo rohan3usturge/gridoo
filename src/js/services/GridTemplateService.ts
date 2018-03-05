@@ -43,6 +43,13 @@ export class GridTemplateService <T> {
             paginationData: Pager.PaginationData,
         });
     }
+    public getTemplate = (firstIndex: number, lastIndex: number): string => {
+        const mainRowArray = this.GetRowsHtml(firstIndex, lastIndex);
+        return this.templateFunctionForMainRow({
+            columns: this.configStore.Options.columns,
+            mainRowArray,
+        });
+    }
     public GetManageColumnsHtml = (): string => {
         return this.templateFunctionForManageCol({columns: this.configStore.Options.columns});
     }

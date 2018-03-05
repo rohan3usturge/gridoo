@@ -5,6 +5,7 @@ export class Grid<T> {
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
     bindManageColums: (manageColContainer?: HTMLElement) => void;
     applyColumnConfig: (columns: IColumn[]) => void;
+    hideRows: (colIds: number[]) => void;
 }
 
 export interface IPaginationInput {
@@ -36,7 +37,8 @@ export interface IGridOptions<T> {
     manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
-    chunkSize: 5;
+    chunkSize: number;
+    animationTime: number;
 }
 
 export enum OrderDirection {
@@ -47,7 +49,7 @@ export enum OrderDirection {
 
 export type IColSettingsChangeDelegate = (colConfig: IColumn[]) => void;
 
-export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean) => void;
+export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean, all?: boolean) => void;
 
 export type IFilterClickDelegate = (column: string, value: any, actionType: FilterActionType) => void;
 
