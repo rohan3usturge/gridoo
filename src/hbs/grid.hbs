@@ -15,7 +15,6 @@
     .table-body {
         overflow: auto;
         flex: 5;
-        padding-right: 17px;
     }
     .table-footer{
         height: 35px;
@@ -44,7 +43,7 @@
 </style>
 <div class="inner-container gui fluid container" style="padding:0%;">
     <div class="table-header">
-        <table id="headertable" class="gui basic large compact fixed single line table">
+        <table id="headertable" class="gui basic large compact sortable fixed single line table">
             <colgroup class="headerColGroup">
                 <col style="width:40px;" />
                 <col style="width:40px;" />
@@ -55,7 +54,7 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th><input type="checkbox" class="select-all-checkbox"></th>
+                    <th><input type="checkbox" class="select-all-checkbox cursor-pointer"></th>
                     {{#each columns}}
                         <th class="gui cursor-pointer" id="header-{{id}}" data-header-id="{{id}}">
                             <span class="gui sub header">{{name}}</span>

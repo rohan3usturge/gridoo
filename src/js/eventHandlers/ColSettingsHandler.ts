@@ -27,6 +27,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
             return;
         }
         if (!targetElement.parents().is(".col-settings-container")) {
+            jQuery(".col-settings-trigger").removeClass("active");
             jQuery(".col-settings-container").slideUp(this.configStore.Options.animationTime);
         }
     }
@@ -35,6 +36,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
             const element = jQuery(event.target);
             const settngsPopup = this.parentElement.find(".col-settings-container");
             this.onResize();
+            jQuery(".col-settings-trigger").addClass("active");
             settngsPopup.slideToggle(this.configStore.Options.animationTime);
             event.stopPropagation();
         });

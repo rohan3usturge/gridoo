@@ -76,18 +76,7 @@ export class Grid<T> {
     public applyColumnConfig = (columns: IColumn[]) => {
         this.toggleHandler.applyColumnConfig(columns);
     }
-    public hideRows = (colIds: number[]) => {
-        jQuery(".mainRow").each((index, element): void | false => {
-            const current = jQuery(element);
-            const uniqueId = current.attr("data-pk-attr");
-            for (const colId of colIds) {
-                if (colId.toString() === uniqueId) {
-                    current.fadeOut();
-                    break;
-                }
-            }
-        });
-    }
+
     private getInitialRowCount = (): number => {
         return Math.floor((jQuery(window).innerHeight() * 0.65 ) / 32);
     }
@@ -96,7 +85,7 @@ export class Grid<T> {
         const parentElement = jQuery(this.configStore.Options.containerElement);
         this.handleChain = [];
         this.handleChain.push({
-            handler: new DetailsRowHandler<T>(parentElement),
+            handler: new DetailsRowHandler<T>(this.configStore, parentElement),
             name: HandlerNames.DetailsRow,
         });
         this.handleChain.push({

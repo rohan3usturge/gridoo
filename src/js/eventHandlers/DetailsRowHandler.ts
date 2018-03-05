@@ -1,8 +1,9 @@
+import { ConfigStore } from "../config/ConfigStore";
 import { IEventHandler } from "./IEventHandler";
 export class DetailsRowHandler<T> implements IEventHandler<T> {
     private parentElement: JQuery;
 
-    constructor(element: JQuery) {
+    constructor(private configStore: ConfigStore<T>, element: JQuery) {
         this.parentElement = element;
     }
     public onResize(): void {
@@ -19,9 +20,9 @@ export class DetailsRowHandler<T> implements IEventHandler<T> {
             const currentIcon = arrow.hide();
             const otherIcon = arrow.siblings("i").show();
             if (arrow.hasClass("expandDetailsRowIcon")) {
-                detailsRow.slideUp(200);
+                detailsRow.slideDown(this.configStore.Options.animationTime);
             } else {
-                detailsRow.slideDown(200);
+                detailsRow.slideUp(this.configStore.Options.animationTime);
             }
             event.stopPropagation();
         });

@@ -14,16 +14,16 @@
 </div> --}}
 <div data-role="pager" class="gui left gui-subheading-2 col-md-6 text-left m-0">
     <span class="gui mini compact ">
-        <a class="gui mini compact firstLink" aria-hidden="true" {{Disabled paginationData.firstPageLinkDisabled}}
+        <button class="gui mini compact firstLink" aria-hidden="true" {{Disabled paginationData.firstPageLinkDisabled}}
             aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="-1">
             <i class="gui-icon gui-icon-previous"></i>
-        </a>
-        <a class="gui mini compact prevLink" aria-hidden="true" {{Disabled paginationData.prevPageLinkDisabled}}
+        </button>
+        <button class="gui mini compact prevLink" aria-hidden="true" {{Disabled paginationData.prevPageLinkDisabled}}
             aria-label="Go to the previous page" title="Go to the previous page" data-page="{{math paginationData.pageIndex '-' 1}}"
             tabindex="-1">
             <i class="gui-icon gui-icon-chevron-left"></i>
             Prev
-        </a>
+        </button>
     </span>
     <span class="gui pager-input-container input">
         <span class="gui m-r-5"> Page </span>
@@ -31,15 +31,15 @@
         <span class="no-of-pages-scan" data-number-of-pages="{{paginationData.noOfPages}}"> of {{paginationData.noOfPages}}</span>
     </span>
     <span class="gui mini compact ">
-        <a class="gui mini compact nextLink" aria-hidden="true" {{Disabled paginationData.nextPageLinkDisabled}}
+        <button class="gui mini compact nextLink" aria-hidden="true" {{Disabled paginationData.nextPageLinkDisabled}}
             aria-label="Go to the next page" title="Go to the next page" data-page="{{math paginationData.pageIndex '+' 1}}" tabindex="-1">
             Next
             <i class="gui-icon gui-icon-chevron-right"></i>
-        </a>
-        <a class="gui mini compact lastLink" aria-hidden="true" {{Disabled paginationData.lastPageLinkDisabled}}
+        </button>
+        <button class="gui mini compact lastLink" aria-hidden="true" {{Disabled paginationData.lastPageLinkDisabled}}
             aria-label="Go to the last page" title="Go to the last page" data-page="{{paginationData.noOFpages}}" tabindex="-1">
             <i class="gui-icon gui-icon-next"></i>
-        </a>
+        </button>
     </span>
 </div>
 <div class="col-md-6 gui gui-subheading-2 right text-right m-0">

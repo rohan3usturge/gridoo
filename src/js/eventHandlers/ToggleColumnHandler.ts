@@ -19,37 +19,27 @@ export class ToggleColumnHandler<T> {
     }
 
     public showAllColumns = (): void => {
-        for (const col of this.configStore.options.columns) {
-            this.showColumn(col.id);
-        }
+        this.SetColWidth(".table-header .headerColGroup col", ShowHide.ShowAll);
+        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.ShowAll);
+        this.configStore.SetHiddenOnConfig(false);
     }
 
     public showColumn = (columnId: string): void => {
-        // if (jQuery(".table-header thead").is(":hidden")) {
-        //     jQuery(".table-header thead").show();
-        // }
-        // if (jQuery(".mainTableBody").is(":hidden")) {
-        //     jQuery(".mainTableBody").show();
-        // }
-        jQuery(".table-header thead #header-" + columnId).fadeIn(this.configStore.Options.animationTime);
-        jQuery(".mainTableBody .body-" + columnId).fadeIn(this.configStore.Options.animationTime);
-        // this.SetColWidth(".table-header .headerColGroup col", ShowHide.Show, columnId);
-        // this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Show, columnId);
+        this.SetColWidth(".table-header .headerColGroup col", ShowHide.Show, columnId);
+        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Show, columnId);
         this.configStore.SetHiddenOnConfig(false, columnId);
     }
 
     public hideColumn = (columnId: string): void => {
-        jQuery(".table-header thead #header-" + columnId).fadeOut(this.configStore.Options.animationTime);
-        jQuery(".mainTableBody .body-" + columnId).fadeOut(this.configStore.Options.animationTime);
-        // this.SetColWidth(".table-header .headerColGroup col", ShowHide.Hide, columnId);
-        // this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Hide , columnId);
+        this.SetColWidth(".table-header .headerColGroup col", ShowHide.Hide, columnId);
+        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.Hide , columnId);
         this.configStore.SetHiddenOnConfig(true, columnId);
     }
 
     public hideAllColumns = (): void => {
-        for (const col of this.configStore.options.columns) {
-            this.hideColumn(col.id);
-        }
+        this.SetColWidth(".table-header .headerColGroup col", ShowHide.HideAll);
+        this.SetColWidth(".table-body .bodyColGroup col", ShowHide.HideAll);
+        this.configStore.SetHiddenOnConfig(true);
     }
     public applyColumnConfig = (columns: IColumn[]) => {
         for (const column of columns) {
