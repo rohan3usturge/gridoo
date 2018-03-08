@@ -2,6 +2,7 @@ import { OrderDirection } from "./OrderDirection";
 
 export interface IColumn {
     id: string;
+    type?: string;
     name: string;
     width: number;
     renderHybrid: boolean;

@@ -16,6 +16,7 @@ export interface IPaginationInput {
 
 export interface IColumn {
     id: string;
+    type?: string;
     name: string;
     width: number;
     renderHybrid: boolean;
@@ -50,7 +51,7 @@ export type IColSettingsChangeDelegate = (colConfig: IColumn[]) => void;
 
 export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean, all?: boolean) => void;
 
-export type IFilterClickDelegate = (column: string, value: any, actionType: FilterActionType) => void;
+export type IFilterClickDelegate = (column: string, value: any, actionType: FilterActionType, type?: string) => void;
 
 export type IHeaderClickDelegate = (column: string, direction: OrderDirection) => void;
 

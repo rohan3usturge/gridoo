@@ -75,6 +75,10 @@ export class Grid<T> {
     }
     public applyColumnConfig = (columns: IColumn[]) => {
         this.toggleHandler.applyColumnConfig(columns);
+        const html = this.gridTemplateService.GetManageColumnsHtml();
+        const element = jQuery(this.configStore.Options.manageColSettingsContainer
+            || this.configStore.Options.containerElement);
+        element.find(".col-settings-container").html(html);
     }
 
     private getInitialRowCount = (): number => {

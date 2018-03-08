@@ -26,6 +26,7 @@ export class FilterClickHandler<T> implements IEventHandler<T> {
             const parentTd = element.parents("td");
             const key = parentTd.attr("data-filter-key");
             const value = parentTd.attr("data-filter-value");
+            const type = parentTd.attr("data-filter-type");
             const col = CommonUtil.GetColumnObject(key, this.configStore.Options.columns);
             if (col === undefined || col === null || !col.filterable ) {
                 return;
@@ -34,7 +35,7 @@ export class FilterClickHandler<T> implements IEventHandler<T> {
             if (element.hasClass("removeFilter")) {
                 filterAction = FilterActionType.Minus;
             }
-            this.configStore.Options.onClickFilter(key, value, filterAction);
+            this.configStore.Options.onClickFilter(key, value, filterAction, type);
             event.stopPropagation();
         });
     }

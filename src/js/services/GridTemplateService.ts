@@ -67,6 +67,7 @@ export class GridTemplateService <T> {
                 }
                 mainRowColArray.push({
                     columnValue,
+                    type: col.type,
                     hidden: col.hidden,
                     actualValue: row[col.id],
                     columnName: col.name,
