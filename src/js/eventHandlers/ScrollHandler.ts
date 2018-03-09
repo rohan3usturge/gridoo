@@ -1,5 +1,4 @@
 import { ConfigStore } from "../config/ConfigStore";
-import { OrderDirection } from "./../models/OrderDirection";
 import { GridTemplateService } from "./../services/GridTemplateService";
 import { IIndexCounter } from "./../virtualization/IndexCounter";
 import { ScrollDirection } from "./../virtualization/ScrollDirection";

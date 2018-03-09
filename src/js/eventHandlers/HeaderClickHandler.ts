@@ -1,8 +1,8 @@
 import { ConfigStore } from "../config/ConfigStore";
 import { IGridOptions } from "../main/IGridOptions";
 import { CommonUtil } from "../util/ColumnUtil";
+import { GridOrderDirection } from "./../models/GridOrderDirection";
 import {IHeaderClickDelegate} from "./../models/IHeaderClickDelegate";
-import { OrderDirection } from "./../models/OrderDirection";
 import { IEventHandler } from "./IEventHandler";
 
 export class HeaderClickHandler<T> implements IEventHandler<T> {
@@ -34,19 +34,19 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
             const arrowIcons = element.find("i");
             const upArrowIcon = arrowIcons.first();
             const downArrowIcon = arrowIcons.last();
-            let direction: OrderDirection;
+            let direction: GridOrderDirection;
             if (arrowIcons.is(":visible")) {
                 if (upArrowIcon.is(":visible")) {
-                    direction = OrderDirection.Desc;
+                    direction = GridOrderDirection.Desc;
                     upArrowIcon.hide();
                     downArrowIcon.show();
                 } else {
-                    direction = OrderDirection.Asc;
+                    direction = GridOrderDirection.Asc;
                     downArrowIcon.hide();
                     upArrowIcon.show();
                 }
             } else {
-                direction = OrderDirection.Asc;
+                direction = GridOrderDirection.Asc;
                 upArrowIcon.show();
             }
             CommonUtil.SetOrder(headerId, direction, this.configStore.Options.columns);

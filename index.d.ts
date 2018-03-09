@@ -5,11 +5,14 @@ export class Grid<T> {
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
     bindManageColums: (manageColContainer?: HTMLElement) => void;
     applyColumnConfig: (columns: IColumn[]) => void;
-    setOrder: (orderByList: [{
-        colId: string;
-        order: OrderDirection;
-    }]) => void;
+    setOrder: (orderByList: IGridOrder[]) => void;
 }
+
+interface IGridOrder {
+    colId: string;
+    order: GridOrderDirection;
+}
+export { IGridOrder };
 
 export interface IPaginationInput {
     totalCount: number;
@@ -27,13 +30,7 @@ export interface IColumn {
     hidden: boolean;
     sortable: boolean;
     filterable: boolean;
-    order?: OrderDirection;
-}
-
-export enum OrderDirection {
-    None = "None",
-    Asc = "Asc",
-    Desc = "Desc",
+    order?: GridOrderDirection;
 }
 
 export interface IGridOptions<T> {
@@ -51,13 +48,19 @@ export interface IGridOptions<T> {
     animationTime: number;
 }
 
+export enum GridOrderDirection {
+    None = "None",
+    Asc = "Asc",
+    Desc = "Desc",
+}
+
 export type IColSettingsChangeDelegate = (colConfig: IColumn[]) => void;
 
 export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean, all?: boolean) => void;
 
 export type IFilterClickDelegate = (column: string, value: any, actionType: FilterActionType, type?: string) => void;
 
-export type IHeaderClickDelegate = (column: string, direction: OrderDirection) => void;
+export type IHeaderClickDelegate = (column: string, direction: GridOrderDirection) => void;
 
 export type IPageSearchClickDelegate = (pageSize: number, pageIndex: number) => void;
 

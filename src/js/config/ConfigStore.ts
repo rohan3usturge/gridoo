@@ -1,7 +1,7 @@
 import { IGridOptions } from "../main/IGridOptions";
 import { FilterActionType } from "../models/FilterActionType";
+import { GridOrderDirection } from "../models/GridOrderDirection";
 import { IColumn } from "../models/IColumn";
-import { OrderDirection } from "../models/OrderDirection";
 
 export class ConfigStore<T> {
     public options: IGridOptions<T>;
@@ -21,7 +21,7 @@ export class ConfigStore<T> {
         onClickFilter: (column: string, value: any, actionType: FilterActionType): void => {
             // No code
         },
-        onClickHeader: (column: string, direction: OrderDirection): void => {
+        onClickHeader: (column: string, direction: GridOrderDirection): void => {
             // No code
         },
         onPageSearch: (pageSize: number, pageIndex: number): void => {

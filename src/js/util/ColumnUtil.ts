@@ -1,4 +1,4 @@
-import { OrderDirection } from "../models/OrderDirection";
+import { GridOrderDirection } from "../models/GridOrderDirection";
 import { IColumn } from "./../models/IColumn";
 
 export class CommonUtil {
@@ -16,7 +16,7 @@ export class CommonUtil {
         });
         return retCol;
     }
-    public static SetOrder = (columnId: string, order: OrderDirection, columns: IColumn[]): IColumn => {
+    public static SetOrder = (columnId: string, order: GridOrderDirection, columns: IColumn[]): IColumn => {
         if (columnId == null || columns == null) {
             return null;
         }

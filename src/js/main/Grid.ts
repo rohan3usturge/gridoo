@@ -2,6 +2,7 @@ import * as jQuery from "jquery";
 import { ConfigStore } from "../config/ConfigStore";
 import { ColSettingsHandler } from "../eventHandlers/ColSettingsHandler";
 import { SelectEventHandler } from "../eventHandlers/SelectEventHandler";
+import { IGridOrder } from "../models/IGridOrder";
 import { IPagination } from "../models/IPagination";
 import { IPaginationInput } from "../models/IPaginationInput";
 import { Pager } from "../pagination/Pager";
@@ -15,8 +16,8 @@ import { PageSearchHandler } from "./../eventHandlers/PageSearchClickHandler";
 import { ScrollHandler } from "./../eventHandlers/ScrollHandler";
 import { ToggleColumnHandler } from "./../eventHandlers/ToggleColumnHandler";
 import { FilterActionType } from "./../models/FilterActionType";
+import { GridOrderDirection } from "./../models/GridOrderDirection";
 import { IColumn } from "./../models/IColumn";
-import { OrderDirection } from "./../models/OrderDirection";
 import { GridTemplateService } from "./../services/GridTemplateService";
 import { CommonUtil } from "./../util/ColumnUtil";
 import { IGridOptions } from "./IGridOptions";
@@ -81,7 +82,7 @@ export class Grid<T> {
         element.find(".col-settings-container").html(html);
     }
 
-    public setOrder = (orderByList: [{colId: string, order: OrderDirection}]) => {
+    public setOrder = (orderByList: IGridOrder[]) => {
         if (orderByList === undefined || orderByList === null || orderByList.length === 0 ) {
             return;
         }

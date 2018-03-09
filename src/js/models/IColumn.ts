@@ -1,4 +1,4 @@
-import { OrderDirection } from "./OrderDirection";
+import { GridOrderDirection } from "./GridOrderDirection";
 
 export interface IColumn {
     id: string;
@@ -9,5 +9,5 @@ export interface IColumn {
     hidden: boolean;
     sortable: boolean;
     filterable: boolean;
-    order?: OrderDirection;
+    order?: GridOrderDirection;
 }

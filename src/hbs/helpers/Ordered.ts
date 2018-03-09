@@ -1,9 +1,9 @@
-import { OrderDirection } from "../../js/models/OrderDirection";
+import { GridOrderDirection } from "../../js/models/GridOrderDirection";
 
-const ordered = (order: OrderDirection): string => {
-    if (order === OrderDirection.Asc) {
+const ordered = (order: GridOrderDirection): string => {
+    if (order === GridOrderDirection.Asc) {
         return "<i class=\"gui gui-icon gui-icon-arrow-up\" ></i> ";
-    } else if (order === OrderDirection.Desc) {
+    } else if (order === GridOrderDirection.Desc) {
         return "<i class=\"gui gui-icon gui-icon-arrow-down\" ></i> ";
     } else {
         return "<i class=\"gui gui-icon gui-icon-arrow-up gui-hidden\" aria-hidden=\"true\" ></i> " +

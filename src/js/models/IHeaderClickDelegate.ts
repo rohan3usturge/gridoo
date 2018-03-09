@@ -1,4 +1,4 @@
+import { GridOrderDirection } from "./GridOrderDirection";
 import { IColumn } from "./IColumn";
-import { OrderDirection } from "./OrderDirection";
 
-export type IHeaderClickDelegate = (column: string, direction: OrderDirection) => void;
+export type IHeaderClickDelegate = (column: string, direction: GridOrderDirection) => void;
