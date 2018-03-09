@@ -81,6 +81,23 @@ export class Grid<T> {
         element.find(".col-settings-container").html(html);
     }
 
+    public setOrder = (orderByList: [{colId: string, order: OrderDirection}]) => {
+        if (orderByList === undefined || orderByList === null || orderByList.length === 0 ) {
+            return;
+        }
+        for (const col of this.configStore.Options.columns) {
+            col.order = undefined;
+        }
+        for (const orderCol of orderByList) {
+            for (const col of this.configStore.Options.columns) {
+                if (orderCol.colId === col.id ) {
+                    col.order = orderCol.order;
+                    break;
+                }
+            }
+        }
+    }
+
     private getInitialRowCount = (): number => {
         return Math.floor((jQuery(window).innerHeight() * 0.65 ) / 32);
     }

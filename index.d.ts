@@ -5,6 +5,10 @@ export class Grid<T> {
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
     bindManageColums: (manageColContainer?: HTMLElement) => void;
     applyColumnConfig: (columns: IColumn[]) => void;
+    setOrder: (orderByList: [{
+        colId: string;
+        order: OrderDirection;
+    }]) => void;
 }
 
 export interface IPaginationInput {
@@ -26,6 +30,12 @@ export interface IColumn {
     order?: OrderDirection;
 }
 
+export enum OrderDirection {
+    None = "None",
+    Asc = "Asc",
+    Desc = "Desc",
+}
+
 export interface IGridOptions<T> {
     columns: IColumn[];
     keyColumn: string;
@@ -39,12 +49,6 @@ export interface IGridOptions<T> {
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: number;
     animationTime: number;
-}
-
-export enum OrderDirection {
-    None = "None",
-    Asc = "Asc",
-    Desc = "Desc",
 }
 
 export type IColSettingsChangeDelegate = (colConfig: IColumn[]) => void;
