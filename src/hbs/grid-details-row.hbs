@@ -6,12 +6,7 @@
                 <tr>
                     <td class="gui rv-parent" valign="top" data-filter-type="{{type}}" data-filter-key="{{id}}" data-filter-value="{{actualValue}}">
                         <span>{{columnName}}</span>
-                        {{#if filterable}}
-                        <span class="gui m-l-5 rv-child gui-caption" >
-                            <i class="gui gui-icon gui-icon-add hover m-l-5 cursor-pointer addFilter"></i>
-                            <i class="gui gui-icon gui-icon-minus hover m-l-5 cursor-pointer removeFilter"></i>
-                        </span>
-                        {{/if}}
+                        {{{Filters filterable type}}}
                     </td>
                     <td>{{{columnValue}}}</td>
                 </tr>
