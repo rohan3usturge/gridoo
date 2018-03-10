@@ -64,7 +64,7 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                 }
                 const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex, lastIndex));
                 tBodyObj.find(".mainTableBody").append(html);
-                this.currentIndex = lastIndex;
+                this.currentIndex = lastIndex + 1;
                 this.rendering = false;
             }
             event.stopPropagation();
