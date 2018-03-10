@@ -49,7 +49,7 @@ export class Grid<T> {
             this.bindManageColums(this.configStore.Options.manageColSettingsContainer);
         }
         // Have to bind Scroll Handler After DOM has been created
-        const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex);
+        const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
         scrollHandler.RegisterDomHandler();
         this.handleChain.push({
             handler: scrollHandler,
