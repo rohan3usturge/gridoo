@@ -59,8 +59,8 @@ export class ScrollHandler<T> implements IEventHandler<T> {
                 }
                 this.rendering = true;
                 let lastIndex = this.currentIndex + this.configStore.Options.chunkSize;
-                if ( lastIndex > this.gridTemplateService.DataLength ) {
-                    lastIndex = this.gridTemplateService.DataLength;
+                if ( lastIndex >= this.gridTemplateService.DataLength ) {
+                    lastIndex = this.gridTemplateService.DataLength - 1;
                 }
                 const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex, lastIndex));
                 tBodyObj.find(".mainTableBody").append(html);
