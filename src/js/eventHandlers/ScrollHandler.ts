@@ -25,7 +25,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     }
 
     public onDocumentClick(event): void {
-        // throw new Error("Method not implemented.");
+        jQuery(document).resize((resizeEvent) => {
+            this.leftOffset = this.parentElement.find(".table-header").offset().left;
+        });
     }
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
@@ -52,12 +54,17 @@ export class ScrollHandler<T> implements IEventHandler<T> {
             }
             const scrollTop = tBodyObj.scrollTop();
             if ((scrollContainerHeight + scrollTop ) - (actualTableHeight * 0.8 ) > 0 ) {
+                if ( this.currentIndex >= this.gridTemplateService.DataLength ) {
+                    return;
+                }
                 this.rendering = true;
-                const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex,
-                                                                          this.currentIndex +
-                                                                          this.configStore.Options.chunkSize));
+                let lastIndex = this.currentIndex + this.configStore.Options.chunkSize;
+                if ( lastIndex > this.gridTemplateService.DataLength ) {
+                    lastIndex = this.gridTemplateService.DataLength;
+                }
+                const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex, lastIndex));
                 tBodyObj.find(".mainTableBody").append(html);
-                this.currentIndex = this.currentIndex + this.configStore.Options.chunkSize;
+                this.currentIndex = lastIndex;
                 this.rendering = false;
             }
             event.stopPropagation();
