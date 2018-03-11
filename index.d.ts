@@ -3,9 +3,10 @@
 export class Grid<T> {
     constructor(options: IGridOptions<T>);
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
-    bindManageColums: (manageColContainer?: HTMLElement) => void;
+    bindManageColums: (manageColContainer?: HTMLElement, force?: boolean) => void;
     applyColumnConfig: (columns: IColumn[]) => void;
     setOrder: (orderByList: IGridOrder[]) => void;
+    destroy: () => void;
 }
 
 interface IGridOrder {

@@ -26,8 +26,10 @@ export class Grid<T> {
 
     private handleChain: Array<IHandlerChain<T>>;
     private gridTemplateService: GridTemplateService<T>;
-    private toggleHandler: ToggleColumnHandler<T>;
     private configStore: ConfigStore<T>;
+    private toggleHandler: ToggleColumnHandler<T>;
+    private scrollHandler: ScrollHandler<T>;
+    private manageColHandler: ColSettingsHandler<T>;
 
     constructor(options: IGridOptions<T>) {
         this.configStore = new ConfigStore<T>(options);
@@ -49,37 +51,37 @@ export class Grid<T> {
             this.bindManageColums(this.configStore.Options.manageColSettingsContainer);
         }
         // Have to bind Scroll Handler After DOM has been created
-        const scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
-        scrollHandler.RegisterDomHandler();
-        this.handleChain.push({
-            handler: scrollHandler,
-            name: HandlerNames.Scroll,
-        });
+        if ( this.scrollHandler !== undefined && this.scrollHandler !== null ) {
+            this.scrollHandler.setCurrentIndex(lastIndex + 1);
+        } else {
+            this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
+            this.scrollHandler.RegisterDomHandler();
+            this.scrollHandler.watchWidth();
+        }
     }
 
-    public bindManageColums = (manageColContainer?: HTMLElement): void => {
+    public bindManageColums = (manageColContainer?: HTMLElement, force?: boolean): void => {
+        if (this.manageColHandler !== undefined && !force ) {
+            return;
+        }
         const html = this.gridTemplateService.GetManageColumnsHtml();
-        const element = jQuery(manageColContainer || this.configStore.Options.manageColSettingsContainer
-            || this.configStore.Options.containerElement);
+        const element = jQuery(manageColContainer
+                        || this.configStore.Options.manageColSettingsContainer
+                        || this.configStore.Options.containerElement);
         this.toggleHandler = new ToggleColumnHandler(this.configStore,
-                             jQuery(this.configStore.Options.containerElement));
+                                                     jQuery(this.configStore.Options.containerElement));
         this.configStore.options.manageColSettingsContainer = element[0];
-        const manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, this.toggleHandler);
+        this.manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, this.toggleHandler);
         element.find(".col-settings-container").html(html);
-        manageColHandler.RegisterDomHandler();
-        jQuery(window).resize(() => {
-            manageColHandler.onResize();
-        });
-        jQuery(document).click((event) => {
-            manageColHandler.onDocumentClick(event);
-            event.stopPropagation();
-        });
+        this.manageColHandler.RegisterDomHandler();
+        jQuery(window).resize(this.documentResizeHandlerForCs);
+        jQuery(document).click(this.documentClickHandlerForCs);
     }
     public applyColumnConfig = (columns: IColumn[]) => {
         this.toggleHandler.applyColumnConfig(columns);
         const html = this.gridTemplateService.GetManageColumnsHtml();
         const element = jQuery(this.configStore.Options.manageColSettingsContainer
-            || this.configStore.Options.containerElement);
+                              || this.configStore.Options.containerElement);
         element.find(".col-settings-container").html(html);
     }
 
@@ -97,6 +99,24 @@ export class Grid<T> {
                     break;
                 }
             }
+        }
+    }
+
+    public destroy = () => {
+        const parentElement = jQuery(this.configStore.Options.containerElement);
+        if ( parentElement !== undefined ) {
+            parentElement.off();
+        }
+        const manageContainerElement = jQuery(this.configStore.Options.manageColSettingsContainer);
+        if ( manageContainerElement !== undefined ) {
+            manageContainerElement.off();
+        }
+        $(window).off("resize", this.documentResizeHandler);
+        $(document).off("click", this.documentClickHandler);
+        $(window).off("resize", this.documentResizeHandlerForCs);
+        $(document).off("click", this.documentClickHandlerForCs);
+        if ( this.scrollHandler !== undefined ) {
+            this.scrollHandler.unWatchWidth();
         }
     }
 
@@ -131,17 +151,33 @@ export class Grid<T> {
         this.handleChain.forEach((value: IHandlerChain<T>): void => {
             value.handler.RegisterDomHandler();
         });
-        jQuery(window).resize(() => {
-            this.handleChain.forEach((value: IHandlerChain<T>): void => {
-                value.handler.onResize();
-            });
+        jQuery(window).resize(this.documentResizeHandler);
+        jQuery(document).click(this.documentClickHandler);
+    }
+
+    private documentResizeHandlerForCs = (event) => {
+        this.manageColHandler.onResize();
+        event.stopPropagation();
+    }
+    private documentClickHandlerForCs = (event) => {
+        this.manageColHandler.onDocumentClick(event);
+        event.stopPropagation();
+    }
+    private documentResizeHandlerForScroll = (event) => {
+        this.manageColHandler.onResize();
+        event.stopPropagation();
+    }
+    private documentClickHandler = (event) => {
+        this.handleChain.forEach((value: IHandlerChain<T>): void => {
+            value.handler.onDocumentClick(event);
         });
-        jQuery(document).click((event) => {
-            this.handleChain.forEach((value: IHandlerChain<T>): void => {
-                value.handler.onDocumentClick(event);
-            });
-            event.stopPropagation();
+        event.stopPropagation();
+    }
+    private documentResizeHandler = (event) => {
+        this.handleChain.forEach((value: IHandlerChain<T>): void => {
+            value.handler.onDocumentClick(event);
         });
+        event.stopPropagation();
     }
 
 }

@@ -2,17 +2,24 @@
 
 <head>
     <!-- Latest compiled and minified CSS -->
-    <link href='https://aurorasit.azurewebsites.net/fonts/black/segoeui.woff' rel='stylesheet' type='text/css'>
     <style>
-        @font-face {
-            font-family: 'SegoeUI MDL2 Assets';
-            src: url("https://aurorasit.azurewebsites.net/fonts/black/segoeui.woff") format('woff');
-            font-weight: 100;
-            font-style: normal;
+        document::-webkit-scrollbar {
+            width: 2em;
+            height: 2em
+        }
+
+        document::-webkit-scrollbar-button {
+            background: #888
+        }
+
+        document::-webkit-scrollbar-track-piece {
+            background: #ccc
+        }
+
+        document::-webkit-scrollbar-thumb {
+            background: black;
         }
     </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
@@ -23,7 +30,7 @@
     <script src="gridoo.js"></script>
     <script>
         var cols = [];
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 30; i++) {
             cols.push({
                 id: "id" + i,
                 name: "Name" + i,
@@ -49,18 +56,24 @@
 
 </head>
 
-<body>
+<body style="width: 100%">
     <button onclick="addFilters()">Add Filters</button>
+    <button onclick="destroy()">Destroy</button>
     <button onclick="hideRows()">Hide Rows</button>
+    <button onclick="showFacet()">Toggle Facet</button>
     <div class="gui item left gui-subheading-2 m-0 manage-col-container" id="manange-cols-container">
         <a class="gui col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings" tabindex="1">
             <i class="gui-icon gui-icon-repair"></i>
             Manage Columns
         </a>
-        <div style="height: 400px; overflow: hidden;"  class="col-settings-container gui of-hidden gui-hidden pop-up"></div>
+        <div style="height: 400px; overflow: hidden;" class="col-settings-container gui of-hidden gui-hidden pop-up"></div>
     </div>
-
-    <div class="gui container" style="height: 90%; margin: 20px;" id="hi"></div>
+    <div style="display: flex;height: 60%; width: 100%">
+        <div class="facet" style="background-color: red;height: 60%" id="facet">
+            asdasdasdasdasd asdasdasdasdasd asdasdasdasdasd
+        </div>
+        <div class="gui container" style="height: 60%; flex:9; overflow: hidden" id="hi"></div>
+    </div>
     <script>
 
         var options = {
@@ -73,8 +86,8 @@
                 alert('recieved' + checked);
                 console.log(row);
             },
-            onClickFilter: function(column, value, actionType, type){
-                alert('recieved'+ column + value + actionType + type);
+            onClickFilter: function (column, value, actionType, type) {
+                alert('recieved' + column + value + actionType + type);
             },
         };
         var paginationInput = {
@@ -88,10 +101,16 @@
             grid.bindData(data, paginationInput);
         }
         function hideRows() {
-            grid.hideRows(["Data-Row-10-Col-1","Data-Row-11-Col-1","Data-Row-12-Col-1", "Data-Row-13-Col-1"]);
+            grid.hideRows(["Data-Row-10-Col-1", "Data-Row-11-Col-1", "Data-Row-12-Col-1", "Data-Row-13-Col-1"]);
         }
         function showManageCols() {
             $("#manageCol").toggle();
+        }
+        function showFacet() {
+            $("#facet").toggle();
+        }
+        function destroy() {
+            grid.destroy();
         }
     </script>
 </body>

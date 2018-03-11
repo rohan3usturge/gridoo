@@ -12,7 +12,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     private rendering: boolean =  false;
     private configStore: ConfigStore<T>;
     private leftOffset: number;
+    private parentOffSetLeft: number;
     private currentIndex: number;
+    private watches: any[] = [];
 
     constructor(configStore: ConfigStore<T>, gridTemplateService: GridTemplateService<T>, currentIndex: number) {
         this.configStore = configStore;
@@ -21,19 +23,14 @@ export class ScrollHandler<T> implements IEventHandler<T> {
         this.currentIndex = currentIndex;
     }
     public onResize(): void {
-        this.leftOffset = this.parentElement.find(".table-header").offset().left;
+        //
     }
 
     public onDocumentClick(event): void {
-        jQuery(document).resize((resizeEvent) => {
-            this.leftOffset = this.parentElement.find(".table-header").offset().left;
-        });
+        // No Op
     }
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
-        this.parentElement.resize((event) => {
-            this.leftOffset = this.parentElement.find(".table-header").offset().left;
-        });
         this.parentElement.find(".table-body").on("scroll", (event) => {
             const tBodyObj = this.parentElement.find(".table-body");
             if (this.leftOffset === undefined || this.leftOffset === null) {
@@ -70,12 +67,34 @@ export class ScrollHandler<T> implements IEventHandler<T> {
             event.stopPropagation();
         });
     }
-    // private get Virtualizer(): Virtualizer {
-    //     if (this.virtualizer === null || this.virtualizer === undefined) {
-    //         return this.virtualizer = new Virtualizer(this.configStore.options.chunkSize,
-    //                                             25, this.gridTemplateService.DataLength);
-    //     } else {
-    //         return this.virtualizer;
-    //     }
-    // }
+    public setCurrentIndex = (index: number) => {
+        this.currentIndex = index;
+    }
+    public watchWidth = () => {
+        this.parentOffSetLeft = this.parentElement.offset().left;
+        this.watches.push(setInterval(this.setHeaderOffset, 300));
+    }
+    public unWatchWidth = () => {
+        if (this.watches === undefined || this.watches === null ) {
+            return;
+        }
+        for (const watch of this.watches) {
+            clearInterval(watch);
+        }
+    }
+    private setHeaderOffset = () => {
+        const left = this.parentElement.offset().left;
+        if ( this.parentOffSetLeft !== left ) {
+            const tBodyObj = this.parentElement.find(".table-body");
+            if (this.leftOffset === undefined || this.leftOffset === null) {
+                this.leftOffset = this.parentElement.find(".table-header").offset().left;
+            }
+            this.leftOffset = this.leftOffset - (this.parentOffSetLeft - left);
+            this.parentElement
+                .find(".table-header")
+                .offset({left: this.leftOffset, top: 0});
+            this.parentOffSetLeft = left;
+            tBodyObj.scrollLeft(tBodyObj.scrollLeft() - 1);
+        }
+    }
 }
