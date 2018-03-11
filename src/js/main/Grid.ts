@@ -53,6 +53,7 @@ export class Grid<T> {
         // Have to bind Scroll Handler After DOM has been created
         if ( this.scrollHandler !== undefined && this.scrollHandler !== null ) {
             this.scrollHandler.removeHandler();
+            this.scrollHandler.resetParentOffset();
         } else {
             this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
             this.scrollHandler.watchWidth();

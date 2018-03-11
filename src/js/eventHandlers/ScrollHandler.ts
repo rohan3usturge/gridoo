@@ -36,6 +36,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     public removeHandler = () => {
         this.parentElement.find(".table-body").off("scroll", this.handleResize);
     }
+    public resetParentOffset = () => {
+        this.parentOffSetLeft = this.parentElement.offset().left;
+    }
     public watchWidth = () => {
         this.parentOffSetLeft = this.parentElement.offset().left;
         this.watches.push(setInterval(this.setHeaderOffset, 300));
