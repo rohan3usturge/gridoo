@@ -31,44 +31,10 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     }
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
-        this.parentElement.find(".table-body").on("scroll", (event) => {
-            const tBodyObj = this.parentElement.find(".table-body");
-            if (this.leftOffset === undefined || this.leftOffset === null) {
-                this.leftOffset = this.parentElement.find(".table-header").offset().left;
-            }
-            this.parentElement.find(".table-header").offset(
-                {
-                    left: this.leftOffset + -1 * tBodyObj.scrollLeft(),
-                    top: 0,
-                },
-            );
-            const actualTableHeight = tBodyObj.find(".mainTable").height();
-            const scrollContainerHeight = tBodyObj.height();
-            event.preventDefault();
-            if (this.rendering) {
-                event.stopPropagation();
-                return;
-            }
-            const scrollTop = tBodyObj.scrollTop();
-            if ((scrollContainerHeight + scrollTop ) - (actualTableHeight * 0.8 ) > 0 ) {
-                if ( this.currentIndex >= this.gridTemplateService.DataLength ) {
-                    return;
-                }
-                this.rendering = true;
-                let lastIndex = this.currentIndex + this.configStore.Options.chunkSize;
-                if ( lastIndex >= this.gridTemplateService.DataLength ) {
-                    lastIndex = this.gridTemplateService.DataLength - 1;
-                }
-                const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex, lastIndex));
-                tBodyObj.find(".mainTableBody").append(html);
-                this.currentIndex = lastIndex + 1;
-                this.rendering = false;
-            }
-            event.stopPropagation();
-        });
+        this.parentElement.find(".table-body").on("scroll", this.handleResize);
     }
-    public setCurrentIndex = (index: number) => {
-        this.currentIndex = index;
+    public removeHandler = () => {
+        this.parentElement.find(".table-body").off("scroll", this.handleResize);
     }
     public watchWidth = () => {
         this.parentOffSetLeft = this.parentElement.offset().left;
@@ -82,6 +48,42 @@ export class ScrollHandler<T> implements IEventHandler<T> {
             clearInterval(watch);
         }
     }
+    private handleResize = (event) => {
+        const tBodyObj = this.parentElement.find(".table-body");
+        if (this.leftOffset === undefined || this.leftOffset === null) {
+            this.leftOffset = this.parentElement.find(".table-header").offset().left;
+        }
+        this.parentElement.find(".table-header").offset(
+            {
+                left: this.leftOffset + -1 * tBodyObj.scrollLeft(),
+                top: 0,
+            },
+        );
+        const actualTableHeight = tBodyObj.find(".mainTable").height();
+        const scrollContainerHeight = tBodyObj.height();
+        event.preventDefault();
+        if (this.rendering) {
+            event.stopPropagation();
+            return;
+        }
+        const scrollTop = tBodyObj.scrollTop();
+        if ((scrollContainerHeight + scrollTop ) - (actualTableHeight * 0.8 ) > 0 ) {
+            if ( this.currentIndex >= this.gridTemplateService.DataLength ) {
+                return;
+            }
+            this.rendering = true;
+            let lastIndex = this.currentIndex + this.configStore.Options.chunkSize;
+            if ( lastIndex >= this.gridTemplateService.DataLength ) {
+                lastIndex = this.gridTemplateService.DataLength - 1;
+            }
+            const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex, lastIndex));
+            tBodyObj.find(".mainTableBody").append(html);
+            this.currentIndex = lastIndex + 1;
+            this.rendering = false;
+        }
+        event.stopPropagation();
+    }
+
     private setHeaderOffset = () => {
         const left = this.parentElement.offset().left;
         if ( this.parentOffSetLeft !== left ) {
