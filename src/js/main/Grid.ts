@@ -53,11 +53,11 @@ export class Grid<T> {
         // Have to bind Scroll Handler After DOM has been created
         if ( this.scrollHandler !== undefined && this.scrollHandler !== null ) {
             this.scrollHandler.removeHandler();
-            this.scrollHandler.unWatchWidth();
+        } else {
+            this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
+            this.scrollHandler.watchWidth();
         }
-        this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
         this.scrollHandler.RegisterDomHandler();
-        this.scrollHandler.watchWidth();
     }
 
     public bindManageColums = (manageColContainer?: HTMLElement, force?: boolean): void => {
