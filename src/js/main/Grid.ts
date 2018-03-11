@@ -63,6 +63,7 @@ export class Grid<T> {
             || this.configStore.Options.containerElement);
         this.toggleHandler = new ToggleColumnHandler(this.configStore,
                              jQuery(this.configStore.Options.containerElement));
+        this.configStore.options.manageColSettingsContainer = element[0];
         const manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, this.toggleHandler);
         element.find(".col-settings-container").html(html);
         manageColHandler.RegisterDomHandler();
