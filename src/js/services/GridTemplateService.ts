@@ -41,6 +41,7 @@ export class GridTemplateService <T> {
             columns: this.configStore.Options.columns,
             mainRowArray,
             paginationData: Pager.PaginationData,
+            caption: this.configStore.Options.caption,
         });
     }
     public getTemplate = (firstIndex: number, lastIndex: number): string => {
@@ -48,6 +49,7 @@ export class GridTemplateService <T> {
         return this.templateFunctionForMainRow({
             columns: this.configStore.Options.columns,
             mainRowArray,
+            caption: this.configStore.Options.caption,
         });
     }
     public GetManageColumnsHtml = (): string => {

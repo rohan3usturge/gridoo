@@ -6,37 +6,18 @@
         display: flex;
         flex-direction: column;
     }
-
     .table-header {
         position: relative;
         top:0 !important;
     }
-
     .table-body {
         overflow: auto;
         flex: 5;
     }
-    .table-footer{
-        height: 35px;
-        padding: 5px;
-    }
-    .table-footer .footer-middle{
-        display: flex;
-    }
-    .table-footer .footer-right{
-        display: flex;
-    }
     .margin-auto{
         margin: auto !important;
     }
-    .remove-label:hover{
-        text-decoration: line-through;
-        cursor: pointer;
-    }
     .border-less tr td,.border-less { border: 0px !important; }
-    .cursor-pointer{
-        cursor: pointer;
-    }
     .ui.supercompact.icon.button, .ui.supercompact.icon.buttons .button {
         padding: .3em .3em .3em .3em !important;
     }
@@ -44,6 +25,9 @@
 <div class="inner-container gui fluid container" style="padding:0%;">
     <div class="table-header">
         <table id="headertable" class="gui basic large compact sortable fixed single line table">
+            {{#if caption}}
+                <caption class="gui gui-subheading-2 m-0 p-0 text-left">{{caption}}</caption>
+            {{/if}}
             <colgroup class="headerColGroup">
                 <col style="width:40px;" />
                 <col style="width:40px;" />
@@ -81,7 +65,7 @@
             </tbody>
         </table>
     </div>
-    <div class="table-footer gui h-auto fluid-w basic curved row p-5 m-0">
+    <div class="table-footer gui h-auto fluid-w flex jc-sb p-5 m-0">
            {{> grid-footer}}
     </div>
 </div>
