@@ -14,16 +14,19 @@ export class DetailsRowHandler<T> implements IEventHandler<T> {
         // Nothing to Do.
     }
     public RegisterDomHandler = (): void => {
-        this.parentElement.on("click", ".table-body .expansionArrows i", (event) => {
-            const arrow = jQuery(event.target);
+        this.parentElement.on("click", ".table-body .expansionArrows button", (event) => {
+            const arrow = jQuery(event.currentTarget);
             const detailsRow = arrow.closest("tr").next();
             const currentIcon = arrow.hide();
-            const otherIcon = arrow.siblings("i").show();
+            const otherIcon = arrow.siblings("button").show();
             if (arrow.hasClass("expandDetailsRowIcon")) {
                 detailsRow.slideDown(this.configStore.Options.animationTime);
+                detailsRow.attr("tabindex", 0);
             } else {
                 detailsRow.slideUp(this.configStore.Options.animationTime);
+                detailsRow.attr("tabindex", -1);
             }
+            otherIcon.focus();
             event.stopPropagation();
         });
     }

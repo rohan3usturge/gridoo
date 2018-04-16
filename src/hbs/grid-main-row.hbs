@@ -1,8 +1,12 @@
 {{#each mainRowArray}}
 <tr class="mainRow" data-pk-attr="{{keyColumn}}" >
     <td class="expansionArrows" style="display:flex;justify-content:center;">
-        <i class="gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer" aria-hidden="true"></i>
-        <i class="gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer gui-hidden" aria-hidden="true"></i>
+        <button class="gui expandDetailsRowIcon cursor-pointer p-0">
+            <i class="gui gui-icon gui-icon-chevron-down">Ex</i>
+        </button>
+        <button class="gui CollapseDetailsRowIcon cursor-pointer gui-hidden p-0" aria-hidden="true">
+            <i class="gui gui-icon gui-icon-chevron-up">Co</i>
+        </button>
     </td>
     <td>
         <input type="checkbox" data-value="{{rowData}}" value="{{keyColumn}}" class="select-key-checkbox cursor-pointer">

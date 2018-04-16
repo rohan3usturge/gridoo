@@ -53,15 +53,21 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th></th>
-                    <th><input type="checkbox" class="select-all-checkbox cursor-pointer"></th>
+                    <th tabindex="-1"></th>
+                    <th tabindex="0">
+                        <input type="checkbox" class="select-all-checkbox cursor-pointer">
+                    </th>
                     {{#each columns}}
-                        <th class="gui cursor-pointer" id="header-{{id}}" data-header-id="{{id}}">
-                            <span class="gui sub header">{{name}}</span>
-                            {{#if sortable}}
+                        {{#if sortable}}
+                            <th class="gui cursor-pointer" tabindex="0" id="header-{{id}}" data-header-id="{{id}}">
+                                <span class="gui sub header">{{name}}</span>
                                 {{{Ordered order}}}
-                            {{/if}}
-                        </th>
+                            </th>
+                        {{else}}
+                            <th class="gui cursor-pointer" tabindex="-1" id="header-{{id}}" data-header-id="{{id}}">
+                                <span class="gui sub header">{{name}}</span>
+                            </th>
+                        {{/if}}
                     {{/each}}
                 </tr>
             </thead>
