@@ -96,7 +96,7 @@ export class Grid<T> {
         for (const orderCol of orderByList) {
             for (const col of this.configStore.Options.columns) {
                 if (orderCol.colId === col.id ) {
-                    col.order = orderCol.order;
+                    col.orderBy = orderCol.orderBy;
                     break;
                 }
             }

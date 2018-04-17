@@ -1,6 +1,6 @@
 import { GridOrderDirection } from "./GridOrderDirection";
 interface IGridOrder {
     colId: string;
-    order: GridOrderDirection;
+    orderBy: GridOrderDirection;
 }
 export {IGridOrder};

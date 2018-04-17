@@ -9,5 +9,6 @@ export interface IColumn {
     hidden: boolean;
     sortable: boolean;
     filterable: boolean;
-    order?: GridOrderDirection;
+    order: number;
+    orderBy?: GridOrderDirection;
 }

@@ -16,14 +16,14 @@ export class CommonUtil {
         });
         return retCol;
     }
-    public static SetOrder = (columnId: string, order: GridOrderDirection, columns: IColumn[]): IColumn => {
+    public static SetOrder = (columnId: string, orderBy: GridOrderDirection, columns: IColumn[]): IColumn => {
         if (columnId == null || columns == null) {
             return null;
         }
         let retCol: IColumn;
         columns.forEach((col: IColumn) => {
             if (col.id === columnId) {
-                col.order = order;
+                col.orderBy = orderBy;
                 retCol = col;
                 return;
             }

@@ -36,6 +36,7 @@ export class ConfigStore<T> {
         if (options.containerElement === null) {
             throw new Error("Please Provide a valid container Element object");
         }
+        this.options.columns.sort((prev, next) => prev.order - next.order);
     }
     public set Options(options: IGridOptions<T>) {
         this.options = options;

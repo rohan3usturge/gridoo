@@ -11,7 +11,7 @@ export class Grid<T> {
 
 interface IGridOrder {
     colId: string;
-    order: GridOrderDirection;
+    orderBy: GridOrderDirection;
 }
 export { IGridOrder };
 
@@ -31,7 +31,8 @@ export interface IColumn {
     hidden: boolean;
     sortable: boolean;
     filterable: boolean;
-    order?: GridOrderDirection;
+    order: number;
+    orderBy?: GridOrderDirection;
 }
 
 export interface IGridOptions<T> {
