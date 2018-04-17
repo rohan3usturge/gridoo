@@ -47,6 +47,7 @@ export interface IGridOptions<T> {
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: number;
     animationTime: number;
+    caption?: string;
 }
 
 export enum GridOrderDirection {
