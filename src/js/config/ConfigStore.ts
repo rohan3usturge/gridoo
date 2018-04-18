@@ -10,14 +10,14 @@ export class ConfigStore<T> {
         chunkSize: 5,
         columns: [],
         containerElement: null,
-        manageColSettingsContainer: null,
+        // manageColSettingsContainer: null,
         hybridFunction: (column: IColumn, row: T): string => {
             return "true";
         },
         keyColumn: "",
-        onColSettingsChange: (colConfig: IColumn[]): void => {
-            // No Code
-        },
+        // onColSettingsChange: (colConfig: IColumn[]): void => {
+        //     // No Code
+        // },
         onClickFilter: (column: string, value: any, actionType: FilterActionType): void => {
             // No code
         },

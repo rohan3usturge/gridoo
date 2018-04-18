@@ -59,7 +59,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                 jQuery(element).prop("checked", true);
             });
             this.toggleColumnHandler.showAllColumns();
-            this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
+            // this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".hide-all-column", (event): void => {
@@ -68,7 +68,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                 jQuery(element).prop("checked", false);
             });
             this.toggleColumnHandler.hideAllColumns();
-            this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
+            // this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".col-settings-hidden-checkbox", (event): void => {
@@ -81,7 +81,7 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
                     this.toggleColumnHandler.hideColumn(id);
                 }
             }
-            this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
+            // this.configStore.Options.onColSettingsChange(this.configStore.Options.columns);
             event.stopPropagation();
         });
     }
