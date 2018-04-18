@@ -12,4 +12,5 @@ export interface IColumn {
     filterable: boolean;
     order: number;
     orderBy?: GridOrderDirection;
+    showOnExcel?: boolean;
 }

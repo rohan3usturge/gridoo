@@ -34,6 +34,7 @@ export interface IColumn {
     filterable: boolean;
     order: number;
     orderBy?: GridOrderDirection;
+    showOnExcel?: boolean;
 }
 
 export interface IGridOptions<T> {
