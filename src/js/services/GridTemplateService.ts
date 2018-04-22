@@ -59,6 +59,7 @@ export class GridTemplateService <T> {
     public GetRowsHtml = (firstIndex: number, lastIndex: number): any[] => {
         const mainRowArray: any[] = [];
         const length = this.configStore.Options.columns.length + 1;
+        const emptyStr = this.configStore.Options.emptyValue;
         for (let i = firstIndex; i <= lastIndex; i++) {
             const row: T = this.data[i];
             const mainRowColArray: any[] = [];
@@ -66,6 +67,9 @@ export class GridTemplateService <T> {
                 let columnValue = row[col.id];
                 if (col.renderHybrid) {
                     columnValue = this.configStore.Options.hybridFunction(col, row);
+                }
+                if (emptyStr !== undefined && columnValue === emptyStr) {
+                    columnValue = "";
                 }
                 mainRowColArray.push({
                     columnValue,

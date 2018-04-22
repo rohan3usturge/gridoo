@@ -49,6 +49,7 @@ export interface IGridOptions<T> {
     chunkSize: number;
     animationTime: number;
     caption?: string;
+    emptyValue?: string;
 }
 
 export enum GridOrderDirection {
