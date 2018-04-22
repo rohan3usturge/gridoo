@@ -3,8 +3,8 @@
 export class Grid<T> {
     constructor(options: IGridOptions<T>);
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
-    bindManageColums: (manageColContainer?: HTMLElement, force?: boolean) => void;
-    applyColumnConfig: (columns: IColumn[]) => void;
+    reRender: () => void;
+    setColConfig: (colConfig: IColumn[]) => void;
     setOrder: (orderByList: IGridOrder[]) => void;
     destroy: () => void;
 }
@@ -29,10 +29,12 @@ export interface IColumn {
     width: number;
     renderHybrid: boolean;
     hidden: boolean;
+    locked: boolean;
     sortable: boolean;
     filterable: boolean;
     order: number;
     orderBy?: GridOrderDirection;
+    showOnExcel?: boolean;
 }
 
 export interface IGridOptions<T> {
@@ -41,9 +43,7 @@ export interface IGridOptions<T> {
     hybridFunction: IRenderHybridDelegate<T>;
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
-    onColSettingsChange: IColSettingsChangeDelegate;
     containerElement: HTMLElement | null;
-    manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: number;
@@ -57,8 +57,6 @@ export enum GridOrderDirection {
     Asc = "Asc",
     Desc = "Desc",
 }
-
-export type IColSettingsChangeDelegate = (colConfig: IColumn[]) => void;
 
 export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean, all?: boolean) => void;
 

@@ -38,53 +38,41 @@ export class Grid<T> {
     }
 
     public bindData = (data: T[], paginationInput?: IPaginationInput): void => {
-        const firstIndex = 0;
-        let lastIndex = this.configStore.Options.chunkSize + this.getInitialRowCount();
-        lastIndex = lastIndex >= data.length ? data.length - 1 : lastIndex;
         Pager.CalculatePaginationData(paginationInput);
-        const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
-                                                                              firstIndex,
-                                                                              lastIndex,
-                                                                              );
-        this.configStore.Options.containerElement.innerHTML = gridContent;
-        if (this.configStore.Options.manageColSettingsContainer !== undefined) {
-            this.bindManageColums(this.configStore.Options.manageColSettingsContainer);
-        }
-        // Have to bind Scroll Handler After DOM has been created
-        if ( this.scrollHandler !== undefined && this.scrollHandler !== null ) {
-            this.scrollHandler.removeHandler();
-            this.scrollHandler.resetParentOffset();
-        } else {
-            this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
-            this.scrollHandler.watchWidth();
-        }
-        this.scrollHandler.RegisterDomHandler();
+        const pageData = Pager.paginationData;
+        this.internalRender(data, pageData);
     }
-
-    public bindManageColums = (manageColContainer?: HTMLElement, force?: boolean): void => {
-        if (this.manageColHandler !== undefined && !force ) {
-            return;
-        }
-        const html = this.gridTemplateService.GetManageColumnsHtml();
-        const element = jQuery(manageColContainer
-                        || this.configStore.Options.manageColSettingsContainer
-                        || this.configStore.Options.containerElement);
-        this.toggleHandler = new ToggleColumnHandler(this.configStore,
-                                                     jQuery(this.configStore.Options.containerElement));
-        this.configStore.options.manageColSettingsContainer = element[0];
-        this.manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, this.toggleHandler);
-        element.find(".col-settings-container").html(html);
-        this.manageColHandler.RegisterDomHandler();
-        jQuery(window).resize(this.documentResizeHandlerForCs);
-        jQuery(document).click(this.documentClickHandlerForCs);
+    public reRender = (): void => {
+        const pageData = Pager.paginationData;
+        this.internalRender(this.gridTemplateService.Data, pageData);
     }
-    public applyColumnConfig = (columns: IColumn[]) => {
-        this.toggleHandler.applyColumnConfig(columns);
-        const html = this.gridTemplateService.GetManageColumnsHtml();
-        const element = jQuery(this.configStore.Options.manageColSettingsContainer
-                              || this.configStore.Options.containerElement);
-        element.find(".col-settings-container").html(html);
+    public setColConfig = (colConfig: IColumn[]): void => {
+        this.configStore.Options.columns = colConfig;
     }
+    // public bindManageColums = (manageColContainer?: HTMLElement, force?: boolean): void => {
+    //     if (this.manageColHandler !== undefined && !force ) {
+    //         return;
+    //     }
+    //     const html = this.gridTemplateService.GetManageColumnsHtml();
+    //     const element = jQuery(manageColContainer
+    //                     || this.configStore.Options.manageColSettingsContainer
+    //                     || this.configStore.Options.containerElement);
+    //     this.toggleHandler = new ToggleColumnHandler(this.configStore,
+    //                                                  jQuery(this.configStore.Options.containerElement));
+    //     this.configStore.options.manageColSettingsContainer = element[0];
+    //     this.manageColHandler = new ColSettingsHandler<T>(jQuery(element), this.configStore, this.toggleHandler);
+    //     element.find(".col-settings-container").html(html);
+    //     this.manageColHandler.RegisterDomHandler();
+    //     jQuery(window).resize(this.documentResizeHandlerForCs);
+    //     jQuery(document).click(this.documentClickHandlerForCs);
+    // }
+    // public applyColumnConfig = (columns: IColumn[]) => {
+    //     this.toggleHandler.applyColumnConfig(columns);
+    //     const html = this.gridTemplateService.GetManageColumnsHtml();
+    //     const element = jQuery(this.configStore.Options.manageColSettingsContainer
+    //                           || this.configStore.Options.containerElement);
+    //     element.find(".col-settings-container").html(html);
+    // }
 
     public setOrder = (orderByList: IGridOrder[]) => {
         for (const col of this.configStore.Options.columns) {
@@ -108,10 +96,10 @@ export class Grid<T> {
         if ( parentElement !== undefined ) {
             parentElement.off();
         }
-        const manageContainerElement = jQuery(this.configStore.Options.manageColSettingsContainer);
-        if ( manageContainerElement !== undefined ) {
-            manageContainerElement.off();
-        }
+        // const manageContainerElement = jQuery(this.configStore.Options.manageColSettingsContainer);
+        // if ( manageContainerElement !== undefined ) {
+        //     manageContainerElement.off();
+        // }
         $(window).off("resize", this.documentResizeHandler);
         $(document).off("click", this.documentClickHandler);
         $(window).off("resize", this.documentResizeHandlerForCs);
@@ -120,7 +108,24 @@ export class Grid<T> {
             this.scrollHandler.unWatchWidth();
         }
     }
-
+    private internalRender = (data: T[], paginationInput?: IPaginationInput): void => {
+        const firstIndex = 0;
+        let lastIndex = this.configStore.Options.chunkSize + this.getInitialRowCount();
+        lastIndex = lastIndex >= data.length ? data.length - 1 : lastIndex;
+        const gridContent: string = this.gridTemplateService.GetFirstTemplate(data,
+                                                                              firstIndex,
+                                                                              lastIndex,
+                                                                              );
+        this.configStore.Options.containerElement.innerHTML = gridContent;
+        if ( this.scrollHandler !== undefined && this.scrollHandler !== null ) {
+            this.scrollHandler.removeHandler();
+            this.scrollHandler.resetParentOffset();
+        } else {
+            this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
+            this.scrollHandler.watchWidth();
+        }
+        this.scrollHandler.RegisterDomHandler();
+    }
     private getInitialRowCount = (): number => {
         return Math.floor((jQuery(window).innerHeight() * 0.65 ) / 32);
     }

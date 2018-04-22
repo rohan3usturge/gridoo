@@ -12,9 +12,9 @@ export interface IGridOptions<T> {
     hybridFunction: IRenderHybridDelegate<T>;
     onClickHeader: IHeaderClickDelegate;
     onClickFilter: IFilterClickDelegate;
-    onColSettingsChange: IColSettingsChangeDelegate;
+    // onColSettingsChange: IColSettingsChangeDelegate;
     containerElement: HTMLElement | null;
-    manageColSettingsContainer?: HTMLElement | null;
+    // manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
     chunkSize: number;

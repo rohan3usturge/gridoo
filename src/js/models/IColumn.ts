@@ -7,8 +7,10 @@ export interface IColumn {
     width: number;
     renderHybrid: boolean;
     hidden: boolean;
+    locked: boolean;
     sortable: boolean;
     filterable: boolean;
     order: number;
     orderBy?: GridOrderDirection;
+    showOnExcel?: boolean;
 }
