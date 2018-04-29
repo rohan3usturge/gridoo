@@ -38,13 +38,17 @@ export class Grid<T> {
     }
 
     public bindData = (data: T[], paginationInput?: IPaginationInput): void => {
-        Pager.CalculatePaginationData(paginationInput);
-        const pageData = Pager.paginationData;
-        this.internalRender(data, pageData);
+        setTimeout(() => {
+            Pager.CalculatePaginationData(paginationInput);
+            const pageData = Pager.paginationData;
+            this.internalRender(data, pageData);
+        }, 1 );
     }
     public reRender = (): void => {
-        const pageData = Pager.paginationData;
-        this.internalRender(this.gridTemplateService.Data, pageData);
+        setTimeout(() => {
+            const pageData = Pager.paginationData;
+            this.internalRender(this.gridTemplateService.Data, pageData);
+        }, 1 );
     }
     public setColConfig = (colConfig: IColumn[]): void => {
         this.configStore.Options.columns = colConfig;

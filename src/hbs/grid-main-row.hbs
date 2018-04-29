@@ -1,14 +1,27 @@
 {{#each mainRowArray}}
 <tr class="mainRow" data-pk-attr="{{keyColumn}}" >
-    <td class="expansionArrows" style="display:flex;justify-content:center;">
-        <i class="gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer" aria-hidden="true"></i>
-        <i class="gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer gui-hidden" aria-hidden="true"></i>
+    <td class="expansionArrows" class="gui flex jc-sb">
+        <i aria-label="Press enter to expand the details Row" 
+           aria-controls="details-row-{{@index}}" 
+           class="gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer" 
+           tabindex="0" 
+           aria-hidden="false"></i>
+        <i aria-label="Press enter to collapse the details Row" 
+           aria-controls="details-row-{{@index}}" 
+           class="gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer gui-hidden" 
+           tabindex="0" 
+           aria-hidden="true"></i>
     </td>
     <td>
-        <input type="checkbox" data-value="{{rowData}}" value="{{keyColumn}}" class="select-key-checkbox cursor-pointer">
+        <input aria-label="Checkbox to select the row with Id {{keyColumn}}" 
+            type="checkbox" 
+            data-value="{{rowData}}" 
+            value="{{keyColumn}}" 
+            class="select-key-checkbox cursor-pointer">
     </td>
     {{#each mainRowColArray}}
         <td title="{{actualValue}}" class="body-{{id}}">{{{columnValue}}}</td>
     {{/each}}
 </tr>
-{{> grid-details-row}} {{/each}}
+{{> grid-details-row}}
+{{/each}}

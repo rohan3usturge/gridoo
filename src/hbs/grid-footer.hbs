@@ -1,39 +1,68 @@
-<div data-role="pager" class="gui gui-subheading-1 text-left m-0">
-    <span class="gui mini compact ">
-        <button class="gui mini compact firstLink" aria-disabled="{{paginationData.firstPageLinkDisabled}}" {{Disabled paginationData.firstPageLinkDisabled}}
-            aria-label="Go to the first page" title="Go to the first page" data-page="1" tabindex="0">
+<div data-role="pager" class="gui flex jc-sb gui-subheading-1 text-left m-0">
+    <div class="gui m-r-10">
+        <button class="gui firstLink" 
+                aria-disabled="{{paginationData.firstPageLinkDisabled}}" 
+                {{Disabled paginationData.firstPageLinkDisabled}}
+                aria-label="Go to the first page" 
+                title="Go to the first page" 
+                data-page="1">
             <i class="gui-icon gui-icon-previous"></i>
         </button>
-        <button class="gui mini compact prevLink" aria-disabled="{{paginationData.prevPageLinkDisabled}}" {{Disabled paginationData.prevPageLinkDisabled}}
-            aria-label="Go to the previous page" title="Go to the previous page" data-page="{{math paginationData.pageIndex '-' 1}}"
-            tabindex="0">
+        <button class="gui prevLink" 
+                aria-disabled="{{paginationData.prevPageLinkDisabled}}" 
+                {{Disabled paginationData.prevPageLinkDisabled}}
+                aria-label="Go to the previous page" 
+                title="Go to the previous page" 
+                data-page="{{math paginationData.pageIndex '-' 1}}">
             <i class="gui-icon gui-icon-chevron-left"></i>
             Prev
         </button>
-    </span>
-    <span class="gui pager-input-container input">
-        <span class="gui m-r-5"> Page </span>
-        <input class="gui pager-input w-25 p-0 m-r-5" aria-label="{{paginationData.pageIndex}}" value="{{paginationData.pageIndex}}" type="text" placeholder="Page Number ...">
-        <span class="no-of-pages-scan" data-number-of-pages="{{paginationData.noOfPages}}"> of {{paginationData.noOfPages}}</span>
-    </span>
-    <span class="gui mini compact ">
-        <button class="gui mini compact nextLink" aria-disabled="{{paginationData.nextPageLinkDisabled}}" {{Disabled paginationData.nextPageLinkDisabled}}
-            aria-label="Go to the next page" title="Go to the next page" data-page="{{math paginationData.pageIndex '+' 1}}" tabindex="0">
+    </div>
+    <div class="gui pager-input-container medium input flex jc-sb m-r-10">
+        <div class="gui m-r-5"> Page </div>
+        <input  class="gui pager-input w-50 m-r-5" 
+                aria-label="Go to Page {{paginationData.pageIndex}}" 
+                title="Go to Page {{paginationData.pageIndex}}" 
+                value="{{paginationData.pageIndex}}" 
+                type="text" 
+                placeholder="Page Number ...">
+        <div class="no-of-pages-scan" 
+             data-number-of-pages="{{paginationData.noOfPages}}">
+             of {{paginationData.noOfPages}}
+        </div>
+    </div>
+    <div class="gui m-r-10">
+        <button class="gui nextLink" 
+                aria-disabled="{{paginationData.nextPageLinkDisabled}}" 
+                {{Disabled paginationData.nextPageLinkDisabled}}
+                aria-label="Go to the next page" 
+                title="Go to the next page" 
+                data-page="{{math paginationData.pageIndex '+' 1}}" >
             Next
             <i class="gui-icon gui-icon-chevron-right"></i>
         </button>
-        <button class="gui mini compact lastLink" aria-disabled="{{paginationData.lastPageLinkDisabled}}" {{Disabled paginationData.lastPageLinkDisabled}}
-                aria-label="Go to the last page" title="Go to the last page" data-page="{{paginationData.noOFpages}}" tabindex="0">
+        <button class="gui lastLink" 
+                aria-disabled="{{paginationData.lastPageLinkDisabled}}" 
+                {{Disabled paginationData.lastPageLinkDisabled}}
+                aria-label="Go to the last page" 
+                title="Go to the last page" 
+                data-page="{{paginationData.noOFpages}}">
             <i class="gui-icon gui-icon-next"></i>
         </button>
-    </span>
+    </div>
 </div>
-<div class="gui gui-subheading-1 text-right m-0">
-    <span>Rows Per Page</span>
-    <select class="gui pageSizeSelector">
+<div class="gui gui-subheading-1 flex jc-sb text-right m-0">
+    <label  for="page-size-selector" 
+            class="gui m-r-10">
+            Rows Per Page
+    </label>
+    <select id="page-size-selector" 
+            class="gui pageSizeSelector m-r-10">
         {{#each paginationData.pageSizes}}
-        <option {{Selected ../paginationData.pageSize this}}>{{this}}</option>
+            <option {{Selected ../paginationData.pageSize this}}>{{this}}</option>
         {{/each}}
     </select>
-    <span class="gui m-l-10">{{paginationData.range.min}} - {{paginationData.range.max}} of {{paginationData.totalCount}} items</span>
+    <div class="gui m-r-10">
+        {{paginationData.range.min}} - {{paginationData.range.max}} of {{paginationData.totalCount}} items
+    </div>
 </div>

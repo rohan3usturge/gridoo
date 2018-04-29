@@ -24,34 +24,42 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
 
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
-        this.parentElement.on("click", ".table-header th", (event) => {
-            const element = jQuery(event.target).closest("th");
-            const headerId = element.attr("data-header-id");
-            const col = CommonUtil.GetColumnObject(headerId, this.configStore.Options.columns);
-            if (col === undefined || col === null || !col.sortable ) {
-                return;
-            }
-            const arrowIcons = element.find("i");
-            const upArrowIcon = arrowIcons.first();
-            const downArrowIcon = arrowIcons.last();
-            let direction: GridOrderDirection;
-            if (arrowIcons.is(":visible")) {
-                if (upArrowIcon.is(":visible")) {
-                    direction = GridOrderDirection.Desc;
-                    upArrowIcon.hide();
-                    downArrowIcon.show();
-                } else {
-                    direction = GridOrderDirection.Asc;
-                    downArrowIcon.hide();
-                    upArrowIcon.show();
-                }
+        this.parentElement.on("click", ".table-header th", this.handleHeaderSort);
+        this.parentElement.on("keyup", ".table-header th", this.handleHeaderSort);
+    }
+
+    private handleHeaderSort = (event) => {
+        const code = event.keyCode || event.which;
+        if ( event.type !== "click" && (event.type === "keyup" && code !== 13 && code !== 32) ) {
+            return;
+        }
+        const element = jQuery(event.target).closest("th");
+        const headerId = element.attr("data-header-id");
+        const col = CommonUtil.GetColumnObject(headerId, this.configStore.Options.columns);
+        if (col === undefined || col === null || !col.sortable ) {
+            return;
+        }
+        const arrowIcons = element.find("i");
+        const upArrowIcon = arrowIcons.first();
+        const downArrowIcon = arrowIcons.last();
+        let direction: GridOrderDirection;
+        if (arrowIcons.is(":visible")) {
+            if (upArrowIcon.is(":visible")) {
+                direction = GridOrderDirection.Desc;
+                upArrowIcon.hide();
+                downArrowIcon.show();
             } else {
                 direction = GridOrderDirection.Asc;
+                downArrowIcon.hide();
                 upArrowIcon.show();
             }
-            CommonUtil.SetOrder(headerId, direction, this.configStore.Options.columns);
-            this.configStore.Options.onClickHeader(headerId, direction);
-            event.stopPropagation();
-        });
+        } else {
+            direction = GridOrderDirection.Asc;
+            upArrowIcon.show();
+        }
+        element.attr("aria-sort", direction === GridOrderDirection.Desc ? "descending" : "ascending");
+        CommonUtil.SetOrder(headerId, direction, this.configStore.Options.columns);
+        this.configStore.Options.onClickHeader(headerId, direction);
+        event.stopPropagation();
     }
 }
