@@ -80,7 +80,7 @@ export class Grid<T> {
 
     public setOrder = (orderByList: IGridOrder[]) => {
         for (const col of this.configStore.Options.columns) {
-            col.order = undefined;
+            col.orderBy = undefined;
         }
         if (orderByList === undefined || orderByList === null || orderByList.length === 0 ) {
             return;
