@@ -25,7 +25,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     public onResize(): void {
         //
     }
-
+    public setCurrentIndex = (index: number) => {
+        this.currentIndex = index;
+    }
     public onDocumentClick(event): void {
         // No Op
     }

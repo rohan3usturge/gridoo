@@ -124,6 +124,7 @@ export class Grid<T> {
         if ( this.scrollHandler !== undefined && this.scrollHandler !== null ) {
             this.scrollHandler.removeHandler();
             this.scrollHandler.resetParentOffset();
+            this.scrollHandler.setCurrentIndex(lastIndex + 1 );
         } else {
             this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
             this.scrollHandler.watchWidth();
