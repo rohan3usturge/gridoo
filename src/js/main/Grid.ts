@@ -109,7 +109,7 @@ export class Grid<T> {
         $(window).off("resize", this.documentResizeHandlerForCs);
         $(document).off("click", this.documentClickHandlerForCs);
         if ( this.scrollHandler !== undefined ) {
-            this.scrollHandler.unWatchWidth();
+            // this.scrollHandler.unWatchWidth();
         }
     }
     private internalRender = (data: T[], paginationInput?: IPaginationInput): void => {
@@ -127,7 +127,7 @@ export class Grid<T> {
             this.scrollHandler.setCurrentIndex(lastIndex + 1 );
         } else {
             this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
-            this.scrollHandler.watchWidth();
+            // this.scrollHandler.watchWidth();
         }
         this.scrollHandler.RegisterDomHandler();
     }
