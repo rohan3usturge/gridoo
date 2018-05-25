@@ -59,10 +59,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
         if (this.leftOffset === undefined || this.leftOffset === null) {
             this.leftOffset = this.parentElement.find(".table-header").offset().left;
         }
-        this.parentElement.find(".table-header").offset(
+        this.parentElement.find(".table-header").css(
             {
-                left: this.leftOffset + -1 * tBodyObj.scrollLeft(),
-                top: 0,
+                "margin-left": -1 * tBodyObj.scrollLeft(),
             },
         );
         const actualTableHeight = tBodyObj.find(".mainTable").height();
