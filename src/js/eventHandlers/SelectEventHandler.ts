@@ -15,29 +15,33 @@ export class SelectEventHandler<T> implements IEventHandler<T> {
     public RegisterDomHandler(): void {
         this.parentElement.on("change", ".select-key-checkbox" , (event) => {
             const element = jQuery(event.target);
-            const row = element.data("value");
             const checked = element.is(":checked");
+            const value = element.val().toString();
             if (checked) {
+                this.gridTemplateService.selectRows(value);
                 element.parents(".mainRow").addClass("active");
             } else {
+                this.gridTemplateService.deSelectRows(value);
                 element.parents(".mainRow").removeClass("active");
             }
             if (event.originalEvent === undefined) {
                 return;
             }
-            this.configStore.Options.onSelect([row], checked);
+            this.configStore.Options.onSelect(this.gridTemplateService.Selected, checked);
             event.stopPropagation();
         });
         this.parentElement.on("change", ".select-all-checkbox" , (event) => {
             const element = jQuery(event.target);
             const checked = element.is(":checked");
-            this.configStore.Options.onSelect(this.gridTemplateService.Data, checked);
             this.parentElement.find(".select-key-checkbox").prop("checked", checked);
             if (checked) {
+                this.gridTemplateService.selectAll();
                 this.parentElement.find(".mainTable .mainRow").addClass("active");
             } else {
+                this.gridTemplateService.deSelectAll();
                 this.parentElement.find(".mainTable .mainRow").removeClass("active");
             }
+            this.configStore.Options.onSelect(this.gridTemplateService.Selected, checked);
             event.stopPropagation();
         });
     }
