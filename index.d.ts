@@ -5,6 +5,7 @@ export class Grid<T> {
     bindData: (data: T[], paginationInput?: IPaginationInput) => void;
     reRender: () => void;
     setColConfig: (colConfig: IColumn[]) => void;
+    updateRows: (rows: T[]) => void;
     setOrder: (orderByList: IGridOrder[]) => void;
     destroy: () => void;
 }

@@ -67,8 +67,8 @@ export class Grid<T> {
                 const mrJq = $(mR);
                 const pkId = mrJq.attr("data-pk-attr");
                 if ( pkId === row[key]) {
-                    mrJq.html(rowJq.find(".mainRow").html());
-                    mrJq.next().html(rowJq.find(".detailsRow").html());
+                    mrJq.html(rowJq[0].innerHTML);
+                    mrJq.next().html(rowJq[2].innerHTML);
                     return;
                 }
             });
