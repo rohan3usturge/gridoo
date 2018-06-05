@@ -53,6 +53,27 @@ export class Grid<T> {
     public setColConfig = (colConfig: IColumn[]): void => {
         this.configStore.Options.columns = colConfig;
     }
+    public updateRows = (rows: T[]) => {
+        if ( rows === undefined || !rows.length ) {
+            return;
+        }
+        this.gridTemplateService.updateRows(rows);
+        const container = $(this.configStore.Options.containerElement);
+        const key = this.configStore.Options.keyColumn;
+        for (const row of rows) {
+            const rowHtml = this.gridTemplateService.getTemplateForOneRow(row);
+            const rowJq = $(rowHtml);
+            container.find(".mainRow").each((i: number, mR: Element) => {
+                const mrJq = $(mR);
+                const pkId = mrJq.attr("data-pk-attr");
+                if ( pkId === row[key]) {
+                    mrJq.html(rowJq.find(".mainRow").html());
+                    mrJq.next().html(rowJq.find(".detailsRow").html());
+                    return;
+                }
+            });
+        }
+    }
     // public bindManageColums = (manageColContainer?: HTMLElement, force?: boolean): void => {
     //     if (this.manageColHandler !== undefined && !force ) {
     //         return;

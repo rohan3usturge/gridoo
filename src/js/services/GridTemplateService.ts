@@ -8,9 +8,18 @@ import { ConfigStore } from "../config/ConfigStore";
 import { IPagination } from "../models/IPagination";
 import { Pager } from "../pagination/Pager";
 import { IColumn } from "./../models/IColumn";
-
+interface IMainColRowArray {
+    columnValue: string;
+    type: string;
+    hidden: boolean;
+    actualValue: string;
+    columnName: string;
+    id: string;
+    filterable: boolean;
+}
 export class GridTemplateService <T> {
     private data: T[];
+    private selected: T[] = [];
     private configStore: ConfigStore<T>;
     private templateFunctionForGrid: any;
     private templateFunctionForMainRow: any;
@@ -28,6 +37,9 @@ export class GridTemplateService <T> {
     }
     public get Data(): T[] {
         return this.data;
+    }
+    public get Selected(): T[] {
+        return this.selected;
     }
     public get DataLength(): number {
         return this.data.length;
@@ -52,42 +64,114 @@ export class GridTemplateService <T> {
             caption: this.configStore.Options.caption,
         });
     }
+    public getTemplateForOneRow = (row: T): string => {
+        const emptyStr = this.configStore.Options.emptyValue;
+        const mainRowColArray = this.getMainRow(row, emptyStr);
+        const mainRowArray = [{
+            keyColumn: row[this.configStore.Options.keyColumn],
+            mainRowColArray,
+            length: this.configStore.Options.columns.length,
+        }];
+        return this.templateFunctionForMainRow({mainRowArray});
+    }
     public GetManageColumnsHtml = (): string => {
         return this.templateFunctionForManageCol({columns: this.configStore.Options.columns});
     }
 
     public GetRowsHtml = (firstIndex: number, lastIndex: number): any[] => {
         const mainRowArray: any[] = [];
-        const length = this.configStore.Options.columns.length + 1;
         const emptyStr = this.configStore.Options.emptyValue;
         for (let i = firstIndex; i <= lastIndex; i++) {
             const row: T = this.data[i];
-            const mainRowColArray: any[] = [];
-            for (const col of this.configStore.Options.columns) {
-                let columnValue = row[col.id];
-                if (col.renderHybrid) {
-                    columnValue = this.configStore.Options.hybridFunction(col, row);
-                }
-                if (emptyStr !== undefined && columnValue === emptyStr) {
-                    columnValue = "";
-                }
-                mainRowColArray.push({
-                    columnValue,
-                    type: col.type,
-                    hidden: col.hidden,
-                    actualValue: row[col.id],
-                    columnName: col.name,
-                    id: col.id,
-                    filterable: col.filterable,
-                });
-            }
+            const mainRowColArray: IMainColRowArray[] = this.getMainRow(row, emptyStr);
             mainRowArray.push({
-                rowData: JSON.stringify(row),
                 keyColumn: row[this.configStore.Options.keyColumn],
                 mainRowColArray,
                 length: this.configStore.Options.columns.length,
             });
         }
         return mainRowArray;
+    }
+    public selectRows = (rowId: string) => {
+        const key = this.configStore.Options.keyColumn;
+        const newSelected = [];
+        let exists = false;
+        for (const selected of this.selected) {
+            if ( rowId === selected[key] ) {
+                exists = true;
+                break;
+            }
+        }
+        if ( !exists ) {
+            newSelected.push(rowId);
+        }
+        for (const toBeAdded of newSelected) {
+            for (const oneRow of this.data) {
+                if ( toBeAdded === oneRow[key] ) {
+                    this.selected.push(oneRow);
+                    break;
+                }
+            }
+        }
+    }
+    public deSelectRows = (rowId: string) => {
+        const newSelected = [];
+        const key = this.configStore.Options.keyColumn;
+        for (const selected of this.selected) {
+            if ( rowId !== selected[key] ) {
+                newSelected.push(selected);
+            }
+        }
+        this.selected = newSelected;
+    }
+    public selectAll = () => {
+        this.selected = this.data;
+    }
+    public deSelectAll = () => {
+        this.selected = [];
+    }
+    public updateRows = (rows: T[]) => {
+        const key = this.configStore.Options.keyColumn;
+        if ( rows === undefined || !rows.length ) {
+            return;
+        }
+        for (const row of rows) {
+            for (let dataRow of this.data) {
+                if (row[key] === dataRow[key] ) {
+                    dataRow = row;
+                    break;
+                }
+            }
+        }
+        for (const row of rows) {
+            for (let dataRow of this.selected) {
+                if (row[key] === dataRow[key] ) {
+                    dataRow = row;
+                    break;
+                }
+            }
+        }
+    }
+    private getMainRow = (row: T, emptyStr: string): IMainColRowArray[] => {
+        const mainRowColArray: any[] = [];
+        for (const col of this.configStore.Options.columns) {
+            let columnValue = row[col.id];
+            if (col.renderHybrid) {
+                columnValue = this.configStore.Options.hybridFunction(col, row);
+            }
+            if (emptyStr !== undefined && columnValue === emptyStr) {
+                columnValue = "";
+            }
+            mainRowColArray.push({
+                columnValue,
+                type: col.type,
+                hidden: col.hidden,
+                actualValue: row[col.id],
+                columnName: col.name,
+                id: col.id,
+                filterable: col.filterable,
+            });
+        }
+        return mainRowColArray;
     }
 }

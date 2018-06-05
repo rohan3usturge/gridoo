@@ -35,7 +35,7 @@
                 id: "id" + i,
                 name: "Name" + i,
                 hidden: false,
-                width: 100,
+                width: 300,
                 renderHybrid: false,
                 sortable: true,
                 filterable: true,
@@ -61,6 +61,7 @@
     <button onclick="destroy()">Destroy</button>
     <button onclick="hideRows()">Hide Rows</button>
     <button onclick="showFacet()">Toggle Facet</button>
+    <button onclick="updateRows()">Update Rows</button>
     <div class="gui item left gui-subheading-2 m-0 manage-col-container" id="manange-cols-container">
         <a class="gui col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings" tabindex="1">
             <i class="gui-icon gui-icon-repair"></i>
@@ -112,6 +113,10 @@
         }
         function destroy() {
             grid.destroy();
+        }
+        function updateRows() {
+            data[2]["id5"] = "Rohan";
+            grid.updateRows([data[2]]);
         }
     </script>
 </body>
