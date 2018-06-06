@@ -48,6 +48,7 @@ export class GridTemplateService <T> {
                                firstIndex: number,
                                lastIndex: number): string => {
         this.data = data;
+        this.selected = [];
         const mainRowArray = this.GetRowsHtml(firstIndex, lastIndex);
         return this.templateFunctionForGrid({
             columns: this.configStore.Options.columns,
