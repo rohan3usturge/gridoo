@@ -1,6 +1,9 @@
 {{#each mainRowArray}}
-<tr class="mainRow" data-pk-attr="{{keyColumn}}" >
-    <td class="expansionArrows" class="gui flex jc-sb">
+<tr aria-rowindex="{{Add rowIndex 1}}" class="mainRow {{BoolAttribute isAllSelected "active"}}" data-pk-attr="{{keyColumn}}" role="row" >
+    <td class="expansionArrows" 
+        class="gui flex jc-sb"
+        aria-colindex="1"
+        role="gridcell">
         <i aria-label="Press enter to expand the details Row" 
            aria-controls="details-row-{{@index}}" 
            class="gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer" 
@@ -12,14 +15,18 @@
            tabindex="0" 
            aria-hidden="true"></i>
     </td>
-    <td>
+    <td role="gridcell"
+        aria-colindex="2" >
         <input aria-label="Checkbox to select the row with Id {{keyColumn}}" 
-            type="checkbox" 
+            type="checkbox"
+            {{BoolAttribute isAllSelected "checked"}}
             value="{{keyColumn}}" 
             class="select-key-checkbox cursor-pointer">
     </td>
     {{#each mainRowColArray}}
-        <td title="{{actualValue}}" class="body-{{id}}">{{{columnValue}}}</td>
+        <td title="{{actualValue}}"
+            aria-colindex="{{Add @index 3}}"
+            class="body-{{id}}">{{{columnValue}}}</td>
     {{/each}}
 </tr>
 {{> grid-details-row}}

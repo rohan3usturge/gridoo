@@ -21,4 +21,6 @@ export interface IGridOptions<T> {
     animationTime: number;
     caption?: string;
     emptyValue?: string;
+    showCaption?: boolean;
+    summary?: string;
 }

@@ -1,7 +1,8 @@
 import { GridOrderDirection } from "../../js/models/GridOrderDirection";
 import { IColumn } from "../../js/models/IColumn";
 
-const ordered = (column: IColumn): string => {
+const ordered = (column: IColumn, index: string): string => {
+    const parsedInt = parseInt(index, 10) + 3;
     let ariaSortStr;
     let headerIconMk;
     if (column.orderBy === GridOrderDirection.Asc) {
@@ -17,7 +18,7 @@ const ordered = (column: IColumn): string => {
                         "<i class=\"gui gui-icon gui-icon-arrow-down gui-hidden\" aria-hidden=\"true\" ></i>";
         ariaSortStr = "aria-sort=\"none\"";
     }
-    return "<th aria-label=\"Press enter to sort data by" + column.name
+    return "<th role=\"columnheader\" aria-colindex=\"" + parsedInt
           + "\" tabindex=\"0\" class=\"gui cursor-pointer\" id=\"header-"
           + column.id  + "\""
           + " data-header-id=\"" + column.id + "\" "

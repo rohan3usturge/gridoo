@@ -30,6 +30,9 @@ export class ConfigStore<T> {
         onSelect: (rows: T[]): void => {
             // No Code
         },
+        showCaption: false,
+        caption: "",
+        summary: "",
     };
     constructor(options: IGridOptions<T>) {
         this.extendOptions(options);

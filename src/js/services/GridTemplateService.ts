@@ -26,6 +26,7 @@ export class GridTemplateService <T> {
     private templateFunctionForDetailsRow: any;
     private templateFunctionForFooter: any;
     private templateFunctionForManageCol: any;
+    private currentIndex: number;
 
     constructor(configStore: ConfigStore<T>) {
         this.configStore = configStore;
@@ -35,15 +36,22 @@ export class GridTemplateService <T> {
         this.templateFunctionForFooter = GridFooter;
         this.templateFunctionForManageCol = ManageColumnTemplate;
     }
+    public isAllSelected = () => {
+        return this.selected.length !== 0 && this.selected.length === this.data.length;
+    }
     public get Data(): T[] {
         return this.data;
     }
     public get Selected(): T[] {
         return this.selected;
     }
+    public set CurrentIndex(index: number) {
+        this.currentIndex = index;
+    }
     public get DataLength(): number {
         return this.data.length;
     }
+    // For First  Render - Update Header , Body, Pagination
     public GetFirstTemplate = (data: T[],
                                firstIndex: number,
                                lastIndex: number): string => {
@@ -51,12 +59,16 @@ export class GridTemplateService <T> {
         this.selected = [];
         const mainRowArray = this.GetRowsHtml(firstIndex, lastIndex);
         return this.templateFunctionForGrid({
+            showCaption: this.configStore.Options.showCaption,
+            summary: this.configStore.Options.summary,
+            rowLength: this.data.length,
             columns: this.configStore.Options.columns,
             mainRowArray,
             paginationData: Pager.PaginationData,
             caption: this.configStore.Options.caption,
         });
     }
+    // For Virtualizaton Render - Body
     public getTemplate = (firstIndex: number, lastIndex: number): string => {
         const mainRowArray = this.GetRowsHtml(firstIndex, lastIndex);
         return this.templateFunctionForMainRow({
@@ -65,10 +77,12 @@ export class GridTemplateService <T> {
             caption: this.configStore.Options.caption,
         });
     }
+    // Update only one Row
     public getTemplateForOneRow = (row: T): string => {
         const emptyStr = this.configStore.Options.emptyValue;
         const mainRowColArray = this.getMainRow(row, emptyStr);
         const mainRowArray = [{
+            isAllSelected: this.isAllSelected(),
             keyColumn: row[this.configStore.Options.keyColumn],
             mainRowColArray,
             length: this.configStore.Options.columns.length,
@@ -86,6 +100,8 @@ export class GridTemplateService <T> {
             const row: T = this.data[i];
             const mainRowColArray: IMainColRowArray[] = this.getMainRow(row, emptyStr);
             mainRowArray.push({
+                rowIndex: i,
+                isAllSelected: this.isAllSelected(),
                 keyColumn: row[this.configStore.Options.keyColumn],
                 mainRowColArray,
                 length: this.configStore.Options.columns.length,
