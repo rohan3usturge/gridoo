@@ -8,6 +8,8 @@ import { IEventHandler } from "./IEventHandler";
 export class HeaderClickHandler<T> implements IEventHandler<T> {
     private parentElement: JQuery;
     private configStore: ConfigStore<T>;
+    private wasHeaderClicked: boolean;
+    private lastFocusedElement: any;
     constructor(configStore: ConfigStore<T>, element: JQuery) {
         this.configStore = configStore;
         this.parentElement = element;
@@ -25,10 +27,22 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
         // Registering JQuery Event Handler if Header is Clicked.
         this.parentElement.on("click", ".table-header th", this.handleHeaderSort);
         this.parentElement.on("keyup", ".table-header th", this.handleHeaderSort);
+        this.parentElement.on("mousedown" , ".table-header th", this.handleMouseDown);
         this.parentElement.on("focusin", ".table-header th", this.handleHeaderFocus);
+    }
+    private handleMouseDown = (event: any) => {
+        this.wasHeaderClicked = true;
     }
     private handleHeaderFocus = (event) => {
         // Handle focus
+        if (this.lastFocusedElement !== event.target) {
+            if (this.wasHeaderClicked) {
+                return;
+            }
+            this.lastFocusedElement = event.target;
+            this.wasHeaderClicked = false;
+        }
+        // event.data.clicked = undefined;
         const header = jQuery(event.target);
         const leftPostition = header.position().left;
         const headerWidth = header.width();
