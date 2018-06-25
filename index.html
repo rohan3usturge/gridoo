@@ -34,10 +34,10 @@
             cols.push({
                 id: "id" + index,
                 name: "Name" + index,
-                hidden: false,
+                hidden: index % 4 == 0,
                 width: 300,
                 renderHybrid: false,
-                sortable: true,
+                sortable: index % 3 !== 0,
                 filterable: true,
                 type: "String",
                 // orderBy: "Asc"

@@ -5,6 +5,8 @@ const ordered = (column: IColumn, index: string): string => {
     const parsedInt = parseInt(index, 10) + 3;
     let ariaSortStr;
     let headerIconMk;
+    const ariaHiddenStr = column.hidden ? " aria-hidden=\"true\"" : " aria-hidden=\"false\"";
+    const tabIndex = column.sortable && !column.hidden ? 0 : -1;
     if (column.orderBy === GridOrderDirection.Asc) {
         headerIconMk = " <i class=\"gui gui-icon gui-icon-arrow-up\" aria-hidden=\"false\" ></i> " +
                         "<i class=\"gui gui-icon gui-icon-arrow-down gui-hidden\" aria-hidden=\"true\" ></i>";
@@ -19,10 +21,11 @@ const ordered = (column: IColumn, index: string): string => {
         ariaSortStr = "aria-sort=\"none\"";
     }
     return "<th role=\"columnheader\" aria-colindex=\"" + parsedInt
-          + "\" tabindex=\"0\" class=\"gui cursor-pointer\" id=\"header-"
+          + "\" tabindex=\"" + tabIndex + "\" class=\"gui cursor-pointer\" id=\"header-"
           + column.id  + "\""
           + " data-header-id=\"" + column.id + "\" "
           + ariaSortStr
+          + ariaHiddenStr
           + " aria-label=\"" + column.name + "\" "
           + " title=\"" + column.name + "\" "
           + "  >"
