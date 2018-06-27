@@ -53,6 +53,7 @@ export class Grid<T> {
     public setColConfig = (colConfig: IColumn[]): void => {
         this.configStore.Options.columns = colConfig;
     }
+    // TODO: Update Row Index
     public updateRows = (rows: T[]) => {
         if ( rows === undefined || !rows.length ) {
             return;

@@ -1,7 +1,15 @@
-<div class="inner-container gui fluid container" style="padding:0%;">
+<div class="inner-container gui fluid container" 
+    aria-readonly="true" 
+    aria-rowcount="{{rowLength}}" 
+    aria-colcount="{{Add columns.length 2}}"
+    aria-label="{{caption}}"
+    summary="{{summary}}"
+    aria-live="polite"
+    role="grid" 
+    style="padding:0%;">
     <div class="table-header">
-        <table id="headertable" class="gui basic tablet stackable large compact sortable fixed single line table">
-            {{#if caption}}
+        <table id="headertable" role="presentation" class="gui basic large compact sortable fixed single line table">
+            {{#if showCaption}}
                 <caption class="gui gui-subheading-2 m-0 p-0 text-left">{{caption}}</caption>
             {{/if}}
             <colgroup class="headerColGroup">
@@ -11,22 +19,29 @@
                     {{{Column this}}}
                 {{/each}}
             </colgroup>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th aria-label="Select All Checkbox" id="select-all-checkbox">
+            <thead role="rowgroup">
+                <tr role="row">
+                    <th role="columnheader" aria-colindex="1"></th>
+                    <th role="columnheader" 
+                        aria-label="Select all rows of {{caption}} Checkbox" 
+                        aria-colindex="2"
+                        id="select-all-checkbox">
                         <input  type="checkbox" 
                                 aria-labelledby="select-all-checkbox"
                                 class="select-all-checkbox cursor-pointer">
                     </th>
                     {{#each columns}}
                         {{#if sortable}}
-                            {{{Ordered this}}}
+                            {{{Ordered this @index}}}
                         {{else}}
                         <th aria-label="{{name}}" 
+                            role="columnheader"
+                            aria-colindex="{{Add @index 3}}"
                             aria-sort="none" 
-                            title="{{name}}" 
-                            class="gui" 
+                            title="{{name}}"
+                            tabindex="-1"
+                            class="gui cursor-default disabled" 
+                            {{{AriaHidden hidden}}}
                             id="header-{{id}}" 
                             data-header-id="{{id}}">
                             <span class="gui sub header">{{name}}</span>
@@ -38,7 +53,7 @@
         </table>
     </div>
     <div class="table-body">
-        <table role="grid" class="gui basic tablet stackable large compact fixed selectable single line table mainTable">
+        <table role="presentation" class="gui basic large compact fixed selectable single line table mainTable">
             <colgroup class="bodyColGroup">
                 <col style="width:40px;" /> 
                 <col style="width:40px;" />
@@ -46,12 +61,12 @@
                     {{{Column this}}}
                 {{/each}}
             </colgroup>
-            <tbody class="mainTableBody">
+            <tbody class="mainTableBody" role="rowgroup">
                 {{> grid-main-row}}
             </tbody>
         </table>
     </div>
-    <div role="pag" class="table-footer gui h-auto fluid-w flex jc-sb p-5 m-0">
+    <div class="table-footer gui h-auto fluid-w flex jc-sb p-5 m-0">
            {{> grid-footer}}
     </div>
 </div>

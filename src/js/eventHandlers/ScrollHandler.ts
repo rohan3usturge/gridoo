@@ -20,13 +20,17 @@ export class ScrollHandler<T> implements IEventHandler<T> {
         this.configStore = configStore;
         this.parentElement = jQuery(this.configStore.Options.containerElement);
         this.gridTemplateService = gridTemplateService;
-        this.currentIndex = currentIndex;
+        this.setCurrentIndex(currentIndex);
     }
     public onResize(): void {
         //
     }
     public setCurrentIndex = (index: number) => {
         this.currentIndex = index;
+        this.gridTemplateService.CurrentIndex = index;
+    }
+    public getCurrentIndex = () => {
+        return this.currentIndex;
     }
     public onDocumentClick(event): void {
         // No Op
@@ -83,7 +87,7 @@ export class ScrollHandler<T> implements IEventHandler<T> {
             }
             const html  = jQuery(this.gridTemplateService.getTemplate(this.currentIndex, lastIndex));
             tBodyObj.find(".mainTableBody").append(html);
-            this.currentIndex = lastIndex + 1;
+            this.setCurrentIndex( lastIndex + 1 );
             this.rendering = false;
         }
         event.stopPropagation();

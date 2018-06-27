@@ -30,19 +30,20 @@
     <script src="gridoo.js"></script>
     <script>
         var cols = [];
-        for (var i = 0; i < 30; i++) {
+        for (var index = 0; index < 30; index++) {
             cols.push({
-                id: "id" + i,
-                name: "Name" + i,
-                hidden: false,
+                id: "id" + index,
+                name: "Name" + index,
+                hidden: index % 4 == 0,
                 width: 300,
                 renderHybrid: false,
-                sortable: true,
+                sortable: index % 3 !== 0,
                 filterable: true,
                 type: "String",
                 // orderBy: "Asc"
             });
         };
+        console.log(cols);
         const data = [];
         for (var i = 0; i < 1000; i++) {
             var row = {};
@@ -78,7 +79,8 @@
     <script>
 
         var options = {
-            caption: "SEARCH RESULTS",
+            caption: "ASSIGNMENT SEARCH RESULTS",
+            summary: "Table shows incoming requests",
             keyColumn: "id1",
             columns: cols,
             chunkSize: 5,

@@ -8,7 +8,8 @@ import { IEventHandler } from "./IEventHandler";
 export class HeaderClickHandler<T> implements IEventHandler<T> {
     private parentElement: JQuery;
     private configStore: ConfigStore<T>;
-
+    private wasHeaderClicked: boolean;
+    private lastFocusedElement: any;
     constructor(configStore: ConfigStore<T>, element: JQuery) {
         this.configStore = configStore;
         this.parentElement = element;
@@ -26,8 +27,39 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
         // Registering JQuery Event Handler if Header is Clicked.
         this.parentElement.on("click", ".table-header th", this.handleHeaderSort);
         this.parentElement.on("keyup", ".table-header th", this.handleHeaderSort);
+        this.parentElement.on("mousedown" , ".table-header th", this.handleMouseDown);
+        this.parentElement.on("focusin", ".table-header th", this.handleHeaderFocus);
     }
-
+    private handleMouseDown = (event: any) => {
+        this.wasHeaderClicked = true;
+    }
+    private handleHeaderFocus = (event) => {
+        // Handle focus
+        if (this.lastFocusedElement !== event.target) {
+            if (this.wasHeaderClicked) {
+                return;
+            }
+            this.lastFocusedElement = event.target;
+            this.wasHeaderClicked = false;
+        }
+        // event.data.clicked = undefined;
+        const header = jQuery(event.target);
+        const leftPostition = header.position().left;
+        const headerWidth = header.width();
+        const tableBody = this.parentElement.find(".table-body");
+        const mainTableBody = this.parentElement.find(".mainTable");
+        const visibleTbodyWidth = tableBody.width();
+        const maxScroll = mainTableBody.width() - visibleTbodyWidth;
+        const currentPosition = leftPostition + headerWidth * 2;
+        let scrollLeftBy;
+        if ( currentPosition > visibleTbodyWidth) {
+            scrollLeftBy = leftPostition > maxScroll ? maxScroll : leftPostition;
+        } else {
+            scrollLeftBy = 0;
+        }
+        tableBody.scrollLeft(scrollLeftBy);
+        event.stopPropagation();
+    }
     private handleHeaderSort = (event) => {
         const code = event.keyCode || event.which;
         if ( event.type !== "click" && (event.type === "keyup" && code !== 13 && code !== 32) ) {
