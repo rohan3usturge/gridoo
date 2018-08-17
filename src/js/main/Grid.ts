@@ -239,7 +239,7 @@ export class Grid<T> {
                 let newFocusable;
                 $(".table-header th").each((index: number, elem: HTMLElement) => {
                     const eachHeader = $(elem);
-                    const eachHeaderId = eachHeader.attr("data-attr-id");
+                    const eachHeaderId = eachHeader.attr("data-header-id");
                     if ( eachHeaderId === dataHeaderId ) {
                         newFocusable = eachHeader;
                         return false;
