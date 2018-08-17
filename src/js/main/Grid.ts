@@ -236,13 +236,11 @@ export class Grid<T> {
             }
             if ( element.tagName.toLowerCase() === "th") {
                 const dataHeaderId = element.getAttribute("data-header-id");
-                const dataHeaderValue = element.getAttribute("data-header-value");
                 let newFocusable;
                 $(".filter-label").each((index: number, elem: HTMLElement) => {
                     const eachHeader = $(elem);
                     const eachHeaderId = eachHeader.attr("data-attr-id");
-                    const eachHeaderValue = eachHeader.attr("data-attr-value");
-                    if ( eachHeaderId === dataHeaderId && eachHeaderValue === dataHeaderValue ) {
+                    if ( eachHeaderId === dataHeaderId ) {
                         newFocusable = eachHeader;
                         return false;
                     }
