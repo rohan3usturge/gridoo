@@ -35,6 +35,7 @@ export class FilterClickHandler<T> implements IEventHandler<T> {
             if (element.hasClass("removeFilter")) {
                 filterAction = FilterActionType.Minus;
             }
+            this.configStore.setFocusableElement(event.target);
             this.configStore.Options.onClickFilter(key, value, filterAction, type);
             event.stopPropagation();
         });

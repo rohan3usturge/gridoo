@@ -152,6 +152,7 @@ export class Grid<T> {
             // this.scrollHandler.watchWidth();
         }
         this.scrollHandler.RegisterDomHandler();
+        this.setFocusToLastElement();
     }
     private getInitialRowCount = (): number => {
         return Math.floor((jQuery(window).innerHeight() * 0.65 ) / 32);
@@ -211,6 +212,13 @@ export class Grid<T> {
             value.handler.onDocumentClick(event);
         });
         event.stopPropagation();
+    }
+    private setFocusToLastElement = (): void => {
+        const element = this.configStore.getFocusableElement();
+        if ( element ) {
+            element.focus();
+            this.configStore.setFocusableElement(undefined);
+        }
     }
 
 }

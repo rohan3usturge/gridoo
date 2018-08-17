@@ -44,7 +44,6 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
             (event): void => {
                 const element = jQuery(event.target);
                 const val = element.val().toString().toLowerCase();
-                console.log(val);
                 this.parentElement.find(".col-settings-table table tbody tr").each((i: number, e) => {
                     jQuery(e).show();
                     if (jQuery(e).attr("data-header-id").toLowerCase().indexOf(val) === -1 ) {

@@ -22,27 +22,33 @@ export class PageSearchHandler<T> implements IEventHandler<T> {
     }
     public RegisterDomHandler = (): void => {
         this.parentElement.on("click", ".table-footer .firstLink", (event) => {
+            this.configStore.setFocusableElement(event.target);
             this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, 1);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .nextLink", (event) => {
+            this.configStore.setFocusableElement(event.target);
             this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, Pager.PaginationData.pageIndex + 1);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .prevLink", (event) => {
+            this.configStore.setFocusableElement(event.target);
             this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, Pager.PaginationData.pageIndex - 1);
             event.stopPropagation();
         });
         this.parentElement.on("click", ".table-footer .lastLink", (event) => {
+            this.configStore.setFocusableElement(event.target);
             this.configStore.options.onPageSearch(Pager.PaginationData.pageSize, Pager.PaginationData.noOfPages);
             event.stopPropagation();
         });
         this.parentElement.on("change", ".table-footer .pageSizeSelector", (event) => {
+            this.configStore.setFocusableElement(event.target);
             const val: number = +jQuery(event.target).val().toString();
             this.configStore.options.onPageSearch(val, Pager.PaginationData.pageIndex);
             event.stopPropagation();
         });
         this.parentElement.on("keypress", ".table-footer .pager-input", (event) => {
+            this.configStore.setFocusableElement(event.target);
             const ip = jQuery(event.target);
             const pageData = Pager.PaginationData;
             if (event.keyCode === 13) {

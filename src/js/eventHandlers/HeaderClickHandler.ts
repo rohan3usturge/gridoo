@@ -91,6 +91,7 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
         }
         element.attr("aria-sort", direction === GridOrderDirection.Desc ? "descending" : "ascending");
         CommonUtil.SetOrder(headerId, direction, this.configStore.Options.columns);
+        this.configStore.setFocusableElement(event.target);
         this.configStore.Options.onClickHeader(headerId, direction);
         event.stopPropagation();
     }

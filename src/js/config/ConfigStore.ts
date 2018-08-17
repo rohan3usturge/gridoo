@@ -5,6 +5,7 @@ import { IColumn } from "../models/IColumn";
 
 export class ConfigStore<T> {
     public options: IGridOptions<T>;
+    private focusableElement: HTMLElement;
     private defaultGridOptions: IGridOptions<T> = {
         animationTime: 200,
         chunkSize: 5,
@@ -46,6 +47,12 @@ export class ConfigStore<T> {
     }
     public get Options(): IGridOptions<T> {
         return this.options;
+    }
+    public setFocusableElement = (element: HTMLElement): void => {
+        this.focusableElement = element;
+    }
+    public getFocusableElement = (): HTMLElement => {
+        return this.focusableElement;
     }
     public SetHiddenOnConfig = (bool: boolean, columnId?: string): void => {
         for (const col of this.Options.columns) {
