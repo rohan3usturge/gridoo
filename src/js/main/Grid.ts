@@ -216,8 +216,41 @@ export class Grid<T> {
     private setFocusToLastElement = (): void => {
         const element = this.configStore.getFocusableElement();
         if ( element ) {
-            element.focus();
-            this.configStore.setFocusableElement(undefined);
+            if ( element.classList.contains("firstLink")) {
+                $(".table-footer .firstLink").focus();
+            }
+            if ( element.classList.contains("nextLink")) {
+                $(".table-footer .nextLink").focus();
+            }
+            if ( element.classList.contains("prevLink")) {
+                $(".table-footer .prevLink").focus();
+            }
+            if ( element.classList.contains("lastLink")) {
+                $(".table-footer .lastLink").focus();
+            }
+            if ( element.classList.contains("pageSizeSelector")) {
+                $(".table-footer .pageSizeSelector").focus();
+            }
+            if ( element.classList.contains("pager-input")) {
+                $(".table-footer .pager-input").focus();
+            }
+            if ( element.tagName.toLowerCase() === "th") {
+                const dataHeaderId = element.getAttribute("data-header-id");
+                const dataHeaderValue = element.getAttribute("data-header-value");
+                let newFocusable;
+                $(".filter-label").each((index: number, elem: HTMLElement) => {
+                    const eachHeader = $(elem);
+                    const eachHeaderId = eachHeader.attr("data-attr-id");
+                    const eachHeaderValue = eachHeader.attr("data-attr-value");
+                    if ( eachHeaderId === dataHeaderId && eachHeaderValue === dataHeaderValue ) {
+                        newFocusable = eachHeader;
+                        return false;
+                    }
+                });
+                if ( newFocusable ) {
+                    newFocusable.focus();
+                }
+            }
         }
     }
 
