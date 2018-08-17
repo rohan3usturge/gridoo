@@ -1,6 +1,6 @@
 {
   "name": "gridoo",
-  "version": "1.0.92",
+  "version": "1.0.93",
   "description": "Simple paginated Grid with paging and auto scrollable fixed to container, with detailed rows",
   "scripts": {
     "clean": "rimraf dist",
