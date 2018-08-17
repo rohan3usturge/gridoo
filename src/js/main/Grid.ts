@@ -237,7 +237,7 @@ export class Grid<T> {
             if ( element.tagName.toLowerCase() === "th") {
                 const dataHeaderId = element.getAttribute("data-header-id");
                 let newFocusable;
-                $(".filter-label").each((index: number, elem: HTMLElement) => {
+                $(".table-header th").each((index: number, elem: HTMLElement) => {
                     const eachHeader = $(elem);
                     const eachHeaderId = eachHeader.attr("data-attr-id");
                     if ( eachHeaderId === dataHeaderId ) {
