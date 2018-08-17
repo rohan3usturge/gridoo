@@ -26,6 +26,7 @@ const ordered = (column: IColumn, index: string): string => {
           + " data-header-id=\"" + column.id + "\" "
           + ariaSortStr
           + ariaHiddenStr
+          + " aria-label=\"" + ariaSortStr + "\" "
           + " title=\"" + column.name + "\" "
           + "  >"
           + " <span class=\"gui sub header m-r-5\">" + column.name + "</span>"
