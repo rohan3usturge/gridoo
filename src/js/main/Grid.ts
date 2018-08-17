@@ -250,6 +250,8 @@ export class Grid<T> {
                 }
             }
         }
+        this.configStore.setFocusableElement(undefined);
+
     }
 
 }
