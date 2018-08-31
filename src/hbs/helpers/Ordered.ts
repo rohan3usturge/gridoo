@@ -22,7 +22,7 @@ const ordered = (column: IColumn, index: string): string => {
         headerIconMk = "<i class=\"gui gui-icon gui-icon-arrow-up gui-hidden\" aria-hidden=\"true\" ></i> " +
                         "<i class=\"gui gui-icon gui-icon-arrow-down gui-hidden\" aria-hidden=\"true\" ></i>";
         ariaSortStr = "aria-sort=\"none\"";
-        ariaLabelStr = column.name + " Press space or enter to sort in ascending order.";
+        ariaLabelStr = column.name + " Press space or enter to sort in ascending order button.";
     }
     return "<th role=\"columnheader\" aria-colindex=\"" + parsedInt
           + "\" tabindex=\"" + tabIndex + "\" class=\"gui cursor-pointer\" id=\"header-"
