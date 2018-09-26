@@ -37,7 +37,7 @@ const ordered = (column: IColumn, index: string): string => {
           + " <span "
           + " id=\"columnLabel-" + column.id + "\" "
           + " aria-label=\"" + ariaLabelStr + "\" "
-          + " role=\"button\" class=\"gui sub header m-r-5\">" + column.name + "</span>"
+          + " role=\"button\" class=\"gui no-css sub header m-r-5\">" + column.name + "</span>"
           + headerIconMk
           + " </th>";
 };
