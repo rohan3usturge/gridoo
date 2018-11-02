@@ -66,7 +66,7 @@ export type ISelectDelegate<T> = (selectedRows: T[], checked: boolean, all?: boo
 
 export type IFilterClickDelegate = (column: string, value: any, actionType: FilterActionType, type?: string) => void;
 
-export type IHeaderClickDelegate = (column: string, direction: GridOrderDirection) => void;
+export type IHeaderClickDelegate = (column: string, direction: GridOrderDirection, orderByProxy?: string) => void;
 
 export type IPageSearchClickDelegate = (pageSize: number, pageIndex: number) => void;
 
