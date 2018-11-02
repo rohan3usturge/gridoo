@@ -2,6 +2,7 @@ import { GridOrderDirection } from "./GridOrderDirection";
 
 export interface IColumn {
     id: string;
+    orderByCol?: string;
     type?: string;
     name: string;
     width: number;
