@@ -37,6 +37,7 @@ export interface IColumn {
     order: number;
     orderBy?: GridOrderDirection;
     showOnExcel?: boolean;
+    excelname?: string;
 }
 
 export interface IGridOptions<T> {
