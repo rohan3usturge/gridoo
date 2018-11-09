@@ -25,8 +25,8 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
 
     public RegisterDomHandler = (): void => {
         // Registering JQuery Event Handler if Header is Clicked.
-        this.parentElement.on("click", ".table-header th", this.handleHeaderSort);
-        this.parentElement.on("keyup", ".table-header th", this.handleHeaderSort);
+        // this.parentElement.on("click", ".table-header th", this.handleHeaderSort);
+        // this.parentElement.on("keyup", ".table-header th", this.handleHeaderSort);
         this.parentElement.on("mousedown" , ".table-header th", this.handleMouseDown);
         this.parentElement.on("focusin", ".table-header th", this.handleHeaderFocus);
     }
