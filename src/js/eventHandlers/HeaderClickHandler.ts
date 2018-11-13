@@ -1,8 +1,6 @@
 import { ConfigStore } from "../config/ConfigStore";
-import { IGridOptions } from "../main/IGridOptions";
 import { CommonUtil } from "../util/ColumnUtil";
 import { GridOrderDirection } from "./../models/GridOrderDirection";
-import {IHeaderClickDelegate} from "./../models/IHeaderClickDelegate";
 import { IEventHandler } from "./IEventHandler";
 
 export class HeaderClickHandler<T> implements IEventHandler<T> {
@@ -30,7 +28,7 @@ export class HeaderClickHandler<T> implements IEventHandler<T> {
         this.parentElement.on("mousedown" , ".table-header th", this.handleMouseDown);
         this.parentElement.on("focusin", ".table-header th", this.handleHeaderFocus);
     }
-    private handleMouseDown = (event: any) => {
+    private handleMouseDown = () => {
         this.wasHeaderClicked = true;
     }
     private handleHeaderFocus = (event) => {

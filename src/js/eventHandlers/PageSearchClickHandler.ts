@@ -1,8 +1,6 @@
 import * as jQuery from "jquery";
 import { ConfigStore } from "../config/ConfigStore";
 import { Pager } from "../pagination/Pager";
-import { IPageSearchClickDelegate } from "./../models/IPageSearchClickDelegate";
-import { IPagination } from "./../models/IPagination";
 import { IEventHandler } from "./IEventHandler";
 
 export class PageSearchHandler<T> implements IEventHandler<T> {

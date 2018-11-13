@@ -1,20 +1,14 @@
 import { ConfigStore } from "../config/ConfigStore";
 import { GridTemplateService } from "./../services/GridTemplateService";
-import { IIndexCounter } from "./../virtualization/IndexCounter";
-import { ScrollDirection } from "./../virtualization/ScrollDirection";
-import { Virtualizer } from "./../virtualization/Virtualizer";
 import { IEventHandler } from "./IEventHandler";
 
 export class ScrollHandler<T> implements IEventHandler<T> {
-    private virtualizer: Virtualizer;
     private parentElement: JQuery;
     private gridTemplateService: GridTemplateService<T>;
     private rendering: boolean =  false;
     private configStore: ConfigStore<T>;
-    private leftOffset: number;
-    private parentOffSetLeft: number;
+    private leftMargin: number;
     private currentIndex: number;
-    private watches: any[] = [];
 
     constructor(configStore: ConfigStore<T>, gridTemplateService: GridTemplateService<T>, currentIndex: number) {
         this.configStore = configStore;
@@ -32,6 +26,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     public getCurrentIndex = () => {
         return this.currentIndex;
     }
+    public scrollTableBody = () => {
+        this.parentElement.find(".table-body").scrollLeft(-1 * this.leftMargin);
+    }
     public onDocumentClick(event): void {
         // No Op
     }
@@ -42,32 +39,16 @@ export class ScrollHandler<T> implements IEventHandler<T> {
     public removeHandler = () => {
         this.parentElement.find(".table-body").off("scroll", this.handleResize);
     }
-    public resetParentOffset = () => {
-        this.parentOffSetLeft = this.parentElement.offset().left;
-        this.leftOffset = this.parentElement.find(".table-header").offset().left;
-    }
-    public watchWidth = () => {
-        this.parentOffSetLeft = this.parentElement.offset().left;
-        this.watches.push(setInterval(this.setHeaderOffset, 300));
-    }
-    public unWatchWidth = () => {
-        if (this.watches === undefined || this.watches === null ) {
-            return;
-        }
-        for (const watch of this.watches) {
-            clearInterval(watch);
-        }
-    }
+
     private handleResize = (event) => {
         const tBodyObj = this.parentElement.find(".table-body");
-        if (this.leftOffset === undefined || this.leftOffset === null) {
-            this.leftOffset = this.parentElement.find(".table-header").offset().left;
-        }
+        const marginLeft = -1 * tBodyObj.scrollLeft();
         this.parentElement.find(".table-header").css(
             {
-                "margin-left": -1 * tBodyObj.scrollLeft(),
+                "margin-left": marginLeft,
             },
         );
+        this.leftMargin = marginLeft;
         const actualTableHeight = tBodyObj.find(".mainTable").height();
         const scrollContainerHeight = tBodyObj.height();
         event.preventDefault();
@@ -91,21 +72,5 @@ export class ScrollHandler<T> implements IEventHandler<T> {
             this.rendering = false;
         }
         event.stopPropagation();
-    }
-
-    private setHeaderOffset = () => {
-        const left = this.parentElement.offset().left;
-        if ( this.parentOffSetLeft !== left ) {
-            const tBodyObj = this.parentElement.find(".table-body");
-            if (this.leftOffset === undefined || this.leftOffset === null) {
-                this.leftOffset = this.parentElement.find(".table-header").offset().left;
-            }
-            this.leftOffset = this.leftOffset - (this.parentOffSetLeft - left);
-            this.parentElement
-                .find(".table-header")
-                .offset({left: this.leftOffset, top: 0});
-            this.parentOffSetLeft = left;
-            tBodyObj.scrollLeft(tBodyObj.scrollLeft() - 1);
-        }
     }
 }

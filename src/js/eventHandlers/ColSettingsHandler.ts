@@ -1,4 +1,3 @@
-import { IGridOptions } from "../main/IGridOptions";
 import { ConfigStore } from "./../config/ConfigStore";
 import { IEventHandler } from "./IEventHandler";
 import { ToggleColumnHandler } from "./ToggleColumnHandler";
@@ -33,7 +32,6 @@ export class ColSettingsHandler<T> implements IEventHandler<T> {
     }
     public RegisterDomHandler(): void {
         this.parentElement.on("click", ".col-settings-trigger", (event): void => {
-            const element = jQuery(event.target);
             const settngsPopup = this.parentElement.find(".col-settings-container");
             this.onResize();
             jQuery(".col-settings-trigger").addClass("active");

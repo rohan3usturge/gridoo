@@ -93,6 +93,9 @@
             onClickFilter: function (column, value, actionType, type) {
                 alert('recieved' + column + value + actionType + type);
             },
+            onClickHeader: function (column, value, actionType, type) {
+                addFilters();
+            }
         };
         var paginationInput = {
             totalCount: 1000,

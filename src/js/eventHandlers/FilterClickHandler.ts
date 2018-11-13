@@ -1,8 +1,6 @@
 import { ConfigStore } from "../config/ConfigStore";
-import { IGridOptions } from "../main/IGridOptions";
 import { CommonUtil } from "../util/ColumnUtil";
 import { FilterActionType } from "./../models/FilterActionType";
-import { IFilterClickDelegate } from "./../models/IFilterClickDelegate";
 import { IEventHandler } from "./IEventHandler";
 
 export class FilterClickHandler<T> implements IEventHandler<T> {
