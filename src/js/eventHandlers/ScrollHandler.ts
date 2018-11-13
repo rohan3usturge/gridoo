@@ -27,6 +27,9 @@ export class ScrollHandler<T> implements IEventHandler<T> {
         return this.currentIndex;
     }
     public scrollTableBody = () => {
+        if ( !this.leftMargin ) {
+            return;
+        }
         this.parentElement.find(".table-body").scrollLeft(-1 * this.leftMargin);
     }
     public onDocumentClick(event): void {

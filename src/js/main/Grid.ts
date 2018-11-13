@@ -204,7 +204,7 @@ export class Grid<T> {
                     if ( newFocusable ) {
                         newFocusable.focus();
                     }
-                });
+                }, 50);
             }
         }
         this.configStore.setFocusableElement(undefined);
