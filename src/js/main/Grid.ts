@@ -190,7 +190,8 @@ export class Grid<T> {
             if ( element.tagName.toLowerCase() === "th" || element.parentElement.tagName.toLowerCase() === "th") {
                 this.scrollHandler.scrollTableBody();
                 setTimeout(() => {
-                    const dataHeaderId = element.getAttribute("data-header-id");
+                    const dataHeaderId = element.getAttribute("data-header-id")
+                                        || element.parentElement.getAttribute("data-header-id");
                     let newFocusable;
                     $(".table-header th").each((index: number, elem: HTMLElement) => {
                         const eachHeader = $(elem);
