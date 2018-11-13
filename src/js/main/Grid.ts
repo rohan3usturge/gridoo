@@ -110,7 +110,9 @@ export class Grid<T> {
             this.scrollHandler = new ScrollHandler<T>(this.configStore, this.gridTemplateService, lastIndex + 1);
         }
         this.scrollHandler.RegisterDomHandler();
-        this.setFocusToLastElement();
+        setTimeout(() => {
+            this.setFocusToLastElement();
+        }, 50);
     }
     private getInitialRowCount = (): number => {
         return Math.floor((jQuery(window).innerHeight() * 0.65 ) / 32);
@@ -189,22 +191,20 @@ export class Grid<T> {
             }
             if ( element.tagName.toLowerCase() === "th" || element.parentElement.tagName.toLowerCase() === "th") {
                 this.scrollHandler.scrollTableBody();
-                setTimeout(() => {
-                    const dataHeaderId = element.getAttribute("data-header-id")
+                const dataHeaderId = element.getAttribute("data-header-id")
                                         || element.parentElement.getAttribute("data-header-id");
-                    let newFocusable;
-                    $(".table-header th").each((index: number, elem: HTMLElement) => {
-                        const eachHeader = $(elem);
-                        const eachHeaderId = eachHeader.attr("data-header-id");
-                        if ( eachHeaderId === dataHeaderId ) {
-                            newFocusable = eachHeader;
-                            return false;
-                        }
-                    });
-                    if ( newFocusable ) {
-                        newFocusable.focus();
+                let newFocusable;
+                $(".table-header th").each((index: number, elem: HTMLElement) => {
+                    const eachHeader = $(elem);
+                    const eachHeaderId = eachHeader.attr("data-header-id");
+                    if ( eachHeaderId === dataHeaderId ) {
+                        newFocusable = eachHeader;
+                        return false;
                     }
-                }, 50);
+                });
+                if ( newFocusable ) {
+                    newFocusable.focus();
+                }
             }
         }
         this.configStore.setFocusableElement(undefined);
