@@ -26,7 +26,7 @@ export class Pager {
             paginationData.prevPageLinkDisabled  = paginationData.pageIndex === 1
                                                     || (paginationData.pageIndex - 1) <= 0;
             paginationData.nextPageLinkDisabled  = paginationData.noOfPages === paginationData.pageIndex
-                                                    || (paginationData.pageIndex + 1) >= paginationData.noOfPages;
+                                                    || (paginationData.pageIndex + 1) > paginationData.noOfPages;
             Pager.paginationData = paginationData;
     }
 
