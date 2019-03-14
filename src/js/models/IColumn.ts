@@ -15,4 +15,5 @@ export interface IColumn {
     orderBy?: GridOrderDirection;
     showOnExcel?: boolean;
     excelname?: string;
+    isTitleHybrid?: boolean;
 }

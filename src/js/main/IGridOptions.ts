@@ -1,4 +1,3 @@
-import { IColSettingsChangeDelegate } from "../models/IColSettingsChangeDelegate";
 import { ISelectDelegate } from "../models/ISelectDelegate";
 import { IColumn } from "./../models/IColumn";
 import { IFilterClickDelegate } from "./../models/IFilterClickDelegate";

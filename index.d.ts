@@ -38,6 +38,7 @@ export interface IColumn {
     orderBy?: GridOrderDirection;
     showOnExcel?: boolean;
     excelname?: string;
+    isTitleHybrid?: boolean;
 }
 
 export interface IGridOptions<T> {

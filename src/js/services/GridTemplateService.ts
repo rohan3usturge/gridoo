@@ -173,17 +173,22 @@ export class GridTemplateService <T> {
         const mainRowColArray: any[] = [];
         for (const col of this.configStore.Options.columns) {
             let columnValue = row[col.id];
+            let actualValue = row[col.id];
             if (col.renderHybrid) {
                 columnValue = this.configStore.Options.hybridFunction(col, row);
+                if ( col.isTitleHybrid ) {
+                    actualValue = columnValue;
+                }
             }
             if (emptyStr !== undefined && columnValue === emptyStr) {
                 columnValue = "";
+                actualValue = "";
             }
             mainRowColArray.push({
                 columnValue,
                 type: col.type,
                 hidden: col.hidden,
-                actualValue: row[col.id],
+                actualValue,
                 columnName: col.name,
                 id: col.id,
                 filterable: col.filterable,
