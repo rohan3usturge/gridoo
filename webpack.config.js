@@ -95,10 +95,7 @@ module.exports = (env = {}) => {
           loader: "handlebars-loader",
           options: {
             helperDirs: path.join(PATHS.src, "hbs/helpers"),
-            runtime: "handlebars",
-            precompileOptions: {
-              knownHelpersOnly: false,
-            }
+            runtime: "handlebars"
           }
         },
         {
