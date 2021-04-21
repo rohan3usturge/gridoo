@@ -1,0 +1,33 @@
+<tr id="details-row-{{@index}}" class="gui gui-hidden detailsRow" aria-live="polite">
+    {{^isCustomExpansion}}
+    <td colspan="{{length}}">
+        <table class="gui compact celled table detailsTable m-l-37 p-5" style="width: fit-content;">
+            <thead>
+                {{#with expandedRowColArray.[0]}}
+                {{#each .}}
+                <th>{{ @key }}</th>
+                {{/each}}
+                {{/with}}
+            </thead>
+            <tbody>
+                {{#each expandedRowColArray}}
+                <tr>
+                    {{#each this}}
+                    <td title="{{actualValue}}" aria-colindex="{{Add @index 3}}" class="body-{{id}}">{{{columnValue}}}
+                    </td>
+                    {{/each}}
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </td>
+    {{/isCustomExpansion}}
+    {{#isCustomExpansion}}
+    <td colspan="{{length}}">
+        <div>{{{customExpansion}}}</div>
+    </td>
+    {{/isCustomExpansion}}
+</tr>
+
+
+{{log isCustomExpansion}}

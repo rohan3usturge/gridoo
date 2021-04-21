@@ -1,5 +1,6 @@
 import * as Handlebars from "handlebars";
 import * as GridDetailsRowTemplate from "../../hbs/grid-details-row.hbs";
+import * as GridDetailsRowTableTemplate from "../../hbs/grid-details-table-row.hbs";
 import * as GridFooter from "../../hbs/grid-footer.hbs";
 import * as GridMainRowTemplate from "../../hbs/grid-main-row.hbs";
 import * as ManageColumnTemplate from "../../hbs/grid-manage-columns.hbs";
@@ -17,13 +18,14 @@ interface IMainColRowArray {
     id: string;
     filterable: boolean;
 }
-export class GridTemplateService <T> {
+export class GridTemplateService<T> {
     private data: T[];
     private selected: T[] = [];
     private configStore: ConfigStore<T>;
     private templateFunctionForGrid: any;
     private templateFunctionForMainRow: any;
     private templateFunctionForDetailsRow: any;
+    private templateFunctionForDetailsTableRow: any;
     private templateFunctionForFooter: any;
     private templateFunctionForManageCol: any;
     private currentIndex: number;
@@ -35,6 +37,7 @@ export class GridTemplateService <T> {
         this.templateFunctionForDetailsRow = GridDetailsRowTemplate;
         this.templateFunctionForFooter = GridFooter;
         this.templateFunctionForManageCol = ManageColumnTemplate;
+        this.templateFunctionForDetailsTableRow = GridDetailsRowTableTemplate;
     }
     public isAllSelected = () => {
         return this.selected.length !== 0 && this.selected.length === this.data.length;
@@ -52,9 +55,10 @@ export class GridTemplateService <T> {
         return this.data.length;
     }
     // For First  Render - Update Header , Body, Pagination
-    public GetFirstTemplate = (data: T[],
-                               firstIndex: number,
-                               lastIndex: number): string => {
+    public GetFirstTemplate = (
+        data: T[],
+        firstIndex: number,
+        lastIndex: number): string => {
         this.data = data;
         this.selected = [];
         const mainRowArray = this.GetRowsHtml(firstIndex, lastIndex);
@@ -66,6 +70,7 @@ export class GridTemplateService <T> {
             mainRowArray,
             paginationData: Pager.PaginationData,
             caption: this.configStore.Options.caption,
+            isAlternateExpanded: this.configStore.Options.isAlternateExpanded,
         });
     }
     // For Virtualizaton Render - Body
@@ -75,6 +80,8 @@ export class GridTemplateService <T> {
             columns: this.configStore.Options.columns,
             mainRowArray,
             caption: this.configStore.Options.caption,
+            isAlternateExpanded: this.configStore.Options.isAlternateExpanded,
+            isCustomExpansion: this.configStore.Options.isCustomExpansion,
         });
     }
     // Update only one Row
@@ -86,11 +93,13 @@ export class GridTemplateService <T> {
             keyColumn: row[this.configStore.Options.keyColumn],
             mainRowColArray,
             length: this.configStore.Options.columns.length,
+            isAlternateExpanded: this.configStore.Options.isAlternateExpanded,
+            isCustomExpansion: this.configStore.Options.isCustomExpansion,
         }];
-        return this.templateFunctionForMainRow({mainRowArray});
+        return this.templateFunctionForMainRow({ mainRowArray });
     }
     public GetManageColumnsHtml = (): string => {
-        return this.templateFunctionForManageCol({columns: this.configStore.Options.columns});
+        return this.templateFunctionForManageCol({ columns: this.configStore.Options.columns });
     }
 
     public GetRowsHtml = (firstIndex: number, lastIndex: number): any[] => {
@@ -99,12 +108,24 @@ export class GridTemplateService <T> {
         for (let i = firstIndex; i <= lastIndex; i++) {
             const row: T = this.data[i];
             const mainRowColArray: IMainColRowArray[] = this.getMainRow(row, emptyStr);
+            let expandedRowColArray: any[] = null;
+            let customExpansion: any = "";
+            if (this.configStore.options.isAlternateExpanded) {
+                expandedRowColArray = this.getExpansionRow(row[this.configStore.Options.expansionFieldName], emptyStr);
+            }
+            if (this.configStore.Options.isCustomExpansion) {
+                customExpansion = this.getCustomExpansionRow(row);
+            }
             mainRowArray.push({
                 rowIndex: i,
                 isAllSelected: this.isAllSelected(),
                 keyColumn: row[this.configStore.Options.keyColumn],
                 mainRowColArray,
                 length: this.configStore.Options.columns.length,
+                isAlternateExpanded: this.configStore.Options.isAlternateExpanded,
+                expandedRowColArray,
+                isCustomExpansion: this.configStore.Options.isCustomExpansion,
+                customExpansion,
             });
         }
         return mainRowArray;
@@ -114,17 +135,17 @@ export class GridTemplateService <T> {
         const newSelected = [];
         let exists = false;
         for (const selected of this.selected) {
-            if ( rowId === selected[key] ) {
+            if (rowId === selected[key]) {
                 exists = true;
                 break;
             }
         }
-        if ( !exists ) {
+        if (!exists) {
             newSelected.push(rowId);
         }
         for (const toBeAdded of newSelected) {
             for (const oneRow of this.data) {
-                if ( toBeAdded === oneRow[key] ) {
+                if (toBeAdded === oneRow[key]) {
                     this.selected.push(oneRow);
                     break;
                 }
@@ -135,7 +156,7 @@ export class GridTemplateService <T> {
         const newSelected = [];
         const key = this.configStore.Options.keyColumn;
         for (const selected of this.selected) {
-            if ( rowId !== selected[key] ) {
+            if (rowId !== selected[key]) {
                 newSelected.push(selected);
             }
         }
@@ -149,12 +170,12 @@ export class GridTemplateService <T> {
     }
     public updateRows = (rows: T[]) => {
         const key = this.configStore.Options.keyColumn;
-        if ( rows === undefined || !rows.length ) {
+        if (rows === undefined || !rows.length) {
             return;
         }
         for (const row of rows) {
             for (let dataRow of this.data) {
-                if (row[key] === dataRow[key] ) {
+                if (row[key] === dataRow[key]) {
                     dataRow = row;
                     break;
                 }
@@ -162,21 +183,22 @@ export class GridTemplateService <T> {
         }
         for (const row of rows) {
             for (let dataRow of this.selected) {
-                if (row[key] === dataRow[key] ) {
+                if (row[key] === dataRow[key]) {
                     dataRow = row;
                     break;
                 }
             }
         }
     }
+
     private getMainRow = (row: T, emptyStr: string): IMainColRowArray[] => {
-        const mainRowColArray: any[] = [];
+        const expandedRowColArray: any[] = [];
         for (const col of this.configStore.Options.columns) {
             let columnValue = row[col.id];
             let actualValue = row[col.id];
             if (col.renderHybrid) {
                 columnValue = this.configStore.Options.hybridFunction(col, row);
-                if ( col.isTitleHybrid ) {
+                if (col.isTitleHybrid) {
                     actualValue = columnValue;
                 }
             }
@@ -184,7 +206,7 @@ export class GridTemplateService <T> {
                 columnValue = "";
                 actualValue = "";
             }
-            mainRowColArray.push({
+            expandedRowColArray.push({
                 columnValue,
                 type: col.type,
                 hidden: col.hidden,
@@ -194,6 +216,46 @@ export class GridTemplateService <T> {
                 filterable: col.filterable,
             });
         }
+
+        return expandedRowColArray;
+    }
+
+    private getCustomExpansionRow = (row: T): string => {
+        return this.configStore.Options.renderHybridExpansion(row);
+    }
+
+    private getExpansionRow = (row: T[], emptyStr: string): IMainColRowArray[][] => {
+        const mainRowColArray: any[][] = [];
+        for (let i = 0; i < row.length; i++) {
+            mainRowColArray.push([]);
+            for (const col of this.configStore.Options.columns) {
+                if (row[i].hasOwnProperty(col.id)) {
+                    let columnValue = row[i][col.id];
+                    let actualValue = row[i][col.id];
+                    if (col.renderHybrid) {
+                        columnValue = this.configStore.Options.hybridFunction(col, row[i]);
+                        if (col.isTitleHybrid) {
+                            actualValue = columnValue;
+                        }
+                    }
+                    if (emptyStr !== undefined && columnValue === emptyStr) {
+                        columnValue = "";
+                        actualValue = "";
+                    }
+
+                    mainRowColArray[i].push({
+                        columnValue,
+                        type: col.type,
+                        hidden: col.hidden,
+                        actualValue,
+                        columnName: col.name,
+                        id: col.id,
+                        filterable: col.filterable,
+                    });
+                }
+            }
+        }
+
         return mainRowColArray;
     }
 }

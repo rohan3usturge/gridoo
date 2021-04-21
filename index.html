@@ -20,8 +20,8 @@
             background: black;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script> -->
     <link rel="stylesheet" href="asgn-search.min.css" />
@@ -43,6 +43,20 @@
                 // orderBy: "Asc"
             });
         };
+
+        cols.push(
+            {
+                id: "id-expansion",
+                name: "Name-Expansion",
+                hidden: index % 4 == 0,
+                width: 300,
+                renderHybrid: false,
+                sortable: index % 3 !== 0,
+                filterable: true,
+                type: "Object",
+                // orderBy: "Asc"
+            }
+        );
         console.log(cols);
         const data = [];
         for (var i = 0; i < 1000; i++) {
@@ -51,6 +65,24 @@
                 const name = cols[j];
                 row[name.id] = "Data-Row-" + i + "-Col-" + j;
             }
+            row["id-expansion"] = [
+                {
+                    'id2': "exp-col-1",
+                    'id1': "exp-col-1",
+                    'id3': "exp-col-1",
+                },
+                {
+                    'id2': "exp-col-2",
+                    'id1': "exp-col-2",
+                    'id3': "exp-col-2",
+                },
+                {
+                    'id2': "exp-col-3",
+                    'id1': "exp-col-3",
+                    'id3': "exp-col-3",
+
+                }
+            ]
             data.push(row);
         };
     </script>
@@ -64,11 +96,13 @@
     <button onclick="showFacet()">Toggle Facet</button>
     <button onclick="updateRows()">Update Rows</button>
     <div class="gui item left gui-subheading-2 m-0 manage-col-container" id="manange-cols-container">
-        <a class="gui col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings" tabindex="1">
+        <a class="gui col-settings-trigger" aria-label="Manage Grid Column Settings" title="Manage Grid Column Settings"
+            tabindex="1">
             <i class="gui-icon gui-icon-repair"></i>
             Manage Columns
         </a>
-        <div style="height: 400px; overflow: hidden;" class="col-settings-container gui of-hidden gui-hidden pop-up"></div>
+        <div style="height: 400px; overflow: hidden;" class="col-settings-container gui of-hidden gui-hidden pop-up">
+        </div>
     </div>
     <div style="display: flex;height: 90%; width: 100%; overflow: hidden;">
         <!-- <div class="facet" style="background-color: red;height: 90%" id="facet">
@@ -95,6 +129,12 @@
             },
             onClickHeader: function (column, value, actionType, type) {
                 addFilters();
+            },
+            isAlternateExpanded: true,
+            expansionFieldName: "id-expansion",
+            isCustomExpansion: true,
+            renderHybridExpansion: function(row) {
+                return "<a href=\"_blank\">asfdasfasdf</a>"
             }
         };
         var paginationInput = {

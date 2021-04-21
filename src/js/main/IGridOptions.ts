@@ -3,7 +3,7 @@ import { IColumn } from "./../models/IColumn";
 import { IFilterClickDelegate } from "./../models/IFilterClickDelegate";
 import { IHeaderClickDelegate } from "./../models/IHeaderClickDelegate";
 import { IPageSearchClickDelegate } from "./../models/IPageSearchClickDelegate";
-import { IRenderHybridDelegate } from "./../models/IRenderHybridDelegate";
+import { IRenderHybridDelegate, IRenderHybridExpansion } from "./../models/IRenderHybridDelegate";
 
 export interface IGridOptions<T> {
     columns: IColumn[];
@@ -16,10 +16,14 @@ export interface IGridOptions<T> {
     // manageColSettingsContainer?: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
+    renderHybridExpansion?: IRenderHybridExpansion<T>;
     chunkSize: number;
     animationTime: number;
     caption?: string;
     emptyValue?: string;
     showCaption?: boolean;
     summary?: string;
+    isAlternateExpanded?: boolean;
+    isCustomExpansion?: boolean;
+    expansionFieldName?: string;
 }
