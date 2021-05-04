@@ -111,7 +111,10 @@ export class GridTemplateService<T> {
             let expandedRowColArray: any[] = null;
             let customExpansion: any = "";
             if (this.configStore.options.isAlternateExpanded) {
-                expandedRowColArray = this.getExpansionRow(row[this.configStore.Options.expansionFieldName], emptyStr);
+                expandedRowColArray = this.getExpansionRow(
+                    row,
+                    row[this.configStore.Options.expansionFieldName],
+                    emptyStr);
             }
             if (this.configStore.Options.isCustomExpansion) {
                 customExpansion = this.getCustomExpansionRow(row);
@@ -130,7 +133,7 @@ export class GridTemplateService<T> {
         }
         return mainRowArray;
     }
-    public selectRows = (rowId: string) => {
+    public selectRows = (rowId: string, allExpandedSelected: boolean = true) => {
         const key = this.configStore.Options.keyColumn;
         const newSelected = [];
         let exists = false;
@@ -146,26 +149,125 @@ export class GridTemplateService<T> {
         for (const toBeAdded of newSelected) {
             for (const oneRow of this.data) {
                 if (toBeAdded === oneRow[key]) {
+                    if (allExpandedSelected && this.configStore.Options.isAlternateExpanded) {
+                        for (const expandedRow of oneRow[this.configStore.Options.expansionFieldName]) {
+                            expandedRow.isSelected = true;
+                        }
+                    }
                     this.selected.push(oneRow);
                     break;
                 }
             }
         }
     }
-    public deSelectRows = (rowId: string) => {
+    public selectChildRows = (rowId: string) => {
+        const key = this.configStore.options.keyColumn;
+        const row = this.selected.filter((s: any) => s[key] === rowId);
+        let index = 0;
+        if (row && row.length > 0) {
+            row[0][this.configStore.options.expansionFieldName].forEach((r: any) => {
+                r.isSelected = true;
+                const element = $("#details-row-" + rowId);
+                $(".select-details-checkbox", element).prop("checked", true);
+                index += 1;
+            });
+        }
+    }
+    public selectExpandedRow = (rowId: string) => {
+        const split = rowId.split("-expansion-row-");
+        const key = this.configStore.options.keyColumn;
+        const expandedRowIndex = split[1];
+        const row = this.selected.filter((s: any) => s[key] === split[0]);
+        const dataRow = this.data.filter((s: any) => s[key] === split[0]);
+        if (row && row.length > 0) {
+            row[0][this.configStore.options.expansionFieldName][expandedRowIndex].isSelected = true;
+            this.selectRows(
+                split[0],
+                false);
+            if (row[0][this.configStore.options.expansionFieldName].every((a: any) => a.isSelected)) {
+                const element = $("#" + split[0] + "-checkbox");
+                element.prop("checked", true);
+            }
+        } else if (dataRow && dataRow.length > 0) {
+            dataRow[0][this.configStore.options.expansionFieldName][expandedRowIndex].isSelected = true;
+            this.selectRows(
+                split[0],
+                false);
+            if (dataRow[0][this.configStore.options.expansionFieldName].every((a: any) => a.isSelected)) {
+                const element = $("#" + split[0] + "-checkbox");
+                element.prop("checked", true);
+            }
+        }
+    }
+    public deSelectRows = (rowId: string, expansionRowIndex: string = null) => {
         const newSelected = [];
         const key = this.configStore.Options.keyColumn;
         for (const selected of this.selected) {
+            if (this.configStore.Options.isAlternateExpanded) {
+                if (expansionRowIndex) {
+                    if (rowId === selected[key]) {
+                        if (
+                            selected[this.configStore.options.expansionFieldName].some(
+                                (a: any) => a.isSelected)) {
+                            selected[this.configStore.options.expansionFieldName]
+                            [expansionRowIndex].isSelected = false;
+                            newSelected.push(selected);
+                        }
+
+                        const element = $("#" + rowId + "-checkbox");
+                        element.prop("checked", false);
+                    }
+                }
+            }
             if (rowId !== selected[key]) {
                 newSelected.push(selected);
             }
         }
         this.selected = newSelected;
     }
+
+    public deSelectChildRows = (rowId: string) => {
+        const key = this.configStore.options.keyColumn;
+        const row = this.selected.filter((s: any) => s[key] === rowId);
+        let index = 0;
+        if (row && row.length > 0) {
+            row[0][this.configStore.options.expansionFieldName].forEach((r: any) => {
+                r.isSelected = false;
+                const element = $("#details-row-" + rowId);
+                $(".select-details-checkbox", element).prop("checked", false);
+                index += 1;
+            });
+        }
+    }
+    public deSelectExpandedRow = (rowId: string) => {
+        const split = rowId.split("-expansion-row-");
+        const key = this.configStore.options.keyColumn;
+        const expandedRowIndex = split[1];
+        const row = this.selected.filter((s: any) => s[key] === split[0]);
+        if (row && row.length > 0) {
+            row[0][this.configStore.options.expansionFieldName][expandedRowIndex].isSelected = false;
+            this.deSelectRows(
+                split[0],
+                expandedRowIndex);
+        }
+    }
+
     public selectAll = () => {
+        if (this.configStore.Options.isAlternateExpanded) {
+            this.data.forEach((a: any) => a[this.configStore.options.expansionFieldName].forEach((element: any) => {
+                element.isSelected = true;
+                this.selectChildRows(a[this.configStore.Options.keyColumn]);
+            }));
+        }
         this.selected = this.data;
     }
     public deSelectAll = () => {
+        if (this.configStore.Options.isAlternateExpanded) {
+            this.data.forEach((a: any) => a[this.configStore.options.expansionFieldName].forEach((element: any) => {
+                element.isSelected = false;
+                this.deSelectChildRows(a[this.configStore.Options.keyColumn]);
+            }));
+        }
         this.selected = [];
     }
     public updateRows = (rows: T[]) => {
@@ -224,34 +326,40 @@ export class GridTemplateService<T> {
         return this.configStore.Options.renderHybridExpansion(row);
     }
 
-    private getExpansionRow = (row: T[], emptyStr: string): IMainColRowArray[][] => {
-        const mainRowColArray: any[][] = [];
-        for (let i = 0; i < row.length; i++) {
-            mainRowColArray.push([]);
-            for (const col of this.configStore.Options.columns) {
-                if (row[i].hasOwnProperty(col.id)) {
-                    let columnValue = row[i][col.id];
-                    let actualValue = row[i][col.id];
-                    if (col.renderHybrid) {
-                        columnValue = this.configStore.Options.hybridFunction(col, row[i]);
-                        if (col.isTitleHybrid) {
-                            actualValue = columnValue;
+    private getExpansionRow = (mainRow: any, row: T[], emptyStr: string): IMainColRowArray[][] => {
+        const mainRowColArray: any[] = [];
+        if (row) {
+            for (let i = 0; i < row.length; i++) {
+                mainRowColArray.push({
+                    colArray: [],
+                    isSelected: false,
+                    rowId: mainRow[this.configStore.Options.keyColumn],
+                });
+                for (const col of this.configStore.Options.columns) {
+                    if (row[i].hasOwnProperty(col.id)) {
+                        let columnValue = row[i][col.id];
+                        let actualValue = row[i][col.id];
+                        if (col.renderHybrid) {
+                            columnValue = this.configStore.Options.hybridFunction(col, row[i]);
+                            if (col.isTitleHybrid) {
+                                actualValue = columnValue;
+                            }
                         }
-                    }
-                    if (emptyStr !== undefined && columnValue === emptyStr) {
-                        columnValue = "";
-                        actualValue = "";
-                    }
+                        if (emptyStr !== undefined && columnValue === emptyStr) {
+                            columnValue = "";
+                            actualValue = "";
+                        }
 
-                    mainRowColArray[i].push({
-                        columnValue,
-                        type: col.type,
-                        hidden: col.hidden,
-                        actualValue,
-                        columnName: col.name,
-                        id: col.id,
-                        filterable: col.filterable,
-                    });
+                        mainRowColArray[i].colArray.push({
+                            columnValue,
+                            type: col.type,
+                            hidden: col.hidden,
+                            actualValue,
+                            columnName: col.name,
+                            id: col.id,
+                            filterable: col.filterable,
+                        });
+                    }
                 }
             }
         }

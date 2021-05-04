@@ -1,19 +1,27 @@
-<tr id="details-row-{{@index}}" class="gui gui-hidden detailsRow" aria-live="polite">
+<tr id="details-row-{{keyColumn}}" class="gui gui-hidden detailsRow" aria-live="polite">
     {{^isCustomExpansion}}
     <td colspan="{{length}}">
         <table class="gui compact celled table detailsTable m-l-37 p-5" style="width: fit-content;">
             <thead>
-                {{#with expandedRowColArray.[0]}}
+                <th></th>
+                {{#with expandedRowColArray.[0].colArray}}
                 {{#each .}}
-                <th>{{ @key }}</th>
+                <th>{{columnName}}</th>
                 {{/each}}
                 {{/with}}
             </thead>
             <tbody>
-                {{#each expandedRowColArray}}
+                {{#each expandedRowColArray as |row|}}
                 <tr>
-                    {{#each this}}
-                    <td title="{{actualValue}}" aria-colindex="{{Add @index 3}}" class="body-{{id}}">{{{columnValue}}}
+                    <td>
+                        <input type="checkbox" {{BoolAttribute row.isSelected "checked" }} aria-colindex="0"
+                            aria-label="Checkbox to select the row with Id {{row.rowId}}-expansion-row-{{Add @index 0}}"
+                            value="{{row.rowId}}-expansion-row-{{Add @index 0}}"
+                            class="select-details-checkbox cursor-pointer active">
+                    </td>
+                    {{#each row.colArray as |col|}}
+                    <td title="{{col.actualValue}}" aria-colindex="{{Add @index 1}}" class="body-{{col.id}}">
+                        {{{col.columnValue}}}
                     </td>
                     {{/each}}
                 </tr>
@@ -28,6 +36,3 @@
     </td>
     {{/isCustomExpansion}}
 </tr>
-
-
-{{log isCustomExpansion}}

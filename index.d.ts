@@ -50,12 +50,16 @@ export interface IGridOptions<T> {
     containerElement: HTMLElement | null;
     onSelect: ISelectDelegate<T>;
     onPageSearch: IPageSearchClickDelegate;
+    renderHybridExpansion?: IRenderHybridExpansion<T>;
     chunkSize: number;
     animationTime: number;
     caption?: string;
     emptyValue?: string;
     showCaption?: boolean;
     summary?: string;
+    isAlternateExpanded?: boolean;
+    isCustomExpansion?: boolean;
+    expansionFieldName?: string;
 }
 
 export enum GridOrderDirection {
@@ -73,6 +77,7 @@ export type IHeaderClickDelegate = (column: string, direction: GridOrderDirectio
 export type IPageSearchClickDelegate = (pageSize: number, pageIndex: number) => void;
 
 export type IRenderHybridDelegate<T> = (column: IColumn, row: T) => string;
+export type IRenderHybridExpansion<T> = (row: T) => string;
 
 export enum FilterActionType {
     Add = "Add",
