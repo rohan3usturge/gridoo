@@ -1,38 +1,40 @@
 <tr id="details-row-{{keyColumn}}" class="gui gui-hidden detailsRow" aria-live="polite">
     {{^isCustomExpansion}}
-    <td colspan="{{length}}">
-        <table class="gui compact celled table detailsTable m-l-37 p-5" style="width: fit-content;">
-            <thead>
-                <th></th>
-                {{#with expandedRowColArray.[0].colArray}}
-                {{#each .}}
-                <th>{{columnName}}</th>
-                {{/each}}
-                {{/with}}
-            </thead>
-            <tbody>
-                {{#each expandedRowColArray as |row|}}
-                <tr>
-                    <td>
-                        <input type="checkbox" {{BoolAttribute row.isSelected "checked" }} aria-colindex="0"
-                            aria-label="Checkbox to select the row with Id {{row.rowId}}-expansion-row-{{Add @index 0}}"
-                            value="{{row.rowId}}-expansion-row-{{Add @index 0}}"
-                            class="select-details-checkbox cursor-pointer active">
-                    </td>
-                    {{#each row.colArray as |col|}}
-                    <td title="{{col.actualValue}}" aria-colindex="{{Add @index 1}}" class="body-{{col.id}}">
-                        {{{col.columnValue}}}
-                    </td>
+    <td colspan="100">
+        <div class="expansionRow">
+            <table class="gui compact celled table detailsTable m-l-37 p-5" style="width: fit-content;">
+                <thead>
+                    <th></th>
+                    {{#with expandedRowColArray.[0].colArray}}
+                    {{#each .}}
+                    <th>{{columnName}}</th>
                     {{/each}}
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
+                    {{/with}}
+                </thead>
+                <tbody>
+                    {{#each expandedRowColArray as |row|}}
+                    <tr>
+                        <td>
+                            <input type="checkbox" {{BoolAttribute row.isSelected "checked" }} aria-colindex="0"
+                                aria-label="Checkbox to select the row with Id {{row.rowId}}-expansion-row-{{Add @index 0}}"
+                                value="{{row.rowId}}-expansion-row-{{Add @index 0}}"
+                                class="select-details-checkbox cursor-pointer active">
+                        </td>
+                        {{#each row.colArray as |col|}}
+                        <td title="{{col.actualValue}}" aria-colindex="{{Add @index 1}}" class="body-{{col.id}}">
+                            {{{col.columnValue}}}
+                        </td>
+                        {{/each}}
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
     </td>
     {{/isCustomExpansion}}
     {{#isCustomExpansion}}
-    <td colspan="{{length}}">
-        <div>{{{customExpansion}}}</div>
+    <td colspan="100">
+        <div class="customExpansion">{{{customExpansion}}}</div>
     </td>
     {{/isCustomExpansion}}
 </tr>
