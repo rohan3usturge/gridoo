@@ -14,8 +14,8 @@
                 <tbody>
                     {{#each expandedRowColArray as |row|}}
                     <tr>
-                        <td>
-                            <input type="checkbox" {{BoolAttribute row.isSelected "checked" }} aria-colindex="0"
+                        <td aria-colindex="0">
+                            <input type="checkbox" {{BoolAttribute row.isSelected "checked" }}
                                 aria-label="Checkbox to select the row with Id {{row.rowId}}-expansion-row-{{Add @index 0}}"
                                 value="{{row.rowId}}-expansion-row-{{Add @index 0}}"
                                 class="select-details-checkbox cursor-pointer active">
