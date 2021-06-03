@@ -1,6 +1,6 @@
 {{#each mainRowArray}}
 <tr aria-rowindex="{{Add rowIndex 1}}" class="mainRow {{BoolAttribute isAllSelected " active"}}"
-    data-pk-attr="{{keyColumn}}" role="row">
+    data-pk-attr="{{keyColumn}}" role="row" id="details-row-{{@index}}">
     <td class="expansionArrows" class="gui flex jc-sb" aria-colindex="1" role="gridcell">
         <i aria-label="Press enter to expand the details Row" role="button" title="Expand the details Row"
             aria-controls="details-row-{{@index}}"
