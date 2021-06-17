@@ -16,4 +16,5 @@ export interface IColumn {
     showOnExcel?: boolean;
     excelname?: string;
     isTitleHybrid?: boolean;
+    onlyShowOnExpansion?: boolean;
 }
