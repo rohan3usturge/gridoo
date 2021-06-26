@@ -14,14 +14,14 @@
                 <tbody>
                     {{#each expandedRowColArray as |row|}}
                     <tr>
-                        <td aria-colindex="1">
+                        <td aria-colindex="0">
                             <input type="checkbox" {{BoolAttribute row.isSelected "checked" }}
                                 aria-label="Checkbox to select the row with Id {{row.rowId}}-expansion-row-{{Add @index 0}}"
-                                value="{{row.rowId}}-expansion-row-{{Add @index 1}}"
+                                value="{{row.rowId}}-expansion-row-{{Add @index 0}}"
                                 class="select-details-checkbox cursor-pointer active">
                         </td>
                         {{#each row.colArray as |col|}}
-                        <td title="{{col.actualValue}}" aria-colindex="{{Add @index 2}}" class="body-{{col.id}}">
+                        <td title="{{col.actualValue}}" aria-colindex="{{Add @index 1}}" class="body-{{col.id}}">
                             {{{col.columnValue}}}
                         </td>
                         {{/each}}
