@@ -1,13 +1,13 @@
 {{#each mainRowArray}}
 <tr aria-rowindex="{{Add rowIndex 1}}" class="mainRow {{BoolAttribute isAllSelected " active"}}"
-    data-pk-attr="{{keyColumn}}" role="row" id="details-row-{{@index}}">
+    data-pk-attr="{{keyColumn}}" role="row" id="-main-row-{{@index}}">
     <td class="expansionArrows" class="gui flex jc-sb" aria-colindex="1" role="gridcell">
         <i aria-label="Press enter to expand the details Row" role="button" title="Expand the details Row"
-            aria-controls="details-row-{{@index}}"
+            aria-controls="details-main-row-{{@index}}"
             class="gui gui-icon gui-icon-chevron-down expandDetailsRowIcon cursor-pointer" tabindex="0"
             aria-hidden="false" aria-expanded="false"></i>
         <i aria-label="Press enter to collapse the details Row" role="button" title="Collapse the details Row"
-            aria-controls="details-row-{{@index}}"
+            aria-controls="details-main-row-{{@index}}"
             class="gui gui-icon gui-icon-chevron-up CollapseDetailsRowIcon cursor-pointer gui-hidden" tabindex="0"
             aria-hidden="true" aria-expanded="true"></i>
     </td>
