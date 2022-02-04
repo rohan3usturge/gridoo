@@ -16,7 +16,7 @@
             isAllSelected "checked" }} value="{{keyColumn}}" class="select-key-checkbox cursor-pointer" id="{{keyColumn}}-checkbox">
     </td>
     {{#each mainRowColArray}}
-    <td title="{{actualValue}}" aria-colindex="{{Add @index 3}}" class="body-{{id}}">{{{columnValue}}}</td>
+    <td title="{{actualValue}}" role="gridcell" aria-colindex="{{Add @index 3}}" class="body-{{id}}">{{{columnValue}}}</td>
     {{/each}}
 </tr>
 {{^isAlternateExpanded}}
